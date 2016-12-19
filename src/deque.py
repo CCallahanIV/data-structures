@@ -23,11 +23,17 @@ class Deque(object):
 
     def pop(self):
         """Remove the node from the tail and return the value."""
-        self._container.shift()
+        try:
+            return self._container.shift()
+        except IndexError:
+            raise IndexError("Cannot pop from empty Deque.")
 
     def popleft(self):
         """Remove the node from the head and return the value."""
-        self._container.pop()
+        try:
+            self._container.pop()
+        except IndexError:
+            raise IndexError("Cannot popleft from empty Deque.")
 
     def peek(self):
         """Give the value for the tail node."""
@@ -39,6 +45,7 @@ class Deque(object):
 
     def size(self):
         """Return the length of the deque."""
+        return self._container._size
 
     def __len__(self):
         """Call the size method."""
