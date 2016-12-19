@@ -31,7 +31,7 @@ class Deque(object):
     def popleft(self):
         """Remove the node from the head and return the value."""
         try:
-            self._container.pop()
+            return self._container.pop()
         except IndexError:
             raise IndexError("Cannot popleft from empty Deque.")
 
