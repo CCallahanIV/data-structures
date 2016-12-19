@@ -37,11 +37,17 @@ class Deque(object):
 
     def peek(self):
         """Give the value for the tail node."""
-        pass
+        try:
+            return self._container.tail.value
+        except AttributeError:
+            return None
 
     def peekleft(self):
         """Give the value for the head node."""
-        pass
+        try:
+            return self._container.head.value
+        except AttributeError:
+            return None
 
     def size(self):
         """Return the length of the deque."""
