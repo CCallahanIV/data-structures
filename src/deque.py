@@ -4,7 +4,18 @@ from dbl_linked_list import DblLinkedList
 
 
 class Deque(object):
-    """This is the Deque data structure."""
+    """This is the Deque data structure.
+
+    Methods:
+
+        append():       Append a Node with given value to the tail.
+        appendleft():   Push a Node with given value to the head.
+        pop():          Remove the node from the head, return the value.
+        popleft():      Remove the node from the tail, return the value.
+        peek():         Return the value from the tail node.
+        peekleft():     Return the value from the head node.
+
+    """
 
     def __init__(self, maybe_an_iterable=None):
         """Initialize a deque data structure."""
