@@ -23,11 +23,11 @@ class Deque(object):
 
     def pop(self):
         """Remove the node from the tail and return the value."""
-        self._container
+        self._container.shift()
 
     def popleft(self):
         """Remove the node from the head and return the value."""
-        pass
+        self._container.pop()
 
     def peek(self):
         """Give the value for the tail node."""
