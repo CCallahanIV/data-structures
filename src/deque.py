@@ -15,15 +15,15 @@ class Deque(object):
 
     def append(self, val):
         """Append a node with given value to the tail."""
-        pass
+        self._container.append(val)
 
     def appendleft(self, val):
         """Append a node with given value to the head."""
-        pass
+        self._container.push(val)
 
     def pop(self):
         """Remove the node from the tail and return the value."""
-        pass
+        self._container
 
     def popleft(self):
         """Remove the node from the head and return the value."""
