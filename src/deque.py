@@ -6,9 +6,12 @@ from dbl_linked_list import DblLinkedList
 class Deque(object):
     """This is the Deque data structure."""
 
-    def __init__(self):
+    def __init__(self, maybe_an_iterable=None):
         """Initialize a deque data structure."""
-        pass
+        try:
+            self._container = DblLinkedList(maybe_an_iterable)
+        except TypeError:
+            self._container = DblLinkedList(maybe_an_iterable)
 
     def append(self, val):
         """Append a node with given value to the tail."""
