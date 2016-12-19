@@ -24,12 +24,12 @@ For more information on the assignment, see here: https://codefellows.github.io/
 | Name                     | Stmts | Miss | Cover | Missing |
 | -----------------------  | ----- | ---- | ----- | ------- |
 | dbl_linked_list.py       |  75   |  0   | 100%  |         |
-| deque.py                 |
+| deque.py                 |  32   |  0   | 100%  |         |
 | linked_list.py           |  50   |  0   |  96%  |  80-81  |
 | queue.py                 |  22   |  2   | 91%   |  47, 51 |
 | stack.py                 |   8   |  0   | 100%  |         |
 | test_dbl_linked_list.py  |  185  |  0   | 100%  |         |
-| test_deque.py            |
+| test_deque.py            |  23   |  0   | 100%  |         |
 | test_linked_list.py      |  73   |  0   |  95%  |         |
 | test_queue.py            |  87   |  0   | 100%  |         |
 | test_stack.py            |  48   |  0   | 100%  | 106-109 |

@@ -33,6 +33,30 @@ def test_creating_a_filled_deque(create_filled_deque):
     assert create_filled_deque._container._size == 5
 
 
+def test_create_deque_with_string():
+    """Test create deque with string, should create node for each char."""
+    from deque import Deque
+    nd = Deque("four")
+    assert len(nd) == 4
+
+
+def test_create_deque_w_empty_list():
+    """Test create deque with [], should create one node."""
+    from deque import Deque
+    l = []
+    nd = Deque(l)
+    assert len(nd) == 0
+
+
+def test_create_deque_single_item():
+    """Test create deque with single node."""
+    from deque import Deque
+    nd = Deque(1)
+    assert len(nd) == 1
+    assert nd._container.head.value == 1
+    assert nd._container.tail.value == 1
+
+
 def test_append_adding_node_to_tail(create_empty_deque):
     """Test adding a new node to the tail of an empty deque."""
     create_empty_deque.append(6)
