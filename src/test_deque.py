@@ -60,3 +60,39 @@ def test_appendleft_on_a_filled_deque(create_filled_deque):
     create_filled_deque.appendleft(6)
     assert create_filled_deque._container.head.value == 6
     assert create_filled_deque._container._size == 6
+
+
+def test_pop_on_filled_deque(create_filled_deque):
+    """Test pop method on filled deque."""
+    assert create_filled_deque.pop() == 1
+    assert create_filled_deque._container.tail.value == 2
+    assert create_filled_deque._container._size == 4
+
+
+def test_pop_on_empty_deque(create_empty_deque):
+    """Test pop on empty deque, should raise exception."""
+    with pytest.raises(IndexError):
+        create_empty_deque.pop()
+
+
+def test_popleft_on_filled_deque(create_filled_deque):
+    """Test popleft on filled deque."""
+    assert create_filled_deque.popleft() == 5
+    assert create_filled_deque._container.head.value == 4
+    assert create_filled_deque._container._size == 4
+
+
+def test_popleft_on_empty_deque(create_empty_deque):
+    """Test popleft on an empty deque, should raise IndexError."""
+    with pytest.raises(IndexError):
+        create_empty_deque.popleft()
+
+
+def test_pop_from_full_to_empty_deque(create_filled_deque):
+    """Test pop on full deque until empty, verify head, tail are none."""
+    for i in range(len(create_filled_deque)):
+        create_filled_deque.pop()
+
+    assert create_filled_deque._container.head is None
+    assert create_filled_deque._container.tail is None
+    assert create_filled_deque._container._size == 0
