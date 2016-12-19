@@ -75,6 +75,16 @@ def test_pop_on_empty_deque(create_empty_deque):
         create_empty_deque.pop()
 
 
+def test_pop_from_full_to_empty_deque(create_filled_deque):
+    """Test pop on full deque until empty, verify head, tail are none."""
+    for i in range(len(create_filled_deque)):
+        create_filled_deque.pop()
+
+    assert create_filled_deque._container.head is None
+    assert create_filled_deque._container.tail is None
+    assert create_filled_deque._container._size == 0
+
+
 def test_popleft_on_filled_deque(create_filled_deque):
     """Test popleft on filled deque."""
     assert create_filled_deque.popleft() == 5
@@ -88,11 +98,41 @@ def test_popleft_on_empty_deque(create_empty_deque):
         create_empty_deque.popleft()
 
 
-def test_pop_from_full_to_empty_deque(create_filled_deque):
-    """Test pop on full deque until empty, verify head, tail are none."""
+def test_popleft_from_full_to_empty_deque(create_filled_deque):
+    """Test popleft on full deque until empty, verify head, tail are none."""
     for i in range(len(create_filled_deque)):
-        create_filled_deque.pop()
+        create_filled_deque.popleft()
 
     assert create_filled_deque._container.head is None
     assert create_filled_deque._container.tail is None
     assert create_filled_deque._container._size == 0
+
+
+def test_peek_on_filled_deque(create_filled_deque):
+    """Test peek on filled deque to return tail value."""
+    assert create_filled_deque.peek() == 1
+
+
+def test_peek_on_an_empty_deque(create_empty_deque):
+    """Test peek on an empty queue to raise exception."""
+    assert create_empty_deque.peek() is None
+
+
+def test_peekleft_on_filled_deque(create_filled_deque):
+    """Test peekleft on filled deque to return head value."""
+    assert create_filled_deque.peekleft() == 5
+
+
+def test_peekleft_on_empty_deque(create_empty_deque):
+    """Test peekleft on an empty deque to return head value."""
+    assert create_empty_deque.peekleft() is None
+
+
+def test_size_on_a_filled_deque(create_filled_deque):
+    """Test size method to return length on a filled deque."""
+    assert create_filled_deque._container._size == 5
+
+
+def test_size_on_an_empty_deque(create_empty_deque):
+    """Test size method to return length on an empty deque."""
+    assert create_empty_deque._container._size == 0
