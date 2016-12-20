@@ -22,7 +22,7 @@ def create_empty_node():
 @pytest.fixture
 def new_q():
     """Given an iterable, create a new queue."""
-    from queue import Queue
+    from queue_ds import Queue
     this_q = Queue(TEST_ITER)
     return this_q
 
@@ -30,13 +30,13 @@ def new_q():
 @pytest.fixture
 def new_empty_q():
     """Create an empty object of type Queue to be used in test functions."""
-    from queue import Queue
+    from queue_ds import Queue
     this_empty_q = Queue()
     return this_empty_q
 
 @pytest.fixture
 def new_q_1():
-    from queue import Queue
+    from queue_ds import Queue
     this_q = Queue(TEST_ITER[-1])
     return this_q
 
