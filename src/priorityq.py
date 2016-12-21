@@ -11,14 +11,15 @@ class PriorityQ(object):
         self._high_p = None
         self._pdict = {}
         self._size = 0
-        try:
-            self.insert(maybe_an_iterable[0], maybe_an_iterable[1])
-        except TypeError:
+        if maybe_an_iterable:
             try:
-                for item in maybe_an_iterable:
-                    self.insert(item[0], item[1])
+                self.insert(maybe_an_iterable[0], maybe_an_iterable[1])
             except TypeError:
-                raise TypeError("Initialize PriorityQ with list of Tuples in format: [(value, priority), ...]")
+                try:
+                    for item in maybe_an_iterable:
+                        self.insert(item[0], item[1])
+                except TypeError:
+                    raise TypeError("Initialize PriorityQ with list of Tuples in format: [(value, priority), ...]")
 
     def insert(self, value, priority=0):
         """Insert a given item into the appropriate place in the PriorityQ."""
@@ -36,10 +37,13 @@ class PriorityQ(object):
             val = self._pdict[self._high_p].dequeue()
             if len(self._pdict[self._high_p]) == 0:
                 del self._pdict[self._high_p]
-                self._high_p = min(self._pdict.keys())
+                try:
+                    self._high_p = min(self._pdict.keys())
+                except ValueError:
+                    self._high_p = None
             self._size -= 1
             return val
-        except IndexError:
+        except KeyError:
             raise IndexError("Cannot pop from empty Priority Q.")
 
     def peek(self):
