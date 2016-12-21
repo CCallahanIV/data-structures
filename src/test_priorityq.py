@@ -13,8 +13,8 @@ def empty_priority_q():
     return new_pq
 
 
-@pytest.fixture
-def filled_priority_q():
+@pytest.fixture(scope="module", params=TEST_SET)
+def filled_priority_q(request):
     """The fixture creates a filled priority queue."""
     from priorityq import PriorityQ
     new_pq = PriorityQ(TEST_SET)
