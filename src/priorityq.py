@@ -8,23 +8,44 @@ class PriorityQ(object):
 
     def __init__(self, maybe_an_iterable=None):
         """Initialize a PriorityQ object."""
-        self._plist = []
+        self._high_p = None
         self._pdict = {}
         self._size = 0
-        if hasattr(maybe_an_iterable, "__iter__"):
-            for item in maybe_an_iterable:
-                insert(item)
-        elif maybe_an_iterable is not None:
-            insert(maybe_an_iterable)
+        try:
+            self.insert(maybe_an_iterable[0], maybe_an_iterable[1])
+        except TypeError:
+            try:
+                for item in maybe_an_iterable:
+                    self.insert(item[0], item[1])
+            except TypeError:
+                raise TypeError("Initialize PriorityQ with list of Tuples in format: [(value, priority), ...]")
 
-    def insert(self, value):
-        """Insert a given value into the appropriate place in the PriorityQ."""
-        pass
+    def insert(self, value, priority=0):
+        """Insert a given item into the appropriate place in the PriorityQ."""
+        try:
+            self._pdict[priority].enqueue(value)
+        except KeyError:
+            if self._high_p is None or priority < self._high_p:
+                self._high_p = priority
+            self._pdict[priority] = Queue([value])
+        self._size += 1
 
     def pop(self):
         """Remove the item with greatest priority and return its value."""
-        pass
+        try:
+            val = self._pdict[self._high_p].dequeue()
+            if len(self._pdict[self._high_p]) == 0:
+                del self._pdict[self._high_p]
+                self._high_p = min(self._pdict.keys())
+            self._size -= 1
+            return val
+        except IndexError:
+            raise IndexError("Cannot pop from empty Priority Q.")
 
     def peek(self):
         """Return the value of the item with greatest priority, do not remove it."""
-        pass
+        return self._pdict[self._high_p].peek()
+
+    def __len__(self):
+        """Return the total size of the PrioritQ."""
+        return self._size
