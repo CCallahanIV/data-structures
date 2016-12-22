@@ -28,6 +28,7 @@ def test_creation_of_empty_priority_q(empty_priority_q):
     assert len(empty_priority_q._pdict) == 0
 
 def test_initialize_with_single_tuple
+    
 
 def test_intitalize_with_single_digit
 
@@ -62,4 +63,8 @@ def pop_filled_priorty_q(filled_priority_q):
 
 def test_pop_on_empty_priority_q(empty_priority_q):
 
-def test_pop
+def test_pop_on_filled_until_empty(filled_priority_q):
+
+def test_peek_on_empty(empty_priority_q):
+
+def test_peek_on_filled(filled_priority_q):
