@@ -1,7 +1,7 @@
 """This Module contains testing for the Priority Q."""
 import pytest
 TEST_SET = [
-    [(1, 17), (2, 99), (1, 15), (3, 99), (2, 1), (3, 9)],
+    [(17, 1), (99, 2), (15, 1), (99, 3), (1, 2), (9, 3)],
 ]
 
 
@@ -64,13 +64,20 @@ def insert_val_into_empty_priorty_q(empty_priority_q):
     assert empty_priority_q._high_p[0] == 3
     assert empty_priority_q._pdict[0] == 3
 
-def test_insert_into_full_with_single_digit_and_no_prio(filled_priority_q):
-
-def test_insert_into_full_with_tuple_prio_already_there(filled_priority_q):
 
 def test_insert_into_full_prio_already_there(filled_priority_q):
+    """Test inserting into a filled priority q, with priority already present."""
+    old_len = len(filled_priority_q)
+    filled_priority_q.insert("something", 1)
+    assert len(filled_priority_q) = old_len + 1
+    assert filled_priority_q.peek() == 17
+
 
 def test_insert_into_full_with_an_iterable(filled_priority_q):
+    """Test attempting to insert into a priority q with an iterable."""
+    with pytest.raises(TypeError):
+        filled_priority_q.insert([1, 2, 3])
+
 
 def pop_filled_priorty_q(filled_priority_q):
     """The tests inserting into a filled priority queue."""
@@ -81,10 +88,27 @@ def pop_filled_priorty_q(filled_priority_q):
     assert val == 17
     assert filled_priority_q.peek() == 15
 
+
 def test_pop_on_empty_priority_q(empty_priority_q):
+    """Test popping on an empty priority q."""
+    with pytest.raises(IndexError):
+        empty_priority_q.pop()
+
 
 def test_pop_on_filled_until_empty(filled_priority_q):
+    """Test pop on filled Priority Q until empty."""
+    expected = [17, 15, 2, 99, 1, 99, 9]
+    for i in len(filled_priority_q):
+        assert filled_priority_q.pop() == expected[i]
+    assert len(filled_priority_q) == 0
+    assert self._high_p is None
+
 
 def test_peek_on_empty(empty_priority_q):
+    """Test peek() on an empty priority Q, should return None."""
+    assert empty_priority_q.peek() is None
+
 
 def test_peek_on_filled(filled_priority_q):
+    """Test peek() on a filled priorityq."""
+    assert filled_priority_q.peek() == 17
