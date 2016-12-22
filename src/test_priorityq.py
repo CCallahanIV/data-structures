@@ -27,6 +27,13 @@ def test_creation_of_empty_priority_q(empty_priority_q):
     assert len(empty_priority_q._high_p) == 0
     assert len(empty_priority_q._pdict) == 0
 
+def test_initialize_with_single_tuple
+
+def test_intitalize_with_single_digit
+
+def test_into_empty_with_tuple_and_no_prio
+
+def test_into_empty_with_tuple_and_prio_not_already_there
 
 def insert_val_into_empty_priorty_q(empty_priority_q):
     """The tests inserting into an empty priority queue."""
@@ -36,6 +43,13 @@ def insert_val_into_empty_priorty_q(empty_priority_q):
     assert empty_priority_q._high_p[0] == 1
     assert empty_priority_q._pdict[0] == 3
 
+def test_insert_into_full_with_single_digit_and_no_prio(filled_priority_q):
+
+def test_insert_into_full_with_tuple_prio_already_there(filled_priority_q):
+
+def test_insert_into_full_prio_already_there(filled_priority_q):
+
+def test_insert_into_full_with_an_iterable(filled_priority_q):
 
 def pop_filled_priorty_q(filled_priority_q):
     """The tests inserting into a filled priority queue."""
@@ -45,3 +59,7 @@ def pop_filled_priorty_q(filled_priority_q):
     assert filled_priority_q._high_p[0] == 1
     assert val == 17
     assert filled_priority_q.peek() == 15
+
+def test_pop_on_empty_priority_q(empty_priority_q):
+
+def test_pop
