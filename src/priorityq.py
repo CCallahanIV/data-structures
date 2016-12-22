@@ -23,6 +23,8 @@ class PriorityQ(object):
 
     def insert(self, value, priority=0):
         """Insert a given item into the appropriate place in the PriorityQ."""
+        if type(priority) != int:
+            raise TypeError("Improper function call.  Call insert as .insert(val, [priority])")
         try:
             try:
                 self._pdict[priority].enqueue(value)
