@@ -24,12 +24,15 @@ class PriorityQ(object):
     def insert(self, value, priority=0):
         """Insert a given item into the appropriate place in the PriorityQ."""
         try:
-            self._pdict[priority].enqueue(value)
-        except KeyError:
-            if self._high_p is None or priority < self._high_p:
-                self._high_p = priority
-            self._pdict[priority] = Queue([value])
-        self._size += 1
+            try:
+                self._pdict[priority].enqueue(value)
+            except KeyError:
+                if self._high_p is None or priority < self._high_p:
+                    self._high_p = priority
+                self._pdict[priority] = Queue([value])
+            self._size += 1
+        except TypeError:
+            raise TypeError("Improper function call.  Call insert as .insert(val, [priority])")
 
     def pop(self):
         """Remove the item with greatest priority and return its value."""
