@@ -13,8 +13,8 @@ def empty_priority_q():
     return new_pq
 
 
-@pytest.fixture(scope="module", params=TEST_SET)
-def filled_priority_q(request):
+@pytest.fixture
+def filled_priority_q():
     """The fixture creates a filled priority queue."""
     from priorityq import PriorityQ
     new_pq = PriorityQ(TEST_SET)
@@ -27,20 +27,21 @@ def test_creation_of_empty_priority_q(empty_priority_q):
     assert len(empty_priority_q._high_p) == 0
     assert len(empty_priority_q._pdict) == 0
 
+
 def test_initialize_with_single_tuple():
     """The test initializes priority q with a single tuple."""
     from priorityq import PriorityQ
-    new_pq = PriorityQ((3,2))
+    new_pq = PriorityQ((3, 2))
     assert len(new_pq) == 1
     assert new_pq._high_p == 2
     assert new_pq.peek() == 3
-    
+
 
 def test_intitalize_with_single_digit():
     """The test initialized a prio q with a single digit."""
     from priorityq import PriorityQ
     with pytest.raises(TypeError):
-        new_pq = PriorityQ(3)
+        PriorityQ(3)
 
 
 def test_insert_empty_with_val_and_no_prio(empty_priority_q):
@@ -69,7 +70,7 @@ def test_insert_into_full_prio_already_there(filled_priority_q):
     """Test inserting into a filled priority q, with priority already present."""
     old_len = len(filled_priority_q)
     filled_priority_q.insert("something", 1)
-    assert len(filled_priority_q) = old_len + 1
+    assert len(filled_priority_q) == old_len + 1
     assert filled_priority_q.peek() == 17
 
 
@@ -101,7 +102,7 @@ def test_pop_on_filled_until_empty(filled_priority_q):
     for i in len(filled_priority_q):
         assert filled_priority_q.pop() == expected[i]
     assert len(filled_priority_q) == 0
-    assert self._high_p is None
+    assert filled_priority_q._high_p is None
 
 
 def test_peek_on_empty(empty_priority_q):
