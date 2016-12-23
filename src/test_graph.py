@@ -100,3 +100,9 @@ def test_del_node_deletes_node_and_all_points_to_node(graph_edges):
     assert 3 not in graph_edges.nodes()
     for edge in graph_edges.edges():
         assert 3 != edge[1]
+
+
+def test_del_node_doesnt_exist_raises_keyerror(graph_edges):
+    """Test that del_node() raises an error if node does not exist."""
+    with pytest.raises(KeyError):
+        graph_edges.del_node("widgets")
