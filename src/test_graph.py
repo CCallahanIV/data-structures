@@ -155,7 +155,8 @@ def test_adjacent_returns_false(graph_edges):
     """Test that adjacent() returns false if given nodes are not neighbors."""
     assert graph_edges.adjacent(1, 5) is False
     graph_edges.del_node(2)
-    assert graph_edges.adjacent(1, 2) is False
+    with pytest.raises(KeyError):
+        graph_edges.adjacent(1, 2)
 
 
 def test_adjacent_raises_error_if_n_not_in_graph(graph_edges):
@@ -174,7 +175,7 @@ def test_neighbors_returns_correct_list(graph_edges):
     """Test that neighbors returns correct list."""
     assert graph_edges.neighbors(1) == [2, 3]
     graph_edges.add_edge(1, 5)
-    assert graph_edges.neighbors == [2, 3, 5]
+    assert graph_edges.neighbors(1) == [2, 3, 5]
 
 
 def test_nieghbors_raises_key_error_no_node(graph_edges):
