@@ -127,3 +127,19 @@ def test_del_edge_functions_correctly(graph_edges):
     graph_edges.del_edge(1, 3)
     assert 3 not in graph_edges._gdict[1]
     assert len(graph_edges._gdict[1]) == 0
+
+
+def test_has_node_return_false(graph_edges):
+    """Test that has_node() returns false if node doesn't exist."""
+    assert graph_edges.has_node("widgets") is False
+    graph_edges.del_node(1)
+    assert graph_edges.has_node(1) is False
+
+
+def test_has_node_return_true(graph_edges):
+    """Test that has_node returns True if node exists."""
+    assert graph_edges.has_node(1) is True
+    graph_edges.add_node("widgets")
+    assert graph_edges.has_node("widgets") is True
+
+
