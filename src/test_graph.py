@@ -3,6 +3,7 @@
 import pytest
 
 TEST_NODES = [1, 2, 3, 4, "five", "six", "seven", "apple"]
+TEST_EDGES = [(1, 2), (2, 3), (3, 1), (5, "six"), ("pear", "bear")]
 
 
 @pytest.fixture
@@ -18,6 +19,18 @@ def graph_nodes():
     g = Graph()
     for node in TEST_NODES:
         g.add_node(node)
+    return g
+
+
+@pytest.fixture
+def graph_edges():
+    from graph import Graph
+    g = Graph()
+    for node in TEST_NODES:
+        g.add_node(node)
+
+    for edge in TEST_EDGES:
+        g.add_edge(edge)
     return g
 
 
@@ -51,3 +64,10 @@ def test_add_node_already_exists(empty_graph):
     empty_graph.add_node(1)
     empty_graph.add_node(1)
     assert empty_graph._gdict[1] == []
+
+
+def test_add_edge_create_new_edge(empty_graph):
+    """Test Adding an edge to an empty graph."""
+    empty_graph.add_edge("dog", "cat")
+    assert "dog", "cat" in empty_graph._gict.keys()
+    assert empty_graph._gdict["dog"] == ["cat"]
