@@ -3,7 +3,7 @@
 import pytest
 
 TEST_NODES = [1, 2, 3, 4, "five", "six", "seven", "apple"]
-TEST_EDGES = [(1, 2), (2, 3), (3, 1), (5, "six"), ("pear", "bear")]
+TEST_EDGES = [(1, 2), (2, 3), (1, 3), (3, 1), (5, "six"), ("pear", "bear")]
 
 
 @pytest.fixture
@@ -71,3 +71,24 @@ def test_add_edge_create_new_edge(empty_graph):
     empty_graph.add_edge("dog", "cat")
     assert "dog", "cat" in empty_graph._gict.keys()
     assert empty_graph._gdict["dog"] == ["cat"]
+
+
+def test_add_edge_n1_already_exists(graph_edges):
+    """Test adding an edge where n1 already exsists."""
+    graph_edges.add_edge(1, "grapple")
+    assert "grapple" in graph_edges._gdict[1]
+    assert "grapple" in graph_edges.nodes()
+
+
+def test_add_edge_n1_does_not_exist_n2_does(graph_edges):
+    """Test case where n1 does not exist, n2 does."""
+    graph_edges.add_edge("grapple", 1)
+    assert 1 in graph_edges._gdict["grapple"]
+    assert "grapple" in graph_edges.nodes()
+
+
+def test_add_edge_already_exists(graph_edges):
+    """Testing adding an edge to a graph already with that edge, doesn't change it."""
+    old_edges = graph_edges._gdict[1]
+    graph_edges.add_edge(1, 2)
+    assert old_edges == graph_edges._gdict[1]
