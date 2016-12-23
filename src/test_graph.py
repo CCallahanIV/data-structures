@@ -143,18 +143,41 @@ def test_has_node_return_true(graph_edges):
     assert graph_edges.has_node("widgets") is True
 
 
-def test_neighbors_returns_true(graph_edges):
-    """Test that neighbors() returns true if given nodes are neighbors."""
+def test_adjacent_returns_true(graph_edges):
+    """Test that adjacent() returns true if given nodes are neighbors."""
     assert graph_edges.neighbors(1, 2) is True
     graph_edges.add_edge(1, 5)
     assert graph_edges.neighbors(1, 5) is True
     assert graph_edges.neighbors(5, "six") is True
 
 
-def test_neighbors_returns_false(graph_edges):
-    """Test that neigbors() returns false if given nodes are not neighbors."""
+def test_adjacent_returns_false(graph_edges):
+    """Test that adjacent() returns false if given nodes are not neighbors."""
     assert graph_edges(1, 5) is False
     graph_edges.del_node(2)
     assert graph_edges(1, 2) is False
 
 
+def test_adjacent_raises_error_if_n_not_in_graph(graph_edges):
+    """Test that adjacent() raises an error if nodes not in graph."""
+    with pytest.raises(KeyError):
+        graph_edges.adjacent(0, 1)
+
+    with pytest.raises(KeyError):
+        graph_edges.adjacent(1, 0)
+
+    with pytest.raises(KeyError):
+        graph_edges.raises("widget", "gizmo")
+
+
+def test_neighbors_returns_correct_list(graph_edges):
+    """Test that neighbors returns correct list."""
+    assert graph_edges.neighbors(1) == [2, 3]
+    graph_edges.add_edge(1, 5)
+    assert graph_edges.neighbors == [2, 3, 5]
+
+
+def test_nieghbors_raises_key_error_no_node(graph_edges):
+    """Test that neighbros raises a key error if the node does not exist."""
+    with pytest.raises(KeyError):
+        graph_edges.neighbors("widget")
