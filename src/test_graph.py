@@ -143,3 +143,18 @@ def test_has_node_return_true(graph_edges):
     assert graph_edges.has_node("widgets") is True
 
 
+def test_neighbors_returns_true(graph_edges):
+    """Test that neighbors() returns true if given nodes are neighbors."""
+    assert graph_edges.neighbors(1, 2) is True
+    graph_edges.add_edge(1, 5)
+    assert graph_edges.neighbors(1, 5) is True
+    assert graph_edges.neighbors(5, "six") is True
+
+
+def test_neighbors_returns_false(graph_edges):
+    """Test that neigbors() returns false if given nodes are not neighbors."""
+    assert graph_edges(1, 5) is False
+    graph_edges.del_node(2)
+    assert graph_edges(1, 2) is False
+
+
