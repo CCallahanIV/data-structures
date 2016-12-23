@@ -92,3 +92,11 @@ def test_add_edge_already_exists(graph_edges):
     old_edges = graph_edges._gdict[1]
     graph_edges.add_edge(1, 2)
     assert old_edges == graph_edges._gdict[1]
+
+
+def test_del_node_deletes_node_and_all_points_to_node(graph_edges):
+    """Test that del_node() delets the node and all pointers to that node."""
+    graph_edges.del_node(3)
+    assert 3 not in graph_edges.nodes()
+    for edge in graph_edges.edges():
+        assert 3 != edge[1]
