@@ -30,7 +30,7 @@ def graph_edges():
         g.add_node(node)
 
     for edge in TEST_EDGES:
-        g.add_edge(edge)
+        g.add_edge(edge[0], edge[1])
     return g
 
 
