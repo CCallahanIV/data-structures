@@ -22,36 +22,67 @@ class Graph(object):
 
     def nodes(self):
         """Return a list of all nodes in the graph."""
-        pass
+        return list(self._gdict.keys())
 
     def edges(self):
         """Return a list of all edges in the graph."""
-        pass
+        edge_list = []
+        for key in self._gdict:
+            for neighbor in self._gdict[key]:
+                edge_list.append((key, neighbor))
+        return edge_list
 
     def add_node(self, n):
         """Add a new node to the graph."""
-        pass
+        self._gdict.setdefault(n, [])
 
     def add_edge(self, n1, n2):
         """Add a new edge to the graph connecting n1 and n2."""
-        pass
+        if n1 in self._gdict and n2 in self._gdict[n1]:
+            return
+        self._gdict.setdefault(n1, []).append(n2)
+        self._gdict.setdefault(n2, [])
 
     def del_node(self, n):
         """Delete node n from the graph."""
-        pass
+        try:
+            del self._gdict[n]
+            for key in self._gdict:
+                if n in self._gdict[key]:
+                    self._gdict[key].remove(n)
+        except KeyError:
+            raise KeyError("Can't delete a node if it doesn't already exist.")
 
     def del_edge(self, n1, n2):
         """Delete the edge connecting node 1 and node 2."""
-        pass
+        try:
+            self._gdict[n1].remove(n2)
+        except ValueError:
+            raise ValueError("That edge does not exist.")
+        except KeyError:
+            raise KeyError("The node n1 does not exist.")
 
     def has_node(self, n):
         """Return True if node n exists in the graph."""
-        pass
+        if n in self._gdict:
+            return True
+        return False
 
     def neighbors(self, n):
         """Return a list of all neighbors of node n."""
-        pass
+        try:
+            return self._gdict[n]
+        except KeyError:
+            raise KeyError("Node {} does not exist".format(n))
 
     def adjacent(self, n1, n2):
         """Return true if there is an edge connecting n1 and n2."""
-        pass
+        if n1 in self._gdict:
+            if n2 in self._gdict:
+                if n2 in self._gdict[n1]:
+                    return True
+                return False
+            else:
+                raise KeyError("The node {} is not in the graph.".format(n2))
+        else:
+            raise KeyError("The node {} is not in the graph.".format(n1))
