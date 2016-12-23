@@ -28,7 +28,6 @@ class PriorityQ(object):
 
         self._pdict.setdefault(priority, Queue()).enqueue(value)
         if self._high_p is None or priority < self._high_p:
-            print("reset _high_p to, ", priority)
             self._high_p = priority
         self._size += 1
 
@@ -44,7 +43,7 @@ class PriorityQ(object):
                     self._high_p = None
             self._size -= 1
             return val
-        except KeyError:
+        except IndexError:
             raise IndexError("Cannot pop from empty Priority Q.")
 
     def peek(self):
