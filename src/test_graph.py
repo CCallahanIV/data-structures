@@ -106,3 +106,24 @@ def test_del_node_doesnt_exist_raises_keyerror(graph_edges):
     """Test that del_node() raises an error if node does not exist."""
     with pytest.raises(KeyError):
         graph_edges.del_node("widgets")
+
+
+def test_del_edge_raise_key_error_no_n1(graph_edges):
+    """Test that del_edge() raises key error if n1 does not exist."""
+    with pytest.raises(KeyError):
+        graph_edges.del_edge("widgets", "anything")
+
+
+def test_del_edge_raise_value_error_no_n2(graph_edges):
+    """Test that del edge raises a value error if n2 does not exist."""
+    with pytest.raises(ValueError):
+        graph_edges.del_edge(1, "widgets")
+
+
+def test_del_edge_functions_correctly(graph_edges):
+    """Test that del edge functions correctly."""
+    graph_edges.del_edge(1, 2)
+    assert 2 not in graph_edges._gdict[1]
+    graph_edges.del_edge(1, 3)
+    assert 3 not in graph_edges._gdict[1]
+    assert len(graph_edges._gdict[1]) == 0
