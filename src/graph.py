@@ -1,4 +1,5 @@
 """This module implements a graph data structure."""
+from queue_ds import Queue
 
 
 class Graph(object):
@@ -102,8 +103,6 @@ class Graph(object):
 
     def breadth_first_traversal(self, start):
         """Traverse a graph breadth first."""
-        from queue_ds import Queue
-
         path = []
         q = Queue()
         q.enqueue(start)
@@ -114,7 +113,8 @@ class Graph(object):
                 path.append(current)
 
             for neighbor in self._gdict[current]:
-                q.enqueue(neighbor)
+                if neighbor not in path:
+                    q.enqueue(neighbor)
 
         return path
 
