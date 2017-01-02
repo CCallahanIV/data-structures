@@ -89,14 +89,21 @@ class Graph(object):
         else:
             raise KeyError("The node {} is not in the graph.".format(n1))
 
-    def depth_first_traversal(self, start, end, path=[]):
+    def depth_first_traversal(self, start, path=None):
         """Traverse a graph depth first."""
-        pass
+        if path is None:
+            path = []
+        path.append(start)
+        for neighbor in self._gdict[start]:
+            if neighbor not in path:
+                self.depth_first_traversal(neighbor, path)
 
-    def breadth_first_traversal(self, start, end, path=[]):
+        return path
+
+    def breadth_first_traversal(self, start, path=[]):
         """Traverse a graph breadth first."""
         pass
 
 
-if __name__ == "__main__":
-    #Do stuff
+# if __name__ == "__main__":
+#     #Do stuff
