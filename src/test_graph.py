@@ -4,6 +4,16 @@ import pytest
 
 TEST_NODES = [1, 2, 3, 4, "five", "six", "seven", "apple"]
 TEST_EDGES = [(1, 2), (2, 3), (1, 3), (3, 1), (5, "six"), ("pear", "bear")]
+TRAVERSAL_NODES = ["A", "B", "C", "D", "E", "F", "G"]
+TRAVERSAL_EDGES = [("A", "B"), ("A", "C"), ("B", "D"), ("B", "E"), ("C", "F"), ("C", "G")]
+CYCLICAL_NODES = [1, 2, 3]
+CYCLICAL_EDGES = [(1, 2), (2, 3), (3, 1)]
+MED_CYCLICAL_NODES = [1, 2, 3, 4, 5, 6, 7]
+MED_CYCLICAL_EDGES = [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (7, 1)]
+COMPLEX_TRAVERSAL_NODES = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+COMPLEX_TRAVERSAL_EDGES = [(1, 3), (1, 7), (2, 4), (2, 8), (3, 6), (3, 2), (4, 5), (4, 1), (4, 9), (5, 8), (5, 2), (5, 9), (6, 3), (6, 8), (6, 5), (7, 3), (7, 1), (7, 8), (8, 1), (8, 3), (8, 5), (8, 7), (9, 2), (9, 4), (9, 6)]
+CIRCLE_WITH_TAIL_NODES = [1, 3, 2, 4, 5, 6]
+CIRCLE_WITH_TAIL_EDGES = [(1, 2), (2, 4), (2, 3), (3, 1), (4, 5), (5, 6)]
 
 
 @pytest.fixture
@@ -32,6 +42,61 @@ def graph_edges():
     for edge in TEST_EDGES:
         g.add_edge(edge[0], edge[1])
     return g
+
+
+@pytest.fixture
+def traversal_graph():
+    from graph import Graph
+    tg = Graph()
+    for node in TRAVERSAL_NODES:
+        tg.add_node(node)
+    for edge in TRAVERSAL_EDGES:
+        tg.add_edge(edge[0], edge[1])
+    return tg
+
+
+@pytest.fixture
+def cyclical_graph():
+    from graph import Graph
+    cg = Graph()
+    for node in CYCLICAL_NODES:
+        cg.add_node(node)
+    for edge in CYCLICAL_EDGES:
+        cg.add_edge(edge[0], edge[1])
+    return cg
+
+
+@pytest.fixture
+def med_cyclical_graph():
+    from graph import Graph
+    mcg = Graph()
+    for node in MED_CYCLICAL_NODES:
+        mcg.add_node(node)
+    for edge in MED_CYCLICAL_EDGES:
+        mcg.add_edge(edge[0], edge[1])
+    return mcg
+
+
+@pytest.fixture
+def complex_traversal_graph():
+    from graph import Graph
+    ctg = Graph()
+    for node in COMPLEX_TRAVERSAL_NODES:
+        ctg.add_node(node)
+    for edge in COMPLEX_TRAVERSAL_EDGES:
+        ctg.add_edge(edge[0], edge[1])
+    return ctg
+
+
+@pytest.fixture
+def circle_with_tail_graph():
+    from graph import Graph
+    cwtg = Graph()
+    for node in CIRCLE_WITH_TAIL_NODES:
+        cwtg.add_node(node)
+    for edge in CIRCLE_WITH_TAIL_EDGES:
+        cwtg.add_edge(edge[0], edge[1])
+    return cwtg
 
 
 def test_init_graph(empty_graph):
@@ -182,3 +247,41 @@ def test_nieghbors_raises_key_error_no_node(graph_edges):
     """Test that neighbros raises a key error if the node does not exist."""
     with pytest.raises(KeyError):
         graph_edges.neighbors("widget")
+
+
+"""Test traversal of graph."""
+
+
+def test_depth_traversal_of_simple_tree_graph_a_to_g(traversal_graph):
+    """The module tests depth traversal of graph."""
+    assert traversal_graph.depth_first_traversal("A") == ["A", "B", "D", "E", "C", "F", "G"]
+
+
+def test_depth_traversal_of_cyclical_graph(cyclical_graph):
+    """The module tests depth traversal of a cyclical graph: 1 to 2, 2 to 3, 3 to 1."""
+    assert cyclical_graph.depth_first_traversal(1) == [1, 2, 3]
+
+
+def test_breadth_traversal_of_simple_tree_graph_a_to_g(traversal_graph):
+    """The module tests breadth traversal of graph."""
+    assert traversal_graph.breadth_first_traversal("A") == ["A", "B", "C", "D", "E", "F", "G"]
+
+
+def test_breadth_traversal_of_medium_cyclical_graph(med_cyclical_graph):
+    """The module tests breadth traversal of a cyclical graph: 1 to 7."""
+    assert med_cyclical_graph.breadth_first_traversal(1) == [1, 2, 3, 4, 5, 6, 7]
+
+
+def test_breadth_traversal_of_complex_graph(complex_traversal_graph):
+    """The module tests the breadth traversal of a complex graph."""
+    assert complex_traversal_graph.breadth_first_traversal(1) == [1, 3, 7, 6, 2, 8, 5, 4, 9]
+
+
+def test_breadth_traversal_of_circle_with_tail(circle_with_tail_graph):
+    """Test breadth traversal on a circle with a tail."""
+    assert circle_with_tail_graph.breadth_first_traversal(1) == [1, 2, 4, 3, 5, 6]
+
+
+def test_depth_traversal_of_circle_with_tail(circle_with_tail_graph):
+    """Test breadth traversal on a circle with a tail."""
+    assert circle_with_tail_graph.breadth_first_traversal(1) == [1, 2, 4, 3, 5, 6]
