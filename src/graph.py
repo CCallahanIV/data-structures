@@ -88,3 +88,15 @@ class Graph(object):
                 raise KeyError("The node {} is not in the graph.".format(n2))
         else:
             raise KeyError("The node {} is not in the graph.".format(n1))
+
+    def depth_first_traversal(self, start, end, path=[]):
+        """Traverse a graph depth first."""
+        pass
+
+    def breadth_first_traversal(self, start, end, path=[]):
+        """Traverse a graph breadth first."""
+        pass
+
+
+if __name__ == "__main__":
+    #Do stuff
