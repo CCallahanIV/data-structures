@@ -100,9 +100,23 @@ class Graph(object):
 
         return path
 
-    def breadth_first_traversal(self, start, path=[]):
+    def breadth_first_traversal(self, start):
         """Traverse a graph breadth first."""
-        pass
+        from queue_ds import Queue
+
+        path = []
+        q = Queue()
+        q.enqueue(start)
+
+        while len(q) > 0:
+            current = q.dequeue()
+            if current not in path:
+                path.append(current)
+
+            for neighbor in self._gdict[current]:
+                q.enqueue(neighbor)
+
+        return path
 
 
 # if __name__ == "__main__":
