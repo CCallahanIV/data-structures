@@ -41,6 +41,8 @@ class Graph(object):
 
     def add_edge(self, n1, n2):
         """Add a new edge to the graph connecting n1 and n2."""
+        if n1 == n2:
+            raise KeyError("Edges cannot connect a node to itself.")
         if n1 in self._gdict and n2 in self._gdict[n1]:
             return
         self._gdict.setdefault(n1, []).append(n2)
