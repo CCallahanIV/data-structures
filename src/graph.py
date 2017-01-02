@@ -2,7 +2,7 @@
 
 
 class Graph(object):
-    """Define a class datastructure.
+    """Define a graph datastructure.
 
     Methods:
 

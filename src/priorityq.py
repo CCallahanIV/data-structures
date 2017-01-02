@@ -23,7 +23,7 @@ class PriorityQ(object):
 
     def insert(self, value, priority=0):
         """Insert a given item into the appropriate place in the PriorityQ."""
-        if type(priority) != int:
+        if type(priority) != int or type(value) in [list, tuple, dict, set]:
             raise TypeError("Improper function call.  Call insert as .insert(val[, priority])")
 
         self._pdict.setdefault(priority, Queue()).enqueue(value)
@@ -43,12 +43,15 @@ class PriorityQ(object):
                     self._high_p = None
             self._size -= 1
             return val
-        except IndexError:
+        except KeyError:
             raise IndexError("Cannot pop from empty Priority Q.")
 
     def peek(self):
         """Return the value of the item with greatest priority, do not remove it."""
-        return self._pdict[self._high_p].peek()
+        try:
+            return self._pdict[self._high_p].peek()
+        except KeyError:
+            return None
 
     def __len__(self):
         """Return the total size of the PrioritQ."""
