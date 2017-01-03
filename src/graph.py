@@ -97,6 +97,8 @@ class Graph(object):
 
     def depth_first_traversal(self, start, path=None):
         """Traverse a graph depth first."""
+        if start not in self._gdict:
+            raise KeyError(start, "not in graph.")
         if path is None:
             path = []
         path.append(start)
