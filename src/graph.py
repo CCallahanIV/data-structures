@@ -43,7 +43,7 @@ class Graph(object):
         if n1 in self._gdict and n2 in self._gdict[n1]:
             return
         self._gdict.setdefault(n1, []).append(n2)
-        self._gdict.setdefault(n2, [])
+        self.add_node(n2)
 
     def del_node(self, n):
         """Delete node n from the graph."""
@@ -66,9 +66,7 @@ class Graph(object):
 
     def has_node(self, n):
         """Return True if node n exists in the graph."""
-        if n in self._gdict:
-            return True
-        return False
+        return n in self._gdict
 
     def neighbors(self, n):
         """Return a list of all neighbors of node n."""
@@ -81,9 +79,7 @@ class Graph(object):
         """Return true if there is an edge connecting n1 and n2."""
         if n1 in self._gdict:
             if n2 in self._gdict:
-                if n2 in self._gdict[n1]:
-                    return True
-                return False
+                return n2 in self._gdict[n1]
             else:
                 raise KeyError("The node {} is not in the graph.".format(n2))
         else:
