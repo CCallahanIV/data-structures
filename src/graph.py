@@ -1,6 +1,8 @@
 """This module implements a graph data structure."""
 
 from queue_ds import Queue
+import timeit
+import random
 
 
 class Graph(object):
@@ -122,5 +124,30 @@ class Graph(object):
         return path
 
 
-# if __name__ == "__main__":
-#     #Do stuff
+def make_graph():
+        nodes = range(0, 100)
+        g = Graph()
+        for node in nodes:
+            for i in range(random.randint(1, 50)):
+                b = random.choice(nodes)
+                if node == b:
+                    continue
+                g.add_edge(node, b)
+        return g
+
+
+def depth(g):
+        return g.depth_first_traversal(0)
+
+
+def breadth(g):
+        return g.breadth_first_traversal(0)
+
+g = make_graph()
+
+if __name__ == "__main__":
+
+    res1 = timeit.repeat(stmt="depth(g)", setup="from graph import g, depth", number=10, repeat=3)
+    res2 = timeit.repeat(stmt="breadth(g)", setup="from graph import g, breadth", number=10, repeat=3)
+    print("Depth First: ", res1)
+    print("Breadth First: ", res2)
