@@ -1,6 +1,7 @@
 """This module contains an implementation of a weighted graph."""
 
 from queue_ds import Queue
+from collections import OrderedDict
 
 
 class WGraph(object):
@@ -17,59 +18,61 @@ class WGraph(object):
         g.has_node(n): True if node 'n' is contained in the graph, False if not.
         g.neighbors(n): returns the list of all nodes connected to 'n' by edges, raises an error if n is not in g
         g.adjacent(n1, n2): returns True if there is an edge connecting n1 and n2, False if not, raises an error if either of the supplied nodes are not in g
+        g.depth_first_traversal(start): Returns the path list for the entire graph with a depth first traversal.
+        g.breadht_first_travers(start): Returns the path list for the entire graph with a breadth first traversal.
 
     """
 
     def __init__(self):
-        """Initialize a graph data structure."""
+        """Initialize a weighted graph data structure."""
         self._gdict = {}
 
     def nodes(self):
-        """Return a list of all nodes in the graph."""
+        """Return a list of all nodes in the weighted graph."""
         return list(self._gdict)
 
     def edges(self):
-        """Return a list of all edges in the graph."""
+        """Return a list of all edges in the weighted graph."""
         edge_list = []
         for key in self._gdict:
-            for neighbor in self._gdict[key]:
-                edge_list.append((key, neighbor))
+            for neighbor in list(self._gdict[key]):
+                edge_list.append((key, neighbor, self._gdict[key][neighbor]))
         return edge_list
 
     def add_node(self, n):
-        """Add a new node to the graph."""
-        self._gdict.setdefault(n, [])
+        """Add a new node to the weighted graph."""
+        self._gdict.setdefault(n, OrderedDict())
 
-    def add_edge(self, n1, n2):
-        """Add a new edge to the graph connecting n1 and n2."""
+    def add_edge(self, n1, n2, weight=1):
+        """Add a new edge to the weighted graph connecting n1 and n2."""
         if n1 == n2:
             raise KeyError("Edges cannot connect a node to itself.")
         if n1 in self._gdict and n2 in self._gdict[n1]:
             return
-        self._gdict.setdefault(n1, []).append(n2)
+        if type(weight) is not int:
+            raise TypeError("weight must be an integer")
+        self._gdict.setdefault(n1, OrderedDict())[n2] = weight
         self.add_node(n2)
 
     def del_node(self, n):
-        """Delete node n from the graph."""
+        """Delete node n from the weighted graph."""
         try:
             del self._gdict[n]
             for key in self._gdict:
                 if n in self._gdict[key]:
-                    self._gdict[key].remove(n)
+                    del self._gdict[key][n]
         except KeyError:
             raise KeyError("Can't delete a node if it doesn't already exist.")
 
     def del_edge(self, n1, n2):
         """Delete the edge connecting node 1 and node 2."""
         try:
-            self._gdict[n1].remove(n2)
-        except ValueError:
-            raise ValueError("That edge does not exist.")
+            del self._gdict[n1][n2]
         except KeyError:
-            raise KeyError("The node n1 does not exist.")
+            raise KeyError("That edge does not exist.")
 
     def has_node(self, n):
-        """Return True if node n exists in the graph."""
+        """Return True if node n exists in the weighted graph."""
         if n in self._gdict:
             return True
         return False
@@ -77,7 +80,7 @@ class WGraph(object):
     def neighbors(self, n):
         """Return a list of all neighbors of node n."""
         try:
-            return self._gdict[n]
+            return list(self._gdict[n])
         except KeyError:
             raise KeyError("Node {} does not exist".format(n))
 
@@ -94,20 +97,20 @@ class WGraph(object):
             raise KeyError("The node {} is not in the graph.".format(n1))
 
     def depth_first_traversal(self, start, path=None):
-        """Traverse a graph depth first."""
+        """Traverse a weighted graph depth first."""
         if start not in self._gdict:
             raise KeyError(start, "not in graph.")
         if path is None:
             path = []
         path.append(start)
-        for neighbor in self._gdict[start]:
+        for neighbor in list(self._gdict[start]):
             if neighbor not in path:
                 self.depth_first_traversal(neighbor, path)
 
         return path
 
     def breadth_first_traversal(self, start):
-        """Traverse a graph breadth first."""
+        """Traverse a weighted graph breadth first."""
         if start not in self._gdict:
             raise KeyError(start, "not in graph.")
         path = []
@@ -119,7 +122,7 @@ class WGraph(object):
             if current not in path:
                 path.append(current)
 
-            for neighbor in self._gdict[current]:
+            for neighbor in list(self._gdict[current]):
                 if neighbor not in path:
                     q.enqueue(neighbor)
 
