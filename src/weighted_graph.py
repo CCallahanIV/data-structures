@@ -3,8 +3,8 @@
 from queue_ds import Queue
 
 
-class Graph(object):
-    """Define a class datastructure.
+class WGraph(object):
+    """Define a unidirectional, weighted graph datastructure.
 
     Methods:
 
