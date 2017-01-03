@@ -110,6 +110,8 @@ class Graph(object):
 
     def breadth_first_traversal(self, start):
         """Traverse a graph breadth first."""
+        if start not in self._gdict:
+            raise KeyError(start, "not in graph.")
         path = []
         q = Queue()
         q.enqueue(start)
