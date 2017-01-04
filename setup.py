@@ -8,7 +8,7 @@ setup(
     author_email="",
     license="MIT",
     package_dir={'': 'src'},
-    py_modules=["linked_list", "stack", "dbl_linked_list", "queue_ds", "deque", "binheap"],
+    py_modules=["linked_list", "stack", "dbl_linked_list", "queue_ds", "deque", "binheap", "graph", "weighted_graph"],
     install_requires=[],
     extras_require={"test": ["pytest", "pytest-watch", "pytest-cov", "tox"]},
     entry_points={}
