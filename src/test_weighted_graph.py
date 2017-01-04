@@ -301,3 +301,5 @@ def test_breadth_traversal_of_circle_with_tail(circle_with_tail_graph):
 def test_depth_traversal_of_circle_with_tail(circle_with_tail_graph):
     """Test breadth traversal on a circle with a tail."""
     assert circle_with_tail_graph.breadth_first_traversal(1) == [1, 2, 4, 3, 5, 6]
+
+# TEST SHORTEST PATHS HERE

@@ -19,7 +19,7 @@ class WGraph(object):
         g.neighbors(n): returns the list of all nodes connected to 'n' by edges, raises an error if n is not in g
         g.adjacent(n1, n2): returns True if there is an edge connecting n1 and n2, False if not, raises an error if either of the supplied nodes are not in g
         g.depth_first_traversal(start): Returns the path list for the entire graph with a depth first traversal.
-        g.breadht_first_travers(start): Returns the path list for the entire graph with a breadth first traversal.
+        g.breadth_first_travers(start): Returns the path list for the entire graph with a breadth first traversal.
 
     """
 
