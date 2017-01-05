@@ -15,7 +15,7 @@ COMPLEX_TRAVERSAL_NODES = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 COMPLEX_TRAVERSAL_EDGES = [(1, 3, 2), (1, 7, 3), (2, 4, 1), (2, 8, 4), (3, 6, 1), (3, 2, 1), (4, 5, 1), (4, 1, 1), (4, 9, 1), (5, 8, 1), (5, 2, 1), (5, 9, 1), (6, 3, 1), (6, 8, 1), (6, 5, 1), (7, 3, 1), (7, 1, 1), (7, 8, 1), (8, 1, 1), (8, 3, 1), (8, 5, 1), (8, 7, 1), (9, 2, 1), (9, 4, 1), (9, 6, 1)]
 CIRCLE_WITH_TAIL_NODES = [1, 3, 2, 4, 5, 6]
 CIRCLE_WITH_TAIL_EDGES = [(1, 2, 1), (2, 4, 1), (2, 3, 2), (3, 1, 3), (4, 5, 4), (5, 6, 5)]
-
+SIMPLE_WGRAPH = [("A", "B", 3), ("A","D", 4), ("B","C", 2), ("B","E",5), ("C","D",1), ("C","G",6), ("D","E",3), ("D","B",4), ("E","G",5), ("E","C",2), ("E","F",5), ("F","G",2)]
 
 @pytest.fixture
 def empty_graph():
@@ -98,6 +98,14 @@ def circle_with_tail_graph():
     for edge in CIRCLE_WITH_TAIL_EDGES:
         cwtg.add_edge(edge[0], edge[1], edge[2])
     return cwtg
+
+@pytest.fixture
+def simple_wgraph()
+    from weighted_graph import WGraph
+    wg = WGraph()
+    for egde in SIMPLE_WGRAPH
+        wg.add_edge(egdge)
+    return wg
 
 
 def test_init_graph(empty_graph):
@@ -303,3 +311,8 @@ def test_depth_traversal_of_circle_with_tail(circle_with_tail_graph):
     assert circle_with_tail_graph.breadth_first_traversal(1) == [1, 2, 4, 3, 5, 6]
 
 # TEST SHORTEST PATHS HERE
+
+
+def test_dijkstra_shortest_path(simple_wgraph):
+    """Test dijkstra shortest path."""
+    assert simple_wgraph.shortest_dijkstra() = ["A", "B", "C", "G"]
