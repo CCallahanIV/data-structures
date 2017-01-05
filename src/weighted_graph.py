@@ -2,7 +2,7 @@
 
 from queue_ds import Queue
 from collections import OrderedDict
-
+from math import inf
 
 class WGraph(object):
     """Define a unidirectional, weighted graph datastructure.
@@ -127,3 +127,30 @@ class WGraph(object):
                     q.enqueue(neighbor)
 
         return path
+
+    def shortest_dijkstra(self, start, target):
+        """Use Dijkstra's algorithm to find the shortest path from start to target."""
+        distance = {}
+        path_weights = {start: (0, None)}
+        for key in self._gdict:
+            distance[key] = inf
+        distance[start] = 0
+
+        while distance:
+            curr = min(distance, key=distance.get)
+
+            for neighbor in self._gdict[curr]:
+                temp_dist = distance[curr] + self._gdict[curr][neighbor]
+
+                if temp_dist < distance[neighbor]:
+                    distance[neighbor] = temp_dist
+                    path_weights[neighbor] = (curr, temp_dist)
+
+            del distance[curr]
+
+        path = []
+        curr = target
+        while curr is not None:
+            path.append(curr)
+            curr = path_weights[curr][1]
+        return list(reversed(path))
