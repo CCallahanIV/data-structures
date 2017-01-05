@@ -143,7 +143,7 @@ class WGraph(object):
             for neighbor in self._gdict[curr]:
                 temp_dist = distance[curr] + self._gdict[curr][neighbor]
 
-                if temp_dist < distance[neighbor]:
+                if neighbor in distance and temp_dist < distance[neighbor]:
                     distance[neighbor] = temp_dist
                     path_weights[neighbor] = (curr, temp_dist)
 

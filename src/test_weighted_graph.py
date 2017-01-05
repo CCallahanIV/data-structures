@@ -303,3 +303,20 @@ def test_depth_traversal_of_circle_with_tail(circle_with_tail_graph):
     assert circle_with_tail_graph.breadth_first_traversal(1) == [1, 2, 4, 3, 5, 6]
 
 # TEST SHORTEST PATHS HERE
+
+SIMPLE_WGRAPH = [("A", "B", 3), ("A","D", 4), ("B","C", 2), ("B","E",5), ("C","D",1), ("C","G",6), ("D","E",3), ("D","B",4), ("E","G",5), ("E","C",2), ("E","F",5), ("F","G",2)]
+
+
+@pytest.fixture
+def simple_wgraph():
+    from weighted_graph import WGraph
+    wg = WGraph()
+    for edge in SIMPLE_WGRAPH:
+        wg.add_edge(edge[0], edge[1])
+    return wg
+
+
+def test_dijkstra_shortest_path(simple_wgraph):
+    """Test dijkstra shortest path."""
+    assert simple_wgraph.shortest_dijkstra("A", "G") == ["A", "B", "C", "G"]
+
