@@ -130,8 +130,9 @@ class WGraph(object):
 
     def shortest_dijkstra(self, start, target):
         """Use Dijkstra's algorithm to find the shortest path from start to target."""
+        # import pdb; pdb.set_trace()
         distance = {}
-        path_weights = {start: (0, None)}
+        path_weights = {start: (None, 0)}
         for key in self._gdict:
             distance[key] = inf
         distance[start] = 0
@@ -149,8 +150,8 @@ class WGraph(object):
             del distance[curr]
 
         path = []
-        curr = target
-        while curr is not None:
-            path.append(curr)
-            curr = path_weights[curr][1]
+        prev = target
+        while prev is not None:
+            path.append(prev)
+            prev = path_weights[prev][0]
         return list(reversed(path))
