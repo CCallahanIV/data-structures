@@ -155,3 +155,37 @@ class WGraph(object):
             path.append(prev)
             prev = path_weights[prev][0]
         return list(reversed(path))
+
+    def shortest_floyd_warshall(self, start, target):
+        """Return the shortest path as determined by the Floyd Warshall algo."""
+        distance = {}
+        nxt = {}
+        nodes = self._gdict.keys()
+
+        for edge in self.edges():
+            distance.setdefault(edge[0], {})[edge[1]] = edge[2]
+            nxt.setdefault(edge[0], {})[edge[1]] = edge[1]
+
+        for node in nodes:
+            for neighbor in nodes:
+                if neighbor not in self._gdict[node]:
+                    distance.setdefault(node, {})[neighbor] = inf
+
+        for k in nodes:
+            for i in nodes:
+                for j in nodes:
+                    if distance[i][j] > distance[i][k] + distance[k][j]:
+                        distance[i][j] = distance[i][k] + distance[k][j]
+                        nxt[i][j] = nxt[i][k]
+
+        return self._return_path_floyd_warshall(start, target, nxt)
+
+    def _return_path_floyd_warshall(self, start, target, nxt):
+        """Return the shortest path from start to target given the nxt dictionary."""
+        if nxt[start][target] is None:
+            return []
+        path = [start]
+        while start is not target:
+            start = nxt[start][target]
+            path.append(start)
+        return path
