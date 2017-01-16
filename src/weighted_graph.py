@@ -2,7 +2,7 @@
 
 from queue_ds import Queue
 from collections import OrderedDict
-
+from math import inf
 
 class WGraph(object):
     """Define a unidirectional, weighted graph datastructure.
@@ -19,7 +19,7 @@ class WGraph(object):
         g.neighbors(n): returns the list of all nodes connected to 'n' by edges, raises an error if n is not in g
         g.adjacent(n1, n2): returns True if there is an edge connecting n1 and n2, False if not, raises an error if either of the supplied nodes are not in g
         g.depth_first_traversal(start): Returns the path list for the entire graph with a depth first traversal.
-        g.breadht_first_travers(start): Returns the path list for the entire graph with a breadth first traversal.
+        g.breadth_first_travers(start): Returns the path list for the entire graph with a breadth first traversal.
 
     """
 
@@ -126,4 +126,66 @@ class WGraph(object):
                 if neighbor not in path:
                     q.enqueue(neighbor)
 
+        return path
+
+    def shortest_dijkstra(self, start, target):
+        """Use Dijkstra's algorithm to find the shortest path from start to target."""
+        # import pdb; pdb.set_trace()
+        distance = {}
+        path_weights = {start: (None, 0)}
+        for key in self._gdict:
+            distance[key] = inf
+        distance[start] = 0
+
+        while distance:
+            curr = min(distance, key=distance.get)
+
+            for neighbor in self._gdict[curr]:
+                temp_dist = distance[curr] + self._gdict[curr][neighbor]
+
+                if neighbor in distance and temp_dist < distance[neighbor]:
+                    distance[neighbor] = temp_dist
+                    path_weights[neighbor] = (curr, temp_dist)
+
+            del distance[curr]
+
+        path = []
+        prev = target
+        while prev is not None:
+            path.append(prev)
+            prev = path_weights[prev][0]
+        return list(reversed(path))
+
+    def shortest_floyd_warshall(self, start, target):
+        """Return the shortest path as determined by the Floyd Warshall algo."""
+        distance = {}
+        nxt = {}
+        nodes = self._gdict.keys()
+
+        for edge in self.edges():
+            distance.setdefault(edge[0], {})[edge[1]] = edge[2]
+            nxt.setdefault(edge[0], {})[edge[1]] = edge[1]
+
+        for node in nodes:
+            for neighbor in nodes:
+                if neighbor not in self._gdict[node]:
+                    distance.setdefault(node, {})[neighbor] = inf
+
+        for k in nodes:
+            for i in nodes:
+                for j in nodes:
+                    if distance[i][j] > distance[i][k] + distance[k][j]:
+                        distance[i][j] = distance[i][k] + distance[k][j]
+                        nxt[i][j] = nxt[i][k]
+
+        return self._return_path_floyd_warshall(start, target, nxt)
+
+    def _return_path_floyd_warshall(self, start, target, nxt):
+        """Return the shortest path from start to target given the nxt dictionary."""
+        if nxt[start][target] is None:
+            return []
+        path = [start]
+        while start is not target:
+            start = nxt[start][target]
+            path.append(start)
         return path
