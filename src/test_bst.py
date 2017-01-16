@@ -27,4 +27,3 @@ def test_insert3():
     assert a[14] == [13, "z"]
     assert a[8] == [3, 10]
     assert a[13] == ["z", "z"]
-
