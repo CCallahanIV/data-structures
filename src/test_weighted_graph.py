@@ -100,11 +100,11 @@ def circle_with_tail_graph():
     return cwtg
 
 @pytest.fixture
-def simple_wgraph()
+def simple_wgraph():
     from weighted_graph import WGraph
     wg = WGraph()
-    for egde in SIMPLE_WGRAPH
-        wg.add_edge(egdge)
+    for edge in SIMPLE_WGRAPH:
+        wg.add_edge(edge[0], edge[1], edge[2])
     return wg
 
 
@@ -315,4 +315,4 @@ def test_depth_traversal_of_circle_with_tail(circle_with_tail_graph):
 
 def test_dijkstra_shortest_path(simple_wgraph):
     """Test dijkstra shortest path."""
-    assert simple_wgraph.shortest_dijkstra() = ["A", "B", "C", "G"]
+    assert simple_wgraph.shortest_dijkstra("A", "G") == ["A", "B", "C", "G"]
