@@ -4,11 +4,16 @@
 class Node(object):
     """Node object for use in a binary search tree."""
 
-    def __init__(self):
-        self.key = key
+    def __init__(self, value, right=None, left=None):
         self.value = value
         self.right = right
         self.left = left
+
+    def _has_children(self):
+        """Return True or False if Node has children."""
+        if self.right or self.left:
+            return True
+        return False
 
 
 class BinarySearchTree(object):
@@ -27,13 +32,46 @@ class BinarySearchTree(object):
     def __init__(self):
         """Initialize a Binary Search Tree object."""
         self.root = None
-        self.size = None
-        self.depth = None
-        self.balance = None
+        self.size = 0
+        self.depth = 0
+        self.balance = 0
 
     def insert(self, val):
         """Insert a new node with val into the BST."""
-        pass
+        # if not self.search(val):
+        #     return
+        new_node = Node(val)
+        if self.root is None:
+            self.root = new_node
+            self.size = 1
+            self.depth = 1
+            return
+
+        curr_node = self.root
+        curr_depth = 1
+        while curr_node:
+            if val > curr_node.value:
+                if curr_node.right:
+                    curr_node = curr_node.right
+                else:
+                    curr_node.right = new_node
+                    self.size += 1
+                    curr_depth += 1
+                    break
+            elif val < curr_node.value:
+                if curr_node.left:
+                    curr_node = curr_node.left
+                else:
+                    curr_node.left = new_node
+                    self.size += 1
+                    curr_depth += 1
+                    break
+            else:
+                break
+            curr_depth += 1
+
+        if curr_depth > self.depth:
+            self.depth = curr_depth
 
     def search(self, val):
         """Return the node with value val or return None."""
@@ -41,6 +79,7 @@ class BinarySearchTree(object):
 
     def size(self):
         """Return the integer size of the BST."""
+        pass
 
     def depth(self):
         """Return the integer depth of the BST."""
