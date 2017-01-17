@@ -3,11 +3,24 @@
 import pytest
 
 
+MEDIUM_TREE = [10, 15, 13, 7, 5, 8, 3]
+
+
 @pytest.fixture
 def e_tree():
     """Initialize an empty search tree."""
     from bst import BinarySearchTree
     return BinarySearchTree()
+
+
+@pytest.fixture
+def m_tree():
+    """Initialize a search tree of medium complexity."""
+    from bst import BinarySearchTree
+    b = BinarySearchTree()
+    for val in MEDIUM_TREE:
+        b.insert(val)
+    return b
 
 
 def test_init_empty_bst(e_tree):
@@ -75,6 +88,15 @@ def test_find_depth_unbalanced_three_node(e_tree):
     assert e_tree.depth() == 3
 
 
+def test_depth_medium_tree(m_tree):
+    """Test balance of a medium sized tree."""
+    assert m_tree.depth() == 4
+    m_tree.insert(1)
+    assert m_tree.depth() == 5
+    m_tree.insert(17)
+    assert m_tree.depth() == 5
+
+
 def test_balance_empty(e_tree):
     """Test balance of empty tree."""
     assert e_tree.balance() == 0
@@ -107,3 +129,50 @@ def test_find_balance_unbalanced_three_node(e_tree):
     e_tree.insert(15)
     e_tree.insert(20)
     assert e_tree.balance() == 2
+
+
+def test_find_neg_balance_unbalanced_three_node(e_tree):
+    """Test finding balance of an unbalanced three node tree."""
+    e_tree.insert(20)
+    e_tree.insert(15)
+    e_tree.insert(10)
+    assert e_tree.balance() == -2
+
+
+def test_find_balance_med_tree(m_tree):
+    """Test finding the balance of a medium tree."""
+    assert m_tree.balance() == -1
+    m_tree.insert(1)
+    assert m_tree.balance() == -2
+    m_tree.insert(12)
+    assert m_tree.balance() == -1
+
+
+def test_search_medium_tree_returns_true(m_tree):
+    """Test searching medium tree returns node."""
+    root_result = m_tree.search(10)
+    assert root_result.value == 10
+    left_result = m_tree.search(3)
+    assert left_result.value == 3
+    right_result = m_tree.search(13)
+    assert right_result.value == 13
+
+
+def test_search_medium_tree_returns_false(m_tree):
+    """Test searching medium tree returns None."""
+    assert m_tree.search(20) is None
+    assert m_tree.search(0) is None
+
+
+def test_contains_returns_true(m_tree):
+    """Test contains returns true for medium tree."""
+    assert m_tree.contains(10) is True
+    assert m_tree.contains(3) is True
+    assert m_tree.contains(15) is True
+    m_tree.insert(1)
+    assert m_tree.contains(1) is True
+
+
+def test_contains_returns_false(m_tree):
+    """Test contains returns false for medoum tree."""
+    assert m_tree.contains(27) is False

@@ -81,6 +81,10 @@ class BinarySearchTree(object):
         """Return the integer size of the BST."""
         return self.size
 
+    def __len__(self):
+        """Return integer size of the BST."""
+        return self.size()
+
     def depth(self, start=''):
         """Return the integer depth of the BST."""
         def depth_wrapped(start):
@@ -95,7 +99,10 @@ class BinarySearchTree(object):
 
     def contains(self, val):
         """Return True if node with value val is in BST, False if not."""
-        return self.search(val).value == val
+        try:
+            return self.search(val).value == val
+        except AttributeError:
+            return False
 
     def balance(self):
         """Return positive or negative integer that represents how well balanced the tree is."""
