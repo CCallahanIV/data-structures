@@ -1,5 +1,7 @@
 """This module implements a binary search tree."""
 
+from queue_ds import Queue
+
 
 class Node(object):
     """Node object for use in a binary search tree."""
@@ -27,6 +29,10 @@ class BinarySearchTree(object):
       - depth(self): will return an integer representing the total number of levels in the tree. If there is one value, the depth should be 1, if two values it will be 2, if three values it may be 2 or three, depending, etc.
       - contains(self, val): will return True if val is in the BST, False if not.
       - balance(self): will return an integer, positive or negative that represents how well balanced the tree is. Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value. An ideally-balanced tree should return 0.
+      - in_order(self): will return a generator that will return the values in the tree using in-order traversal, one at a time.
+      - pre_order(self): will return a generator that will return the values in the tree using pre-order traversal, one at a time.
+      - post_order(self): will return a generator that will return the values in the tree using post_order traversal, one at a time.
+      - breadth_first(self): will return a generator that will return the values in the tree using breadth-first traversal, one at a time.
 
     """
 
@@ -109,3 +115,30 @@ class BinarySearchTree(object):
         if self.root is None:
             return 0
         return self.depth(self.root.right) - self.depth(self.root.left)
+
+    def in_order(self):
+        """Return a generator of the tree in in_order order."""
+        pass
+
+    def pre_order(self):
+        """Return a generator of the tree in pre_order order."""
+        pass
+
+    def post_order(self):
+        """Return a generator of the tree in post_order order."""
+        pass
+
+    def breadth_first(self):
+        """Return a generator of the tree in breadth first traversal order."""
+        start = self.root
+        q = Queue()
+        q.enqueue(start)
+
+        while len(q) > 0:
+            current = q.dequeue()
+            if current not in path:
+                path.append(current)
+
+            for neighbor in self._gdict[current]:
+                if neighbor not in path:
+                    q.enqueue(neighbor)
