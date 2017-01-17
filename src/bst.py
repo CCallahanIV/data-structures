@@ -2,15 +2,17 @@
 
 
 class Node(object):
+    """Node class."""
 
     def __init__(self, value=None, left=None, right=None):
+        """Init of the Node class."""
         self.value = value
         self.left = left
         self.right = right
 
 
 class BinarySearchTree(object):
-    """Foo."""
+    """Binary Search Tree."""
 
     """insert(self, val): will insert the value val into the BST. If val is already present, it will be ignored."""
     """search(self, val): will return the node containing that value, else None"""
@@ -82,6 +84,7 @@ class BinarySearchTree(object):
     def depth(self):
         """
         Return an integer representing the total number of levels in the tree.
+
         If there is one value, the depth should be 1, if two values it will be 2,
         if three values it may be 2 or three, depending, etc.
         """
@@ -97,10 +100,11 @@ class BinarySearchTree(object):
     def balance(self):
         """
         Return an integer, positive or negative that represents how well balanced the tree is.
+
         Trees which are higher on the left than the right should return a positive value,
         trees which are higher on the right than the left should return a negative value.
         An ideally-balanced tree should return 0.
         """
         if self.root is None:
             return 0
-        return self.calc_depth(self.root.left) - self.calc_depth(self.root.right)
+        return self.calc_depth(self.root.right) - self.calc_depth(self.root.left)
