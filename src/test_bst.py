@@ -1,6 +1,16 @@
 """Test Module for Binary Search Tree."""
 from bst import BinarySearchTree
 
+BST_SIMPLE = [8, 10, 3, 14, 13, 1, 6, 7, 4]
+
+
+@pytest.fixture
+def filled_bst():
+    """Fixture to fill the bst tree with nodes."""
+    from bst import BinarySearchTree
+    new_tree = BinarySearchTree(BST_SIMPLE)
+    return new_tree
+
 
 def test_insert_5_is_root():
     """Test the insert function."""
@@ -164,3 +174,8 @@ def test_search_none():
 #     a.insert(6)
 #     a.insert(7)
 #     assert a.balance == -1
+
+
+def test_in_order_traversal():
+    """Returns a generator that returns in-order traversal results."""
+    
