@@ -71,14 +71,14 @@ class BinarySearchTree(object):
         """Return the integer size of the BST."""
         return self.size
 
-    def depth(self, start=None):
+    def depth(self, start=''):
         """Return the integer depth of the BST."""
         def depth_wrapped(start):
             if start is None:
                 return 0
             else:
                 return max(depth_wrapped(start.right), depth_wrapped(start.left)) + 1
-        if start is None:
+        if start is '':
             return depth_wrapped(self.root)
         else:
             return depth_wrapped(start)

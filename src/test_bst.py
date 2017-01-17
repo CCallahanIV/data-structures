@@ -78,3 +78,32 @@ def test_find_depth_unbalanced_three_node(e_tree):
 def test_balance_empty(e_tree):
     """Test balance of empty tree."""
     assert e_tree.balance() == 0
+
+
+def test_balance_one_node(e_tree):
+    """Test balance of one node tree."""
+    e_tree.insert(10)
+    assert e_tree.balance() == 0
+
+
+def test_balance_two_node(e_tree):
+    """Test finding blance from a two node tree."""
+    e_tree.insert(10)
+    e_tree.insert(15)
+    assert e_tree.balance() == 1
+
+
+def test_find_balance_balanced_three_node(e_tree):
+    """Test finding balance from a balanced three node tree."""
+    e_tree.insert(10)
+    e_tree.insert(15)
+    e_tree.insert(5)
+    assert e_tree.balance() == 0
+
+
+def test_find_balance_unbalanced_three_node(e_tree):
+    """Test finding balance from an unbalanced three node tree."""
+    e_tree.insert(10)
+    e_tree.insert(15)
+    e_tree.insert(20)
+    assert e_tree.balance() == 2
