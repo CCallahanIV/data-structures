@@ -38,3 +38,43 @@ def test_insert_third_node_adds_child_correctly(e_tree):
     assert e_tree.root.left.value == 5
     assert e_tree.root.right.value == 15
     assert e_tree.root.value == 10
+
+
+def test_find_total_depth_empty(e_tree):
+    """Test finding depth from empty tree."""
+    # import pdb; pdb.set_trace()
+    assert e_tree.depth() == 0
+
+
+def test_find_depth_one_node(e_tree):
+    """Test finding depth from a one node tree."""
+    e_tree.insert(10)
+    assert e_tree.depth() == 1
+
+
+def test_find_depth_two_node(e_tree):
+    """Test finding depth from a two node tree."""
+    e_tree.insert(10)
+    e_tree.insert(15)
+    assert e_tree.depth() == 2
+
+
+def test_find_depth_balanced_three_node(e_tree):
+    """Test finding depth from a balanced three node tree."""
+    e_tree.insert(10)
+    e_tree.insert(15)
+    e_tree.insert(5)
+    assert e_tree.depth() == 2
+
+
+def test_find_depth_unbalanced_three_node(e_tree):
+    """Test finding depth from an unbalanced three node tree."""
+    e_tree.insert(10)
+    e_tree.insert(15)
+    e_tree.insert(20)
+    assert e_tree.depth() == 3
+
+
+def test_balance_empty(e_tree):
+    """Test balance of empty tree."""
+    assert e_tree.balance() == 0

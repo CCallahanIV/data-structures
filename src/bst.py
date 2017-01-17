@@ -33,8 +33,6 @@ class BinarySearchTree(object):
         """Initialize a Binary Search Tree object."""
         self.root = None
         self.size = 0
-        self.depth = 0
-        self.balance = 0
 
     def insert(self, val):
         """Insert a new node with val into the BST."""
@@ -44,11 +42,9 @@ class BinarySearchTree(object):
         if self.root is None:
             self.root = new_node
             self.size = 1
-            self.depth = 1
             return
 
         curr_node = self.root
-        curr_depth = 1
         while curr_node:
             if val > curr_node.value:
                 if curr_node.right:
@@ -56,7 +52,6 @@ class BinarySearchTree(object):
                 else:
                     curr_node.right = new_node
                     self.size += 1
-                    curr_depth += 1
                     break
             elif val < curr_node.value:
                 if curr_node.left:
@@ -64,14 +59,9 @@ class BinarySearchTree(object):
                 else:
                     curr_node.left = new_node
                     self.size += 1
-                    curr_depth += 1
                     break
             else:
                 break
-            curr_depth += 1
-
-        if curr_depth > self.depth:
-            self.depth = curr_depth
 
     def search(self, val):
         """Return the node with value val or return None."""
@@ -79,11 +69,19 @@ class BinarySearchTree(object):
 
     def size(self):
         """Return the integer size of the BST."""
-        pass
+        return self.size
 
-    def depth(self):
+    def depth(self, start=None):
         """Return the integer depth of the BST."""
-        pass
+        def depth_wrapped(start):
+            if start is None:
+                return 0
+            else:
+                return max(depth_wrapped(start.right), depth_wrapped(start.left)) + 1
+        if start is None:
+            return depth_wrapped(self.root)
+        else:
+            return depth_wrapped(start)
 
     def contains(self, val):
         """Return True if node with value val is in BST, False if not."""
@@ -91,4 +89,6 @@ class BinarySearchTree(object):
 
     def balance(self):
         """Return positive or negative integer that represents how well balanced the tree is."""
-        pass
+        if self.root is None:
+            return 0
+        return self.depth(self.root.right) - self.depth(self.root.left)
