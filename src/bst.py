@@ -128,7 +128,7 @@ class BinarySearchTree(object):
         """Return a generator of the tree in in_order order."""
         start = self.root
         if start is None:
-            return
+            raise StopIteration
         s = Stack()
         while len(s) or start:
             if start:
@@ -143,7 +143,7 @@ class BinarySearchTree(object):
         """Return a generator of the tree in pre_order order."""
         start = self.root
         if start is None:
-            return
+            raise StopIteration
         s = Stack()
         s.push(start)
         while len(s):
@@ -158,7 +158,7 @@ class BinarySearchTree(object):
         """Return a generator of the tree in post_order order."""
         start = self.root
         if start is None:
-            return
+            raise StopIteration
         s = []
         last = None
         while s or start:
@@ -176,6 +176,8 @@ class BinarySearchTree(object):
     def breadth_first(self):
         """Return a generator of the tree in breadth first traversal order."""
         start = self.root
+        if start is None:
+            raise StopIteration
         q = Queue()
         q.enqueue(start)
 

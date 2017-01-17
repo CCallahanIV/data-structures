@@ -178,6 +178,22 @@ def test_contains_returns_false(m_tree):
     assert m_tree.contains(27) is False
 
 
+def test_traversals_empty_tree(e_tree):
+    """Test breadth first traversal on empty and small trees."""
+    new = e_tree.breadth_first()
+    with pytest.raises(StopIteration):
+        next(new)
+    new_post = e_tree.post_order()
+    with pytest.raises(StopIteration):
+        next(new_post)
+    new_pre = e_tree.pre_order()
+    with pytest.raises(StopIteration):
+        next(new_pre)
+    new_in = e_tree.in_order()
+    with pytest.raises(StopIteration):
+        next(new_in)
+
+
 def test_breadth_first_m_tree(m_tree):
     """Test the breadth_first method returns a generator of values in correct order."""
     expected = [10, 7, 15, 5, 8, 13, 3]
