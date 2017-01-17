@@ -52,6 +52,8 @@ class BinarySearchTree(object):
                         self.counter += 1
                         self.container.append(val)
                         break
+                else:
+                    break
 
     def size(self):
         """Return size of Binary Search Tree."""
