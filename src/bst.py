@@ -12,6 +12,7 @@ class BinarySearchTree(object):
 
     def insert(self, val):
         """Takes a value, inserts into Binary Search Tree at correct placement."""
+        import pdb; pdb.set_trace()
         if not any(self._bstdict):
             self.root = val
             self._bstdict[val] = [None, None]
