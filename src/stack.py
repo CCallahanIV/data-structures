@@ -16,3 +16,11 @@ class Stack(object):
     def pop(self):
         """Use Linked List pop() method to remove one from stack."""
         return self._container.pop()
+
+    def peek(self):
+        """Peek the top of the stack."""
+        return self._container.head
+
+    def __len__(self):
+        """Return integer size of stack."""
+        return self._container.size()

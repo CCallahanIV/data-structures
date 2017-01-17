@@ -1,6 +1,7 @@
 """This module implements a binary search tree."""
 
 from queue_ds import Queue
+from stack import Stack
 
 
 class Node(object):
@@ -17,6 +18,13 @@ class Node(object):
         if self.right or self.left:
             return True
         return False
+
+    def _return_children(self):
+        """Return all children of a Node."""
+        if self.left and self.right:
+            return [self.left, self.right]
+        elif self.left or self.right:
+            return [self.left] if self.left else [self.right]
 
 
 class BinarySearchTree(object):
@@ -39,7 +47,7 @@ class BinarySearchTree(object):
     def __init__(self):
         """Initialize a Binary Search Tree object."""
         self.root = None
-        self.size = 0
+        self._size = 0
 
     def insert(self, val):
         """Insert a new node with val into the BST."""
@@ -48,7 +56,7 @@ class BinarySearchTree(object):
         new_node = Node(val)
         if self.root is None:
             self.root = new_node
-            self.size = 1
+            self._size = 1
             return
 
         curr_node = self.root
@@ -58,14 +66,14 @@ class BinarySearchTree(object):
                     curr_node = curr_node.right
                 else:
                     curr_node.right = new_node
-                    self.size += 1
+                    self._size += 1
                     break
             elif val < curr_node.value:
                 if curr_node.left:
                     curr_node = curr_node.left
                 else:
                     curr_node.left = new_node
-                    self.size += 1
+                    self._size += 1
                     break
             else:
                 break
@@ -85,7 +93,7 @@ class BinarySearchTree(object):
 
     def size(self):
         """Return the integer size of the BST."""
-        return self.size
+        return self._size
 
     def __len__(self):
         """Return integer size of the BST."""
@@ -118,15 +126,52 @@ class BinarySearchTree(object):
 
     def in_order(self):
         """Return a generator of the tree in in_order order."""
-        pass
+        start = self.root
+        if start is None:
+            return
+        s = Stack()
+        while len(s) or start:
+            if start:
+                s.push(start)
+                start = start.left
+            else:
+                start = s.pop()
+                yield start.value
+                start = start.right
 
     def pre_order(self):
         """Return a generator of the tree in pre_order order."""
-        pass
+        start = self.root
+        if start is None:
+            return
+        s = Stack()
+        s.push(start)
+        while len(s):
+            curr = s.pop()
+            yield curr.value
+            if curr.right is not None:
+                s.push(curr.right)
+            if curr.left is not None:
+                s.push(curr.left)
 
     def post_order(self):
         """Return a generator of the tree in post_order order."""
-        pass
+        start = self.root
+        if start is None:
+            return
+        s = []
+        last = None
+        while s or start:
+            if start:
+                s.append(start)
+                start = start.left
+            else:
+                peek = s[-1]
+                if peek.right and last is not peek.right:
+                    start = peek.right
+                else:
+                    yield peek.value
+                    last = s.pop()
 
     def breadth_first(self):
         """Return a generator of the tree in breadth first traversal order."""
@@ -136,9 +181,8 @@ class BinarySearchTree(object):
 
         while len(q) > 0:
             current = q.dequeue()
-            if current not in path:
-                path.append(current)
+            yield current.value
 
-            for neighbor in self._gdict[current]:
-                if neighbor not in path:
-                    q.enqueue(neighbor)
+            if current._has_children():
+                for child in current._return_children():
+                    q.enqueue(child)
