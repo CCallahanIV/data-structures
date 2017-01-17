@@ -38,3 +38,4 @@ def test_insert_third_node_adds_child_correctly(e_tree):
     assert e_tree.root.left.value == 5
     assert e_tree.root.right.value == 15
     assert e_tree.root.value == 10
+

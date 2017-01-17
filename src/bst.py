@@ -5,6 +5,7 @@ class Node(object):
     """Node object for use in a binary search tree."""
 
     def __init__(self, value, right=None, left=None):
+        """Initialize a node for a binary search tree object."""
         self.value = value
         self.right = right
         self.left = left
