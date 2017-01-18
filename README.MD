@@ -1,6 +1,11 @@
 #Summary
 
-The assignment was to implement a [Weighted Graph](https://codefellows.github.io/sea-python-401d5/assignments/graph_3_weighted.html)
+This Repository contains python implementations of common datastructures.
+
+[![Build Status](https://travis-ci.org/CCallahanIV/data-structures.svg?branch=master)](https://travis-ci.org/CCallahanIV/data-structures)
+
+
+Implement a [Weighted Graph](https://codefellows.github.io/sea-python-401d5/assignments/graph_3_weighted.html)
 in Python containing the following methods:
 
 

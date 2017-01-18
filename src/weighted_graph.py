@@ -2,7 +2,12 @@
 
 from queue_ds import Queue
 from collections import OrderedDict
-from math import inf
+import sys
+if sys.version_info[0] > 2:
+    from math import inf
+else:
+    inf = 999999999999999999
+
 
 class WGraph(object):
     """Define a unidirectional, weighted graph datastructure.
