@@ -36,7 +36,7 @@ class BinarySearchTree(object):
                 for value in if_iter:
                     self.insert(value)
             except TypeError:
-                self.push(if_iter)
+                self.insert(if_iter)
 
 
     def insert(self, val):
@@ -120,3 +120,17 @@ class BinarySearchTree(object):
         if self.root is None:
             return 0
         return self.calc_depth(self.root.right) - self.calc_depth(self.root.left)
+
+    def in_order(self):
+        """Traverse in_order, yielding via generator."""
+        vertex = self.root
+        visited = []
+        while (not any(visited) or vertex is not None):
+            if vertex is not None:
+                visited.append(vertex)
+                vertex = vertex.left
+            else:
+                vertex = visited.pop()
+                yield vertex.value
+                vertex = vertex.right
+
