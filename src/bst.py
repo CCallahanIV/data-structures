@@ -35,9 +35,8 @@ class BinarySearchTree(object):
                 for value in if_iter:
                     self.insert(value)
             except TypeError:
-                self.push(if_iter)
-        self._in_order = self.in_order_trav(self.root)
-        self.collect = []
+                self.insert(if_iter)
+        self._in_order = self.in_order_trav()
 
     def insert(self, val):
         """Take a value, inserts into Binary Search Tree at correct placement."""
@@ -125,68 +124,84 @@ class BinarySearchTree(object):
         """Return."""
         return next(self._in_order)
 
-    def recursive(self, node):
-        """Return."""
-        print('before t.l', node.left, node.left.value)
-        if node.left:
-            print('in t.l')
-            yield next(self.recursive(node.left))
-            self.recursive(node.left)
-            print('after rec')
-        print('hey', node.left, node.value)
-        self.collect.append(node.value)
-        print('before yield', node.value)
-        yield node.value
-        print('after yield', node.right)
-        if node.right:
-            self.recursive(node.right)
-        # print(node.value)
+    def in_order_trav(self):
+        """Traverse in_order, yielding via generator."""
+        vertex = self.root
+        visited = []
+        while (visited or vertex is not None):
+            if vertex is not None:
+                visited.append(vertex)
+                vertex = vertex.left
+            else:
+                vertex = visited.pop()
+                yield vertex.value
+                vertex = vertex.right
 
-    def pre_order(self):
-        """Return."""
-        num = 0
-        while num < 10:
-            yield num
-            num += 1
 
-    def post_order(self):
-        """Return."""
-        num = 0
-        while num < 10:
-            yield num
-            num += 1
+#         """Return."""
 
-    def breadth_first(self):
-        """Return."""
-        num = 0
-        while num < 10:
-            yield num
-            num += 1
+#     def recursive(self, node):
+#         """Return."""
+#         print('before t.l', node.left, node.left.value)
+#         if node.left:
+#             print('in t.l')
+#             yield next(self.recursive(node.left))
+#             self.recursive(node.left)
+#             print('after rec')
+#         print('hey', node.left, node.value)
+#         self.collect.append(node.value)
+#         print('before yield', node.value)
+#         yield node.value
+#         print('after yield', node.right)
+#         if node.right:
+#             self.recursive(node.right)
+#         # print(node.value)
 
-    def in_order_trav(self, tree):
-        """Return."""
-        import pdb; pdb.set_trace()
-        if tree is None:
-            return
-        if tree.left:
-            for each in self.in_order_trav(tree.left):
-                yield self.in_order_trav(tree.left)
-        yield tree.value
-        if tree.right:
-            for each in self.in_order_trav(tree.right):
-                yield tree.value
+#     def pre_order(self):
+#         """Return."""
+#         num = 0
+#         while num < 10:
+#             yield num
+#             num += 1
 
-        # for i in self.in_order_trav(tree.left):
-        #     if tree.left is not None:
-        #         yield tree.left.value
-        #     yield None
-        # if tree.left:
-        #     for i in self.in_order_trav(tree.left):
-        #         yield tree.value
-        # yield tree.value
-        # if tree is None:
-        #     yield
-        # num = 0
-        # while num < 10:
-        #     yield num
-        #     num += 1
+#     def post_order(self):
+#         """Return."""
+#         num = 0
+#         while num < 10:
+#             yield num
+#             num += 1
+
+#     def breadth_first(self):
+#         """Return."""
+#         num = 0
+#         while num < 10:
+#             yield num
+#             num += 1
+
+#     def in_order_trav(self, tree):
+#         """Return."""
+#         import pdb; pdb.set_trace()
+#         if tree is None:
+#             return
+#         if tree.left:
+#             for each in self.in_order_trav(tree.left):
+#                 yield self.in_order_trav(tree.left)
+#         yield tree.value
+#         if tree.right:
+#             for each in self.in_order_trav(tree.right):
+#                 yield tree.value
+
+#         # for i in self.in_order_trav(tree.left):
+#         #     if tree.left is not None:
+#         #         yield tree.left.value
+#         #     yield None
+#         # if tree.left:
+#         #     for i in self.in_order_trav(tree.left):
+#         #         yield tree.value
+#         # yield tree.value
+#         # if tree is None:
+#         #     yield
+#         # num = 0
+#         # while num < 10:
+#         #     yield num
+#         #     num += 1

@@ -1,5 +1,6 @@
 """Test Module for Binary Search Tree."""
 from bst import BinarySearchTree
+import pytest
 
 BST_SIMPLE = [8, 10, 3, 14, 13, 1, 6, 7, 4]
 
@@ -176,6 +177,6 @@ def test_search_none():
 #     assert a.balance == -1
 
 
-def test_in_order_traversal():
-    """Returns a generator that returns in-order traversal results."""
-    
+def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
+    """In-order traversal will get """
+    assert filled_bst.in_order() == 1
