@@ -43,15 +43,13 @@ class BinarySearchTree(object):
 
     def insert(self, val):
         """Insert a new node with val into the BST."""
-        # if not self.search(val):
-        #     return
+        curr_node = self.root
         new_node = Node(val)
-        if self.root is None:
+        if curr_node is None:
             self.root = new_node
             self._size = 1
             return
 
-        curr_node = self.root
         while curr_node:
             if val > curr_node.value:
                 if curr_node.right:
