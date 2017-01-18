@@ -1,5 +1,7 @@
 """Module for Binary Search Tree."""
 
+from queue_ds import Queue
+
 
 class Node(object):
     """Node class."""
@@ -39,6 +41,7 @@ class BinarySearchTree(object):
         self._in_order = self.in_order_trav()
         self._pre_order = self.pre_order_trav()
         self._post_order = self.post_order_trav()
+        self._breadth_first = self.breadth_first_trav()
 
     def insert(self, val):
         """Take a value, inserts into Binary Search Tree at correct placement."""
@@ -175,7 +178,22 @@ class BinarySearchTree(object):
                 peek_vertex = visited[-1]
                 if peek_vertex.right and peek_vertex.right is not last_vertex:
                     vertex = peek_vertex.right
-                    yield vertex.value
                 else:
-                    visited.append(peek_vertex)
+                    yield peek_vertex.value
                     last_vertex = visited.pop()
+
+    def breadth_first(self):
+        """Fill in later."""
+        return next(self._breadth_first)
+
+    def breadth_first_trav(self):
+        """Traverse breadth first order, yielding a generator."""
+        q = Queue()
+        q.enqueue(self.root)
+        while len(q) > 0:
+            vertex = q.dequeue()
+            yield vertex.value
+            if (vertex.left):
+                q.enqueue(vertex.left)
+            if (vertex.right):
+                q.enqueue(vertex.right)

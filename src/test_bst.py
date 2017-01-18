@@ -193,3 +193,7 @@ def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
 def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
     """Pre-order traversal will get """
     assert filled_bst.pre_order() == 8
+
+def test_post_order_traversal(filled_bst):
+    """Post-order traversal."""
+    
