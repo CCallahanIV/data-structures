@@ -33,6 +33,7 @@ def test_insert_first_node_sets_root(e_tree):
     """Test inserting first node sets root."""
     e_tree.insert(1)
     assert e_tree.root.value == 1
+    assert e_tree.root.parent is None
 
 
 def test_insert_second_node_adds_child_correctly(e_tree):
@@ -41,6 +42,7 @@ def test_insert_second_node_adds_child_correctly(e_tree):
     e_tree.insert(15)
     assert e_tree.root.right.value == 15
     assert e_tree.root.left is None
+    assert e_tree.root.right.parent is e_tree.root
 
 
 def test_insert_third_node_adds_child_correctly(e_tree):
@@ -51,6 +53,7 @@ def test_insert_third_node_adds_child_correctly(e_tree):
     assert e_tree.root.left.value == 5
     assert e_tree.root.right.value == 15
     assert e_tree.root.value == 10
+    assert e_tree.root.left.parent is e_tree.root
 
 
 def test_find_total_depth_empty(e_tree):
@@ -225,3 +228,60 @@ def test_post_order_m_tree(m_tree):
     gen_test = m_tree.post_order()
     for i in range(len(m_tree)):
         assert next(gen_test) == expected[i]
+
+
+def test_delete_empty_tree(e_tree):
+    """Test that deleting a value in an empty tree raises an error."""
+    with pytest.raises(ValueError):
+        assert e_tree.delete(12)
+
+
+def test_delete_tree_of_one(e_tree):
+    """Test delete from a tree with a single value removes that node."""
+    e_tree.insert(12)
+    e_tree.delete(12)
+    assert e_tree.size() == 0
+    assert e_tree.root is None
+
+
+def test_delete_tree_value_not_present(m_tree):
+    """Test that deleting a value not present in tree raises an exception."""
+    with pytest.raises(ValueError):
+        m_tree.delete(42)
+
+
+def test_deleting_correctly_moves_nodes(m_tree):
+    """Test that deleting a value correctly moves the nodes."""
+    expected = [3, 5, 7, 8, 13, 15]
+    m_tree.delete(10)
+    test_gen = m_tree.in_order()
+    for i in range(len(m_tree)):
+        assert expected[i] == next(test_gen)
+
+
+def test_delete_leaf(m_tree):
+    """Test deleting a leaf leaves a correct tree."""
+    expected = [5, 7, 8, 10, 13, 15]
+    m_tree.delete(3)
+    test_gen = m_tree.in_order()
+    for i in range(len(m_tree)):
+        assert expected[i] == next(test_gen)
+
+
+def test_delete_interior_leaf(m_tree):
+    """Test deleting an interior leaf."""
+    expected = [3, 5, 7, 10, 13, 15]
+    m_tree.delete(8)
+    test_gen = m_tree.in_order()
+    for i in range(len(m_tree)):
+        assert expected[i] == next(test_gen)
+
+
+def test_delete_node_has_one_child(m_tree):
+    """Test deleting node with one child leaves correct tree."""
+    expected = [3, 5, 8, 10, 13, 15]
+    m_tree.delete(7)
+    test_gen = m_tree.in_order()
+    for i in range(len(m_tree)):
+        assert expected[i] == next(test_gen)
+    assert m_tree.root.left.value == 8
