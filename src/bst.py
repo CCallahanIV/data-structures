@@ -125,7 +125,7 @@ class BinarySearchTree(object):
         """Traverse in_order, yielding via generator."""
         vertex = self.root
         visited = []
-        while (not any(visited) or vertex is not None):
+        while visited
             if vertex is not None:
                 visited.append(vertex)
                 vertex = vertex.left
@@ -133,4 +133,3 @@ class BinarySearchTree(object):
                 vertex = visited.pop()
                 yield vertex.value
                 vertex = vertex.right
-
