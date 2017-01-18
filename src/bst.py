@@ -7,11 +7,12 @@ from stack import Stack
 class Node(object):
     """Node object for use in a binary search tree."""
 
-    def __init__(self, value, right=None, left=None):
+    def __init__(self, value, right=None, left=None, parent=None):
         """Initialize a node for a binary search tree object."""
         self.value = value
         self.right = right
         self.left = left
+        self.parent = parent
 
     def _has_children(self):
         """Return True or False if Node has children."""
@@ -31,16 +32,32 @@ class BinarySearchTree(object):
     """Binary Search Tree Object.
 
     Methods:
-      - insert(self, val): will insert the value val into the BST. If val is already present, it will be ignored.
-      - search(self, val): will return the node containing that value, else None
-      - size(self): will return the integer size of the BST (equal to the total number of values stored in the tree). It will return 0 if the tree is empty.
-      - depth(self): will return an integer representing the total number of levels in the tree. If there is one value, the depth should be 1, if two values it will be 2, if three values it may be 2 or three, depending, etc.
-      - contains(self, val): will return True if val is in the BST, False if not.
-      - balance(self): will return an integer, positive or negative that represents how well balanced the tree is. Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value. An ideally-balanced tree should return 0.
-      - in_order(self): will return a generator that will return the values in the tree using in-order traversal, one at a time.
-      - pre_order(self): will return a generator that will return the values in the tree using pre-order traversal, one at a time.
-      - post_order(self): will return a generator that will return the values in the tree using post_order traversal, one at a time.
-      - breadth_first(self): will return a generator that will return the values in the tree using breadth-first traversal, one at a time.
+      - insert(self, val): will insert the value val into the BST. If
+        val is already present, it will be ignored.
+      - search(self, val): will return the node containing that value,
+        else None
+      - size(self): will return the integer size of the BST (equal to
+        the total number of values stored in the tree). It will return 0
+        if the tree is empty.
+      - depth(self): will return an integer representing the total number
+        of levels in the tree. If there is one value, the depth should be
+        1, if two values it will be 2, if three values it may be 2 or three,
+        depending, etc.
+      - contains(self, val): will return True if val is in the BST, False
+        if not.
+      - balance(self): will return an integer, positive or negative that
+        represents how well balanced the tree is. Trees which are higher
+        on the left than the right should return a positive value, trees
+        which are higher on the right than the left should return a negative
+        value. An ideally-balanced tree should return 0.
+      - in_order(self): will return a generator that will return the values
+        in the tree using in-order traversal, one at a time.
+      - pre_order(self): will return a generator that will return the values
+        in the tree using pre-order traversal, one at a time.
+      - post_order(self): will return a generator that will return the values
+        in the tree using post_order traversal, one at a time.
+      - breadth_first(self): will return a generator that will return the
+        values in the tree using breadth-first traversal, one at a time.
 
     """
 
@@ -66,6 +83,7 @@ class BinarySearchTree(object):
                     curr_node = curr_node.right
                 else:
                     curr_node.right = new_node
+                    curr_node.right.parent = curr_node
                     self._size += 1
                     break
             elif val < curr_node.value:
@@ -73,6 +91,7 @@ class BinarySearchTree(object):
                     curr_node = curr_node.left
                 else:
                     curr_node.left = new_node
+                    curr_node.left.parent = curr_node
                     self._size += 1
                     break
             else:
@@ -119,14 +138,16 @@ class BinarySearchTree(object):
             return False
 
     def balance(self):
-        """Return positive or negative integer that represents how well balanced the tree is."""
+        """Return positive or negative integer that represents tree balance."""
         if self.root is None:
             return 0
         return self.depth(self.root.right) - self.depth(self.root.left)
 
-    def in_order(self):
+    def in_order(self, node=None):
         """Return a generator of the tree in in_order order."""
-        start = self.root
+        start = node
+        if start is None:
+            start = self.root
         if start is None:
             raise StopIteration
         s = Stack()
@@ -188,3 +209,27 @@ class BinarySearchTree(object):
             if current._has_children():
                 for child in current._return_children():
                     q.enqueue(child)
+
+    def delete(self, val):
+        """Delete a node."""
+        target = self.search(val)
+        if not target:
+            raise ValueError('that node does not exist')
+        replacement = self.in_order(target)
+        self._del(target, replacement)
+        if replacement is not None:
+            self._del(replacement)
+
+    def _del(self, node, replacement=None):
+        if not node._has_children:
+            if node.parent.left == node:
+                node.parent.left = None
+            else:
+                node.parent.right = None
+        elif node.left and node.right:
+            node.value = replacement.value
+        else:
+            if node.left:
+                node.parent.right = node.left
+            else:
+                node.parent.left = node.right
