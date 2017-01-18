@@ -37,6 +37,8 @@ class BinarySearchTree(object):
             except TypeError:
                 self.insert(if_iter)
         self._in_order = self.in_order_trav()
+        self._pre_order = self.pre_order_trav()
+        self._post_order = self.post_order_trav()
 
     def insert(self, val):
         """Take a value, inserts into Binary Search Tree at correct placement."""
@@ -135,6 +137,39 @@ class BinarySearchTree(object):
             else:
                 vertex = visited.pop()
                 yield vertex.value
+                vertex = vertex.right
+
+    def pre_order(self):
+        """Return."""
+        return next(self._pre_order)
+
+    def pre_order_trav(self):
+        """Traverse pre_order, yielding via generator."""
+        vertex = self.root
+        visited = []
+        while (visited or vertex is not None):
+            if vertex is not None:
+                yield vertex.value
+                visited.append(vertex)
+                vertex = vertex.left
+            else:
+                vertex = visited.pop()
+                vertex = vertex.right
+
+    def post_order(self):
+        """Return."""
+        return next(self._post_order)
+
+    def post_order_trav(self):
+        """Traverse pre_order, yielding via generator."""
+        vertex = self.root
+        visited = []
+        while (visited or vertex is not None):
+            if vertex is not None:
+                visited.append(vertex)
+                vertex = vertex.left
+            else:
+                vertex = visited.pop()
                 vertex = vertex.right
 
 
