@@ -135,46 +135,46 @@ def test_search_none():
     assert a.search(100) is None
 
 
-# def test_depth_zero():
-#     """Test the depth function."""
-#     a = BinarySearchTree()
-#     assert a.depth == 0
+def test_depth_zero():
+    """Test the depth function."""
+    a = BinarySearchTree()
+    assert a.depth() == 0
 
 
-# def test_depth_one():
-#     """Test the depth function."""
-#     a = BinarySearchTree()
-#     a.insert(8)
-#     assert a.depth == 1
+def test_depth_one():
+    """Test the depth function."""
+    a = BinarySearchTree()
+    a.insert(8)
+    assert a.depth() == 1
 
 
-# def test_depth_many():
-#     """Test the depth function."""
-#     a = BinarySearchTree()
-#     a.insert(8)
-#     a.insert(10)
-#     a.insert(3)
-#     a.insert(14)
-#     a.insert(13)
-#     a.insert(1)
-#     a.insert(6)
-#     a.insert(7)
-#     a.insert(4)
-#     assert a.depth == 4
+def test_depth_many():
+    """Test the depth function."""
+    a = BinarySearchTree()
+    a.insert(8)
+    a.insert(10)
+    a.insert(3)
+    a.insert(14)
+    a.insert(13)
+    a.insert(1)
+    a.insert(6)
+    a.insert(7)
+    a.insert(4)
+    assert a.depth() == 4
 
 
-# def test_balance():
-#     """Test the balance function."""
-#     a = BinarySearchTree()
-#     a.insert(8)
-#     a.insert(10)
-#     a.insert(3)
-#     a.insert(14)
-#     a.insert(13)
-#     a.insert(1)
-#     a.insert(6)
-#     a.insert(7)
-#     assert a.balance == -1
+def test_balance():
+    """Test the balance function."""
+    a = BinarySearchTree()
+    a.insert(8)
+    a.insert(10)
+    a.insert(3)
+    a.insert(14)
+    a.insert(13)
+    a.insert(1)
+    a.insert(6)
+    a.insert(7)
+    assert a.balance() == 0
 
 
 def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
@@ -188,3 +188,8 @@ def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
 def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
     """In-order traversal's first value from generator will get a 1."""
     assert filled_bst.in_order() == 1
+
+
+def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
+    """Pre-order traversal will get """
+    assert filled_bst.pre_order() == 8
