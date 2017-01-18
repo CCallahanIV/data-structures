@@ -131,6 +131,7 @@ class BinarySearchTree(object):
         vertex = self.root
         visited = []
         while (visited or vertex is not None):
+
             if vertex is not None:
                 visited.append(vertex)
                 vertex = vertex.left
@@ -163,14 +164,21 @@ class BinarySearchTree(object):
     def post_order_trav(self):
         """Traverse pre_order, yielding via generator."""
         vertex = self.root
+        peek_vertex = None
+        last_vertex = None
         visited = []
         while (visited or vertex is not None):
             if vertex is not None:
                 visited.append(vertex)
                 vertex = vertex.left
             else:
-                vertex = visited.pop()
-                vertex = vertex.right
+                peek_vertex = visited[-1]
+                if peek_vertex.right and peek_vertex.right is not last_vertex:
+                    vertex = peek_vertex.right
+                    yield vertex.value
+                else:
+                    visited.append(peek_vertex)
+                    last_vertex = visited.pop()
 
 
 
