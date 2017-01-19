@@ -181,7 +181,6 @@ class BinarySearchTree(object):
                     yield peek_vertex.value
                     last_vertex = visited.pop()
 
-<<<<<<< HEAD
 
 #         """Return."""
 
