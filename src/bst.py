@@ -1,5 +1,7 @@
 """Module for Binary Search Tree."""
 
+from queue_ds import Queue
+
 
 class Node(object):
     """Node class."""
@@ -179,6 +181,7 @@ class BinarySearchTree(object):
                     yield peek_vertex.value
                     last_vertex = visited.pop()
 
+<<<<<<< HEAD
 
 #         """Return."""
 
@@ -247,3 +250,19 @@ class BinarySearchTree(object):
 #         # while num < 10:
 #         #     yield num
 #         #     num += 1
+
+    def breadth_first(self):
+        """Fill in later."""
+        return next(self._breadth_first)
+
+    def breadth_first_trav(self):
+        """Traverse breadth first order, yielding a generator."""
+        q = Queue()
+        q.enqueue(self.root)
+        while len(q) > 0:
+            vertex = q.dequeue()
+            yield vertex.value
+            if (vertex.left):
+                q.enqueue(vertex.left)
+            if (vertex.right):
+                q.enqueue(vertex.right)
