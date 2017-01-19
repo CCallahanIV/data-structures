@@ -100,6 +100,8 @@ class BinarySearchTree(object):
     def search(self, val):
         """Return the node with value val or return None."""
         start = self.root
+        if start is None:
+            raise ValueError("Cannot search an empty tree.")
         while True:
             if start.value == val:
                 return start
@@ -212,24 +214,46 @@ class BinarySearchTree(object):
 
     def delete(self, val):
         """Delete a node."""
-        target = self.search(val)
-        if not target:
-            raise ValueError('that node does not exist')
-        replacement = self.in_order(target)
-        self._del(target, replacement)
-        if replacement is not None:
-            self._del(replacement)
+        if self.size() == 0:
+            raise IndexError("Cannot delete from empty tree.")
 
-    def _del(self, node, replacement=None):
-        if not node._has_children:
-            if node.parent.left == node:
-                node.parent.left = None
-            else:
-                node.parent.right = None
-        elif node.left and node.right:
-            node.value = replacement.value
+        if self.size() == 1:
+            self.root = None
+            self._size -= 1
+            return
+        target = self.search(val)
+        if target is None:
+            raise ValueError("Cannot delete node that does not exist.")
+        if not target._has_children():
+            self._del_leaf(target)
+        elif len(target._return_children()) == 1:
+            self._swap_par_child(target)
         else:
-            if node.left:
-                node.parent.right = node.left
+            g = self.in_order()
+            lst = list(g)
+            target_ind = lst.index(val)
+            succ_ind = target_ind + 1
+            successor = self.search(lst[succ_ind])
+            target.value = successor.value
+            if not successor._has_children():
+                self._del_leaf(successor)
             else:
-                node.parent.left = node.right
+                self._swap_par_child(successor)
+
+        self._size -= 1
+
+    def _del_leaf(self, node):
+        """Given a leaf node, delete it from tree."""
+        if node.parent.left == node:
+            node.parent.left = None
+        else:
+            node.parent.right = None
+        node.parent = None
+
+    def _swap_par_child(self, node):
+        """Given a node with one child swap, parent child and del node."""
+        if node is node.parent.left:
+            node.parent.left = node._return_children()[0]
+        else:
+            node.parent.right = node._return_children()[0]
+        node.parent = None
