@@ -216,14 +216,13 @@ class BinarySearchTree(object):
         """Delete a node."""
         if self.size() == 0:
             raise IndexError("Cannot delete from empty tree.")
-
+        target = self.search(val)
+        if target is None:
+            raise ValueError("Cannot delete node that does not exist.")
         if self.size() == 1:
             self.root = None
             self._size -= 1
             return
-        target = self.search(val)
-        if target is None:
-            raise ValueError("Cannot delete node that does not exist.")
         if not target._has_children():
             self._del_leaf(target)
         elif len(target._return_children()) == 1:
