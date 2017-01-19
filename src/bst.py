@@ -217,7 +217,12 @@ class BinarySearchTree(object):
                 self.root.left = left
                 self.counter -= 1
                 return
-            min_node = self._find_min_parent(self.root, "right").left
+            vertex = vertex.right
+            while True:
+                if not vertex.left.left:
+                    min_node = vertex
+                else:
+                    vertex = vertex.left
             self.root = min_node
             self.root.left = left
             self.root.right = right
@@ -286,13 +291,6 @@ class BinarySearchTree(object):
 
     def _find_min_parent(self, vertex, side):
         """Find the parent of the replacement node, given the parent of the delete node."""
-        if vertex is self.root:
-            vertex = vertex.right
-            while True:
-                if not vertex.left.left:
-                    return vertex
-                else:
-                    vertex = vertex.left
         if side == "right":
             if not vertex.right.right and not vertex.right.left:
                 return

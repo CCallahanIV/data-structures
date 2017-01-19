@@ -194,6 +194,7 @@ def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
     """Pre-order traversal will get """
     assert filled_bst.pre_order() == 8
 
+
 def test_post_order_traversal(filled_bst):
     """Post-order traversal."""
 
@@ -201,4 +202,36 @@ def test_post_order_traversal(filled_bst):
 def test_delete_empty():
     """Test delete function with empty binary search tree."""
     a = BinarySearchTree()
-    
+    assert a.delete(5) is None
+
+
+def test_delete_filled_root(filled_bst):
+    """Test delete of root."""
+    a = filled_bst
+    assert a.size() == 9
+    a.delete(8)
+    assert a.size() == 8
+    assert a.in_order() == 1
+    assert a.in_order() == 3
+    assert a.in_order() == 4
+    assert a.in_order() == 6
+    assert a.in_order() == 7
+    assert a.in_order() == 10
+    assert a.in_order() == 13
+    assert a.in_order() == 14
+
+
+def test_delete_end_root(filled_bst):
+    """Test delete of root."""
+    a = filled_bst
+    assert a.size() == 9
+    a.delete(1)
+    assert a.size() == 8
+    assert a.in_order() == 3
+    assert a.in_order() == 4
+    assert a.in_order() == 6
+    assert a.in_order() == 7
+    assert a.in_order() == 8
+    assert a.in_order() == 10
+    assert a.in_order() == 13
+    assert a.in_order() == 14
