@@ -281,7 +281,7 @@ class BinarySearchTree(object):
                 del_node = min_node
                 del_node.right = right
                 del_node.left = left
-                parent_of_del.right = del_node
+                parent_of_del.left = del_node
                 self.counter -= 1
 
     def _find_min_parent(self, vertex, side):

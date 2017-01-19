@@ -196,4 +196,9 @@ def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
 
 def test_post_order_traversal(filled_bst):
     """Post-order traversal."""
+
+
+def test_delete_empty():
+    """Test delete function with empty binary search tree."""
+    a = BinarySearchTree()
     
