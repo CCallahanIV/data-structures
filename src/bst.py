@@ -206,7 +206,7 @@ class BinarySearchTree(object):
         if self.root.value == val:
             left = self.root.left
             right = self.root.right
-            self.root = self._find_min(self.root)
+            self.root = self._find_min_parent(self.root).left
             self.root.left = left
             self.root.right = right
         else:
