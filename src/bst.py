@@ -197,3 +197,97 @@ class BinarySearchTree(object):
                 q.enqueue(vertex.left)
             if (vertex.right):
                 q.enqueue(vertex.right)
+
+    def delete(self, val):
+        """Remove val from the tree if present, if not present this method is a no-op. Return None in all cases."""
+        vertex = self.root
+        parent_of_del = None
+        del_node = None
+        if self.root.value == val:
+            left = self.root.left
+            right = self.root.right
+            self.root = self._find_min(self.root)
+            self.root.left = left
+            self.root.right = right
+        else:
+            while True:
+                if vertex.right and val == vertex.right.value:
+                    parent_of_del = vertex
+                    del_node = parent_of_del.right
+                    break
+                elif vertex.left and val == vertex.left.value:
+                    parent_of_del = vertex
+                    del_node = parent_of_del.left
+                    break
+                elif val > vertex.value and vertex.right:
+                    vertex = vertex.right
+                elif val < vertex.value and vertex.left:
+                    vertex = vertex.left
+                else:
+                    return
+            min_parent = self._find_min_parent(parent_of_del)
+            if val == parent_of_del.right.value:
+                del_node = parent_of_del.right
+                left = del_node.left
+                right = del_node.right
+                min_node = min_parent.left
+
+                if min_node.right:
+                    min_parent.left = min_node.right
+                del_node = min_node
+                del_node.right = right
+                del_node.left = left
+                parent_of_del.right = del_node
+
+            elif val == parent_of_del.left.value:
+                del_node = parent_of_del.left
+                left = del_node.left
+                right = del_node.right
+                min_node = min_parent.left
+
+                if min_node.right:
+                    min_parent.left = min_node.right
+                del_node = min_node
+                del_node.right = right
+                del_node.left = left
+                parent_of_del.right = del_node
+
+            parent_of_del
+
+        return
+
+        def _find_min_parent(self, parent_of_del):
+            """Find the parent of the leftmost node on the right of the node you wish to delete."""
+
+
+            # self._find_min(parent_of_del)
+
+
+
+    #     while vertex:
+    #         if val > vertex.value:
+    #             if not vertex.right:
+    #                 return None
+    #             vertex = vertex.right
+    #         elif val < vertex.value:
+    #             if not vertex.left:
+    #                 return None
+    #             vertex = vertex.left
+    #         else:
+    #             return vertex
+    #     return None
+
+    #     del_node = self._find_min(vertex, val, del_node)
+
+
+
+    # def _find_min(self, vertex, val, del_node):
+    #     if vertex.right:
+    #             vertex = vertex.right
+    #         while True:
+    #             if vertex.left == val:
+    #                 vertex.left.right = del_node.right
+    #                 vertex.left.left = del_node.left
+    #                 if vertex.left.right:
+    #                     vertex.left = vertex.left.right
+    #             return vertex
