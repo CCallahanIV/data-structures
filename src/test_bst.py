@@ -257,6 +257,7 @@ def test_deleting_correctly_moves_nodes(m_tree):
     test_gen = m_tree.in_order()
     for i in range(len(m_tree)):
         assert next(test_gen) == expected[i]
+    assert m_tree.contains(10) is False
 
 
 def test_delete_leaf(m_tree):
@@ -266,6 +267,7 @@ def test_delete_leaf(m_tree):
     test_gen2 = m_tree.in_order()
     for i in range(len(m_tree)):
         assert next(test_gen2) == expected[i]
+    assert m_tree.contains(3) is False
 
 
 def test_delete_interior_leaf(m_tree):
@@ -275,6 +277,7 @@ def test_delete_interior_leaf(m_tree):
     test_gen3 = m_tree.in_order()
     for i in range(len(m_tree)):
         assert expected[i] == next(test_gen3)
+    assert m_tree.contains(8) is False
 
 
 def test_delete_node_has_one_child(m_tree):
@@ -285,3 +288,4 @@ def test_delete_node_has_one_child(m_tree):
     for i in range(len(m_tree)):
         assert expected[i] == next(test_gen4)
     assert m_tree.root.left.value == 8
+    assert m_tree.contains(7) is False
