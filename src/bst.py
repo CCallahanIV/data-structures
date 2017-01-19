@@ -95,7 +95,8 @@ class BinarySearchTree(object):
                     self._size += 1
                     break
             else:
-                break
+                return
+        self._test_tree_balance()
 
     def search(self, val):
         """Return the node with value val or return None."""
@@ -139,11 +140,13 @@ class BinarySearchTree(object):
         except AttributeError:
             return False
 
-    def balance(self):
+    def find_balance(self, start=None):
         """Return positive or negative integer that represents tree balance."""
-        if self.root is None:
+        if start is None:
+            start = self.root
+        if start is None:
             return 0
-        return self.depth(self.root.right) - self.depth(self.root.left)
+        return self.depth(start.left) - self.depth(start.right)
 
     def in_order(self, node=None):
         """Return a generator of the tree in in_order order."""
@@ -219,6 +222,7 @@ class BinarySearchTree(object):
         target = self.search(val)
         if target is None:
             raise ValueError("Cannot delete node that does not exist.")
+        test_node = target.parent
         if self.size() == 1:
             self.root = None
             self._size -= 1
@@ -234,12 +238,14 @@ class BinarySearchTree(object):
                 gen_out = next(g)
             successor = self.search(next(g))
             target.value = successor.value
+            test_node = successor
             if not successor._has_children():
                 self._del_leaf(successor)
             else:
                 self._swap_par_child(successor)
 
         self._size -= 1
+        self._test_tree_balance(test_node)
 
     def _del_leaf(self, node):
         """Given a leaf node, delete it from tree."""
@@ -256,3 +262,48 @@ class BinarySearchTree(object):
         else:
             node.parent.right = node._return_children()[0]
         node.parent = None
+
+    def _rotate_right(self, sub_root):
+        """Given root and pivot nodes, complete a right rotation."""
+        pivot = sub_root.left
+        if sub_root is self.root:
+            self.root = pivot
+        pivot.parent = sub_root.parent
+        if pivot.right:
+            pivot.right.parent = sub_root
+            sub_root.left = pivot.right
+        pivot.right = sub_root
+        sub_root.parent = pivot
+
+    def _rotate_left(self, sub_root):
+        """Give root and pivot nodes, complete a left rotation."""
+        pivot = sub_root.right
+        if sub_root is self.root:
+            self.root = pivot
+        pivot.parent = sub_root.parent
+        if pivot.left:
+            pivot.left.parent = sub_root
+            sub_root.right = pivot.left
+        pivot.left = sub_root
+        sub_root.parent = pivot
+
+    def _test_tree_balance(self, node):
+        """Check balance of tree."""
+        while node:
+            bal = self.find_balance(node)
+            if abs(bal) >= 2:
+                self._balance_tree(node, bal)
+            node = node.parent
+
+    def _balance_tree(self, start_node, bal):
+        """Balance subtree of start node."""
+        if bal > 0:                             #< --- Heavy on the left.
+            sub_bal = self.find_balance(start_node.left)
+            if sub_bal < 0:                     #< --- Sub, right heavy
+                self._rotate_left(start_node.left)
+            self._rotate_right(start_node)
+        else:                                   #< --- Heavy on the right.
+            sub_bal = self.find_balance(start_node.right)
+            if sub_bal > 0:                     #< --- Sub, left heavy
+                self.rotate_right(start_node.right)
+            self._rotate_left(start_node)
