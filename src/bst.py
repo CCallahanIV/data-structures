@@ -96,7 +96,7 @@ class BinarySearchTree(object):
                     break
             else:
                 return
-        self._test_tree_balance()
+        self._test_tree_balance(new_node)
 
     def search(self, val):
         """Return the node with value val or return None."""
@@ -305,5 +305,5 @@ class BinarySearchTree(object):
         else:                                   #< --- Heavy on the right.
             sub_bal = self.find_balance(start_node.right)
             if sub_bal > 0:                     #< --- Sub, left heavy
-                self.rotate_right(start_node.right)
+                self._rotate_right(start_node.right)
             self._rotate_left(start_node)

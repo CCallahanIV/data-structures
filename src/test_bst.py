@@ -102,20 +102,20 @@ def test_depth_medium_tree(m_tree):
 
 def test_balance_empty(e_tree):
     """Test balance of empty tree."""
-    assert e_tree.balance() == 0
+    assert e_tree.find_balance() == 0
 
 
 def test_balance_one_node(e_tree):
     """Test balance of one node tree."""
     e_tree.insert(10)
-    assert e_tree.balance() == 0
+    assert e_tree.find_balance() == 0
 
 
 def test_balance_two_node(e_tree):
     """Test finding blance from a two node tree."""
     e_tree.insert(10)
     e_tree.insert(15)
-    assert e_tree.balance() == 1
+    assert e_tree.find_balance() == -1
 
 
 def test_find_balance_balanced_three_node(e_tree):
@@ -123,32 +123,32 @@ def test_find_balance_balanced_three_node(e_tree):
     e_tree.insert(10)
     e_tree.insert(15)
     e_tree.insert(5)
-    assert e_tree.balance() == 0
+    assert e_tree.find_balance() == 0
 
 
-def test_find_balance_unbalanced_three_node(e_tree):
-    """Test finding balance from an unbalanced three node tree."""
-    e_tree.insert(10)
-    e_tree.insert(15)
-    e_tree.insert(20)
-    assert e_tree.balance() == 2
+# def test_find_balance_unbalanced_three_node(e_tree):
+#     """Test finding balance from an unbalanced three node tree."""
+#     e_tree.insert(10)
+#     e_tree.insert(15)
+#     e_tree.insert(20)
+#     assert e_tree.find_balance() == 2
 
 
-def test_find_neg_balance_unbalanced_three_node(e_tree):
-    """Test finding balance of an unbalanced three node tree."""
-    e_tree.insert(20)
-    e_tree.insert(15)
-    e_tree.insert(10)
-    assert e_tree.balance() == -2
+# def test_find_neg_balance_unbalanced_three_node(e_tree):
+#     """Test finding balance of an unbalanced three node tree."""
+#     e_tree.insert(20)
+#     e_tree.insert(15)
+#     e_tree.insert(10)
+#     assert e_tree.find_balance() == -2
 
 
-def test_find_balance_med_tree(m_tree):
-    """Test finding the balance of a medium tree."""
-    assert m_tree.balance() == -1
-    m_tree.insert(1)
-    assert m_tree.balance() == -2
-    m_tree.insert(12)
-    assert m_tree.balance() == -1
+# def test_find_balance_med_tree(m_tree):
+#     """Test finding the balance of a medium tree."""
+#     assert m_tree.balance() == -1
+#     m_tree.insert(1)
+#     assert m_tree.balance() == -2
+#     m_tree.insert(12)
+#     assert m_tree.balance() == -1
 
 
 def test_search_medium_tree_returns_true(m_tree):
@@ -289,3 +289,14 @@ def test_delete_node_has_one_child(m_tree):
         assert expected[i] == next(test_gen4)
     assert m_tree.root.left.value == 8
     assert m_tree.contains(7) is False
+
+
+def test_auto_balance_adding_to_empty_tree(e_tree):
+    """Test autobalance when adding to empty tree."""
+    e_tree.insert(5)
+    e_tree.insert(10)
+    assert e_tree.root.value == 5
+    e_tree.insert(15)   #<-- Should balance.
+    assert e_tree.root.value == 10
+    assert e_tree.root.right.value == 15
+    assert e_tree.root.left.value == 5
