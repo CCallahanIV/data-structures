@@ -4,7 +4,7 @@ setup(
     name="data-structures",
     description="this module will be expanded as we write more data-structures",
     version=1.1,
-    author="Ted Callahan and Colin Lamont",
+    author="Ben Shields and Colin Lamont, initially forked from Ted Callahan's repo, which he worked on with Colin Lamont.",
     author_email="",
     license="MIT",
     package_dir={'': 'src'},

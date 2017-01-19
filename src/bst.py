@@ -39,7 +39,6 @@ class BinarySearchTree(object):
         self._in_order = self.in_order_trav()
         self._pre_order = self.pre_order_trav()
         self._post_order = self.post_order_trav()
-        self._breadth_first = self.breadth_first_trav()
 
     def insert(self, val):
         """Take a value, inserts into Binary Search Tree at correct placement."""
@@ -180,13 +179,6 @@ class BinarySearchTree(object):
                     yield peek_vertex.value
                     last_vertex = visited.pop()
 
-    def breadth_first(self):
-        """Fill in later."""
-        return next(self._breadth_first)
-
-    def breadth_first_trav(self):
-        """Traverse breadth first order, yielding a generator."""
-        
 
 #         """Return."""
 
