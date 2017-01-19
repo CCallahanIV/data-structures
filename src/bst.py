@@ -230,14 +230,10 @@ class BinarySearchTree(object):
             self._swap_par_child(target)
         else:
             g = self.in_order()
-            # lst = list(g)
             gen_out = None
             while gen_out is not val:
                 gen_out = next(g)
             successor = self.search(next(g))
-            # target_ind = lst.index(val)
-            # succ_ind = target_ind + 1
-            # successor = self.search(lst[succ_ind])
             target.value = successor.value
             if not successor._has_children():
                 self._del_leaf(successor)
