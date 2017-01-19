@@ -79,7 +79,10 @@ class BinarySearchTree(object):
 
     def contains(self, val):
         """Return True if val is in the BST, False if not."""
-        return val in self.container
+        if self.search(val):
+            return True
+        return False
+        # return val in self.container
 
     def search(self, val):
         """Return the node containing that value, else None."""
