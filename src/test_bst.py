@@ -3,6 +3,24 @@ from bst import BinarySearchTree
 import pytest
 
 BST_SIMPLE = [8, 10, 3, 14, 13, 1, 6, 7, 4]
+BST_STRAIGHT_LINE = [1, 2, 3, 4, 5, 6, 7]
+BST_BIG = [30, 50, 45, 60, 15, 25, 10, 47, 42, 40, 27, 55, 44, 46, 49, 7, 12, 65, 70, 57, 63, 52, 23, 4, 9, 11, 13, 21, 24, 26, 28]
+
+
+@pytest.fixture
+def big_bst():
+    """Fixture to fill big bst."""
+    from bst import BinarySearchTree
+    new_tree = BinarySearchTree(BST_BIG)
+    return new_tree
+
+
+@pytest.fixture
+def straight_bst():
+    """Fixture to fill bst tree with a straight line of nodes down right side."""
+    from bst import BinarySearchTree
+    new_tree = BinarySearchTree(BST_STRAIGHT_LINE)
+    return new_tree
 
 
 @pytest.fixture
@@ -221,7 +239,7 @@ def test_delete_filled_root(filled_bst):
     assert a.in_order() == 14
 
 
-def test_delete_end_root(filled_bst):
+def test_delete_end(filled_bst):
     """Test delete of root."""
     a = filled_bst
     assert a.size() == 9
@@ -235,3 +253,69 @@ def test_delete_end_root(filled_bst):
     assert a.in_order() == 10
     assert a.in_order() == 13
     assert a.in_order() == 14
+
+def test_delete_vertex_of_left_sub_head_in_bst(filled_bst):
+    """Test delete of a BST's left sub tree's head."""
+    a = filled_bst
+    a.delete(3)
+    assert a.root.value == 8
+    assert a.root.left.value == 4
+    assert a.root.left.right.value == 6
+    assert a.root.left.right.right.value == 7
+
+def test_delete_vertex_of_lower_vertex_with_2_children(filled_bst):
+    """Test lower vertex removal at bottom of tree with 2 children."""
+    a = filled_bst
+    a.delete(6)
+    assert a.root.value == 8
+    assert a.root.left.right.value == 7
+    assert a.root.left.right.left.value == 4
+    assert a.root.left.value == 3
+    assert a.root.left.left.value == 1
+    assert a.root.right.value == 10
+
+def test_delete(straight_bst):
+    """Test removal of node from straight line bst."""
+    a = straight_bst
+    a.delete(4)
+    assert a.root.value == 1
+    assert a.root.right.value == 2
+    assert a.root.right.right.value == 3
+    assert a.root.right.right.right.value == 5
+    assert a.root.right.right.right.right.value == 6
+
+def test_delete(straight_bst):
+    """Test removal of node from straight line bst."""
+    a = straight_bst
+    a.delete(4)
+    assert a.root.value == 1
+    assert a.root.right.value == 2
+    assert a.root.right.right.value == 3
+    assert a.root.right.right.right.value == 5
+    assert a.root.right.right.right.right.value == 6
+
+
+def test_node_deletion_from_big_tree_with_grand_children(BST_BIG):
+    """Test deletion of node in big bst tree with children and grand children."""
+    a = big_bst
+    a.delete(45)
+    assert a.root.right.left.value == 46
+    assert a.root.right.left.right.value == 47
+    assert a.root.right.left.left.value == 42
+    assert a.root.right.left.right.right.value == 49
+    assert a.root.right.left.right.left.value is None
+
+
+def test_deletion_from_big_tree_with_great_grand_children(BST_BIG):
+    """Test deletion of node in big bst tree with children and grand children."""
+    a = big_bst
+    a.delete(50)
+    assert a.root.right.value == 52
+    assert a.root.right.left.value == 45
+    assert a.root.right.right.value == 60
+    assert a.root.right.right.left.value == 55
+    assert a.root.right.right.right.value == 65
+    assert a.root.right.right.left.right.value == 57
+    assert a.root.right.right.left.left.value is None
+    assert a.root.right.right.right.right.value == 70
+    assert a.root.right.right.right.left.value == 63
