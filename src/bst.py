@@ -83,7 +83,7 @@ class BinarySearchTree(object):
                     curr_node = curr_node.right
                 else:
                     curr_node.right = new_node
-                    curr_node.right.parent = curr_node
+                    new_node.parent = curr_node
                     self._size += 1
                     break
             elif val < curr_node.value:
@@ -91,7 +91,7 @@ class BinarySearchTree(object):
                     curr_node = curr_node.left
                 else:
                     curr_node.left = new_node
-                    curr_node.left.parent = curr_node
+                    new_node.parent = curr_node
                     self._size += 1
                     break
             else:
@@ -269,6 +269,7 @@ class BinarySearchTree(object):
         if sub_root is self.root:
             self.root = pivot
         pivot.parent = sub_root.parent
+        sub_root.left = None
         if pivot.right:
             pivot.right.parent = sub_root
             sub_root.left = pivot.right
@@ -281,6 +282,7 @@ class BinarySearchTree(object):
         if sub_root is self.root:
             self.root = pivot
         pivot.parent = sub_root.parent
+        sub_root.right = None
         if pivot.left:
             pivot.left.parent = sub_root
             sub_root.right = pivot.left

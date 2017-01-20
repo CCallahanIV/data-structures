@@ -17,10 +17,10 @@ def e_tree():
 def m_tree():
     """Initialize a search tree of medium complexity."""
     from bst import BinarySearchTree
-    b = BinarySearchTree()
+    b_tree = BinarySearchTree()
     for val in MEDIUM_TREE:
-        b.insert(val)
-    return b
+        b_tree.insert(val)
+    return b_tree
 
 
 def test_init_empty_bst(e_tree):
