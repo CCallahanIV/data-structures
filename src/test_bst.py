@@ -295,7 +295,7 @@ def test_delete(straight_bst):
     assert a.root.right.right.right.right.value == 6
 
 
-def test_node_deletion_from_big_tree_with_grand_children(BST_BIG):
+def test_node_deletion_from_big_tree_with_grand_children(big_bst):
     """Test deletion of node in big bst tree with children and grand children."""
     a = big_bst
     a.delete(45)
@@ -306,7 +306,7 @@ def test_node_deletion_from_big_tree_with_grand_children(BST_BIG):
     assert a.root.right.left.right.left.value is None
 
 
-def test_deletion_from_big_tree_with_great_grand_children(BST_BIG):
+def test_deletion_from_big_tree_with_great_grand_children(big_bst):
     """Test deletion of node in big bst tree with children and grand children."""
     a = big_bst
     a.delete(50)
