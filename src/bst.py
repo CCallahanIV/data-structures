@@ -301,7 +301,6 @@ class BinarySearchTree(object):
 
     def _find_min_parent(self, vertex, side):
         """Find the parent of the replacement node, given the parent of the delete node."""
-        import pdb; pdb.set_trace()
         if side == "right":
             if not vertex.right.right and not vertex.right.left:
                 return
