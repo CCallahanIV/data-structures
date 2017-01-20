@@ -127,7 +127,9 @@ class BinarySearchTree(object):
             if start is None:
                 return 0
             else:
-                return max(depth_wrapped(start.right), depth_wrapped(start.left)) + 1
+                right_depth = depth_wrapped(start.right)
+                left_depth = depth_wrapped(start.left)
+                return max(right_depth, left_depth) + 1
         if start is '':
             return depth_wrapped(self.root)
         else:
@@ -269,6 +271,7 @@ class BinarySearchTree(object):
         if sub_root is self.root:
             self.root = pivot
         pivot.parent = sub_root.parent
+        sub_root.left = None
         if pivot.right:
             pivot.right.parent = sub_root
             sub_root.left = pivot.right
@@ -281,6 +284,7 @@ class BinarySearchTree(object):
         if sub_root is self.root:
             self.root = pivot
         pivot.parent = sub_root.parent
+        sub_root.right = None
         if pivot.left:
             pivot.left.parent = sub_root
             sub_root.right = pivot.left
