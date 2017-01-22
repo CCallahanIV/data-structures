@@ -199,6 +199,20 @@ def test_balance():
     assert a.balance() == 0
 
 
+def test_balance_unbalanced_right(filled_bst):
+    """Test the balance function."""
+    filled_bst.insert(11)
+    filled_bst.insert(12)
+    assert filled_bst.balance() == 2
+
+
+def test_balance_unbalanced_left(filled_bst):
+    """Test the balance function."""
+    filled_bst.insert(5)
+    filled_bst.insert(4.5)
+    assert filled_bst.balance() == -2
+
+
 def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
     """In-order traversal will start with 1."""
     in_order_list = []
