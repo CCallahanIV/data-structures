@@ -82,7 +82,6 @@ class BinarySearchTree(object):
         if self.search(val):
             return True
         return False
-        # return val in self.container
 
     def search(self, val):
         """Return the node containing that value, else None."""
@@ -224,11 +223,11 @@ class BinarySearchTree(object):
             while True:
                 if not vertex.left.left:
                     min_parent = vertex
+                    break
                 else:
                     vertex = vertex.left
             min_node = min_parent.left
-            if min_node.right:
-                min_parent.left = min_node.right
+            min_parent.left = min_node.right
             self.root = min_node
             self.root.left = left
             self.root.right = right

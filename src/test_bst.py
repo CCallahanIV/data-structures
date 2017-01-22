@@ -4,7 +4,11 @@ import pytest
 
 BST_SIMPLE = [8, 10, 3, 14, 13, 1, 6, 7, 4]
 BST_STRAIGHT_LINE = [1, 2, 3, 4, 5, 6, 7]
-BST_BIG = [30, 50, 45, 60, 15, 25, 10, 47, 42, 40, 27, 55, 44, 46, 49, 7, 12, 65, 70, 57, 63, 52, 23, 4, 9, 11, 13, 21, 24, 26, 28]
+BST_BIG = [
+    30, 50, 45, 60, 15, 25, 10, 47, 42,
+    40, 27, 55, 44, 46, 49, 7, 12, 65, 70, 57,
+    63, 52, 23, 4, 9, 11, 13, 21, 24, 26, 28
+]
 
 
 @pytest.fixture
@@ -196,20 +200,20 @@ def test_balance():
 
 
 def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
-    """In-order traversal will start with 1. """
+    """In-order traversal will start with 1."""
     in_order_list = []
-    for x in filled_bst.in_order():
+    for x in filled_bst.in_order_trav():
         in_order_list.append(x)
     assert in_order_list[0] == 1
 
 
-def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
+def test_in_order_traversal_first_node_traversed_is_1_reg(filled_bst):
     """In-order traversal's first value from generator will get a 1."""
     assert filled_bst.in_order() == 1
 
 
 def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
-    """Pre-order traversal will get """
+    """Pre-order traversal will get 8."""
     assert filled_bst.pre_order() == 8
 
 
@@ -254,6 +258,7 @@ def test_delete_end(filled_bst):
     assert a.in_order() == 13
     assert a.in_order() == 14
 
+
 def test_delete_vertex_of_left_sub_head_in_bst(filled_bst):
     """Test delete of a BST's left sub tree's head."""
     a = filled_bst
@@ -262,6 +267,7 @@ def test_delete_vertex_of_left_sub_head_in_bst(filled_bst):
     assert a.root.left.value == 4
     assert a.root.left.right.value == 6
     assert a.root.left.right.right.value == 7
+
 
 def test_delete_vertex_of_lower_vertex_with_2_children(filled_bst):
     """Test lower vertex removal at bottom of tree with 2 children."""
@@ -274,15 +280,6 @@ def test_delete_vertex_of_lower_vertex_with_2_children(filled_bst):
     assert a.root.left.left.value == 1
     assert a.root.right.value == 10
 
-def test_delete(straight_bst):
-    """Test removal of node from straight line bst."""
-    a = straight_bst
-    a.delete(4)
-    assert a.root.value == 1
-    assert a.root.right.value == 2
-    assert a.root.right.right.value == 3
-    assert a.root.right.right.right.value == 5
-    assert a.root.right.right.right.right.value == 6
 
 def test_delete(straight_bst):
     """Test removal of node from straight line bst."""
@@ -317,5 +314,137 @@ def test_deletion_from_big_tree_with_great_grand_children(big_bst):
     assert a.root.right.right.right.value == 65
     assert a.root.right.right.left.right.value == 57
     assert a.root.right.right.left.left is None
+    assert a.root.right.right.right.right.value == 70
+    assert a.root.right.right.right.left.value == 63
+
+
+def test_node_deletion_from_big_tree_root(big_bst):
+    """Test root deletion on big_bst."""
+    a = big_bst
+    a.delete(30)
+    assert a.root.value == 40
+    assert a.root.right.value == 50
+    assert a.root.right.left.value == 45
+    assert a.root.right.left.left.value == 42
+    assert a.root.right.left.left.left is None
+    assert a.root.right.left.left.right.value == 44
+    assert a.root.right.right.value == 60
+    assert a.root.right.right.left.value == 55
+    assert a.root.right.right.right.value == 65
+    assert a.root.right.right.left.right.value == 57
+    assert a.root.right.right.left.left.value == 52
+    assert a.root.right.right.right.right.value == 70
+    assert a.root.right.right.right.left.value == 63
+
+
+def test_node_deletion_from_big_tree_furthest_left(big_bst):
+    """Test furthest left node deletion on big_bst."""
+    a = big_bst
+    a.delete(4)
+    assert a.root.value == 30
+    assert a.root.left.value == 15
+    assert a.root.left.left.value == 10
+    assert a.root.left.left.left.value == 7
+    assert a.root.left.left.left.left is None
+    assert a.root.right.value == 50
+    assert a.root.right.left.value == 45
+    assert a.root.right.left.left.value == 42
+    assert a.root.right.left.left.left.value == 40
+    assert a.root.right.left.left.right.value == 44
+    assert a.root.right.right.value == 60
+    assert a.root.right.right.left.value == 55
+    assert a.root.right.right.right.value == 65
+    assert a.root.right.right.left.right.value == 57
+    assert a.root.right.right.left.left.value == 52
+    assert a.root.right.right.right.right.value == 70
+    assert a.root.right.right.right.left.value == 63
+
+
+def test_big_bst(big_bst):
+    """Test nodes in proper places in big_bst."""
+    a = big_bst
+    assert a.root.value == 30
+    assert a.root.left.value == 15
+    assert a.root.left.right.value == 25
+    assert a.root.left.right.left.value == 23
+    assert a.root.left.left.value == 10
+    assert a.root.left.left.right.value == 12
+    assert a.root.left.left.right.right.value == 13
+    assert a.root.left.left.right.left.value == 11
+    assert a.root.left.left.left.value == 7
+    assert a.root.left.left.left.right.value == 9
+    assert a.root.left.left.left.left.value == 4
+    assert a.root.right.value == 50
+    assert a.root.right.left.value == 45
+    assert a.root.right.left.left.value == 42
+    assert a.root.right.left.left.left.value == 40
+    assert a.root.right.left.left.right.value == 44
+    assert a.root.right.right.value == 60
+    assert a.root.right.right.left.value == 55
+    assert a.root.right.right.right.value == 65
+    assert a.root.right.right.left.right.value == 57
+    assert a.root.right.right.left.left.value == 52
+    assert a.root.right.right.right.right.value == 70
+    assert a.root.right.right.right.left.value == 63
+
+
+def test_big_bst_insert_delete_min_node_with_right_child(big_bst):
+    """Test deletion of node with min node with right child."""
+    a = big_bst
+    a.insert(22)
+    a.delete(15)
+    assert a.root.value == 30
+    assert a.root.left.value == 21
+    assert a.root.left.right.value == 25
+    assert a.root.left.right.left.value == 23
+    assert a.root.left.right.left.left.value == 22
+    assert a.root.left.left.value == 10
+    assert a.root.left.left.right.value == 12
+    assert a.root.left.left.right.right.value == 13
+    assert a.root.left.left.right.left.value == 11
+    assert a.root.left.left.left.value == 7
+    assert a.root.left.left.left.right.value == 9
+    assert a.root.left.left.left.left.value == 4
+    assert a.root.right.value == 50
+    assert a.root.right.left.value == 45
+    assert a.root.right.left.left.value == 42
+    assert a.root.right.left.left.left.value == 40
+    assert a.root.right.left.left.right.value == 44
+    assert a.root.right.right.value == 60
+    assert a.root.right.right.left.value == 55
+    assert a.root.right.right.right.value == 65
+    assert a.root.right.right.left.right.value == 57
+    assert a.root.right.right.left.left.value == 52
+    assert a.root.right.right.right.right.value == 70
+    assert a.root.right.right.right.left.value == 63
+
+
+def test_big_bst_insert_delete_root_min_node_with_right_child(big_bst):
+    """Test deletion of root node with min node with right child."""
+    a = big_bst
+    a.insert(41)
+    a.delete(30)
+    a = big_bst
+    assert a.root.value == 40
+    assert a.root.left.value == 15
+    assert a.root.left.right.value == 25
+    assert a.root.left.right.left.value == 23
+    assert a.root.left.left.value == 10
+    assert a.root.left.left.right.value == 12
+    assert a.root.left.left.right.right.value == 13
+    assert a.root.left.left.right.left.value == 11
+    assert a.root.left.left.left.value == 7
+    assert a.root.left.left.left.right.value == 9
+    assert a.root.left.left.left.left.value == 4
+    assert a.root.right.value == 50
+    assert a.root.right.left.value == 45
+    assert a.root.right.left.left.value == 42
+    assert a.root.right.left.left.left.value == 41
+    assert a.root.right.left.left.right.value == 44
+    assert a.root.right.right.value == 60
+    assert a.root.right.right.left.value == 55
+    assert a.root.right.right.right.value == 65
+    assert a.root.right.right.left.right.value == 57
+    assert a.root.right.right.left.left.value == 52
     assert a.root.right.right.right.right.value == 70
     assert a.root.right.right.right.left.value == 63
