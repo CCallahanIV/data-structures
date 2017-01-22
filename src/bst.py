@@ -1,6 +1,8 @@
 """Module for Binary Search Tree."""
 
 from queue_ds import Queue
+import timeit
+import random
 
 
 class Node(object):
@@ -323,3 +325,11 @@ class BinarySearchTree(object):
                     else:
                         vertex = vertex.left
         return
+
+
+# if __name__ == "__main__":
+
+#     res1 = timeit.repeat(stmt="depth(g)", setup="from graph import g, depth", number=10, repeat=3)
+#     res2 = timeit.repeat(stmt="breadth(g)", setup="from graph import g, breadth", number=10, repeat=3)
+#     print("Depth First: ", res1)
+#     print("Breadth First: ", res2)
