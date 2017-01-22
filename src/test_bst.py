@@ -210,15 +210,40 @@ def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
 def test_in_order_traversal_first_node_traversed_is_1_reg(filled_bst):
     """In-order traversal's first value from generator will get a 1."""
     assert filled_bst.in_order() == 1
+    assert filled_bst.in_order() == 3
+    assert filled_bst.in_order() == 4
+    assert filled_bst.in_order() == 6
+    assert filled_bst.in_order() == 7
+    assert filled_bst.in_order() == 8
+    assert filled_bst.in_order() == 10
+    assert filled_bst.in_order() == 13
+    assert filled_bst.in_order() == 14
 
 
-def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
+def test_pre_order_traversal_first_node_traversed_is_8(filled_bst):
     """Pre-order traversal will get 8."""
     assert filled_bst.pre_order() == 8
+    assert filled_bst.pre_order() == 3
+    assert filled_bst.pre_order() == 1
+    assert filled_bst.pre_order() == 6
+    assert filled_bst.pre_order() == 4
+    assert filled_bst.pre_order() == 7
+    assert filled_bst.pre_order() == 10
+    assert filled_bst.pre_order() == 14
+    assert filled_bst.pre_order() == 13
 
 
 def test_post_order_traversal(filled_bst):
     """Post-order traversal."""
+    assert filled_bst.post_order() == 1
+    assert filled_bst.post_order() == 4
+    assert filled_bst.post_order() == 7
+    assert filled_bst.post_order() == 6
+    assert filled_bst.post_order() == 3
+    assert filled_bst.post_order() == 13
+    assert filled_bst.post_order() == 14
+    assert filled_bst.post_order() == 10
+    assert filled_bst.post_order() == 8
 
 
 def test_delete_empty():
