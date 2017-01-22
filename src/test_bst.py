@@ -202,7 +202,7 @@ def test_balance():
 def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
     """In-order traversal will start with 1."""
     in_order_list = []
-    for x in filled_bst.in_order_trav():
+    for x in filled_bst._in_order_trav():
         in_order_list.append(x)
     assert in_order_list[0] == 1
 
@@ -473,3 +473,18 @@ def test_big_bst_insert_delete_root_min_node_with_right_child(big_bst):
     assert a.root.right.right.left.left.value == 52
     assert a.root.right.right.right.right.value == 70
     assert a.root.right.right.right.left.value == 63
+
+
+def test_multiple_delete_to_empty(filled_bst):
+    """Test that all nodes can be deleted and size output reflects this."""
+    a = filled_bst
+    a.delete(8)
+    a.delete(10)
+    a.delete(3)
+    a.delete(14)
+    a.delete(13)
+    a.delete(1)
+    a.delete(6)
+    a.delete(7)
+    a.delete(4)
+    assert a.size() == 0
