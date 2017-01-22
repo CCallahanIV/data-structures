@@ -268,8 +268,7 @@ class BinarySearchTree(object):
                 left = del_node.left
                 right = del_node.right
                 min_node = min_parent.left
-                if min_node.right:
-                    min_parent.left = min_node.right
+                min_parent.left = min_node.right
                 del_node = min_node
                 del_node.right = right
                 del_node.left = left
@@ -291,8 +290,7 @@ class BinarySearchTree(object):
                 left = del_node.left
                 right = del_node.right
                 min_node = min_parent.left
-                if min_node.right:
-                    min_parent.left = min_node.right
+                min_parent.left = min_node.right
                 del_node = min_node
                 del_node.right = right
                 del_node.left = left

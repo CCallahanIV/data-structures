@@ -303,7 +303,7 @@ def test_node_deletion_from_big_tree_with_grand_children(big_bst):
     assert a.root.right.left.right.value == 47
     assert a.root.right.left.left.value == 42
     assert a.root.right.left.right.right.value == 49
-    assert a.root.right.left.right.left.value is None
+    assert a.root.right.left.right.left is None
 
 
 def test_deletion_from_big_tree_with_great_grand_children(big_bst):
@@ -316,6 +316,6 @@ def test_deletion_from_big_tree_with_great_grand_children(big_bst):
     assert a.root.right.right.left.value == 55
     assert a.root.right.right.right.value == 65
     assert a.root.right.right.left.right.value == 57
-    assert a.root.right.right.left.left.value is None
+    assert a.root.right.right.left.left is None
     assert a.root.right.right.right.right.value == 70
     assert a.root.right.right.right.left.value == 63
