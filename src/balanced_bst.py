@@ -14,7 +14,6 @@ class Node(object):
         self.left = left
         self.right = right
         self.parent = None
-        self.red = False
 
 
 class BinarySearchTree(object):
@@ -59,7 +58,9 @@ class BinarySearchTree(object):
                     if vertex.right:
                         vertex = vertex.right
                     else:
-                        vertex.right = Node(val)
+                        new_node = Node(val)
+                        vertex.right = new_node
+                        new_node.parent = vertex
                         self.counter += 1
                         break
 
@@ -67,7 +68,9 @@ class BinarySearchTree(object):
                     if vertex.left:
                         vertex = vertex.left
                     else:
-                        vertex.left = Node(val)
+                        new_node = Node(val)
+                        vertex.left = new_node
+                        new_node.parent = vertex
                         self.counter += 1
                         break
                 else:
@@ -200,6 +203,28 @@ class BinarySearchTree(object):
             if (vertex.right):
                 q.enqueue(vertex.right)
 
+    def print_bst(self):
+        """Return."""
+        thislevel = [self.root]
+        while thislevel:
+            nextlevel = []
+            print_level = []
+            counter = 0
+            for n in thislevel:
+                print(print_level[counter])
+                if n.left:
+                    nextlevel.append(n.left)
+                    print_level.append(n.left.value)
+                else:
+                    print_level.append('_')
+                if n.right:
+                    nextlevel.append(n.right)
+                    print_level.append(n.right.value)
+                else:
+                    print_level.append('_')
+            print()
+            thislevel = nextlevel
+
     def delete(self, val):
         """Remove val from the tree if present, if not present this method is a no-op. Return None in all cases."""
         vertex = self.root
@@ -212,11 +237,13 @@ class BinarySearchTree(object):
             right = self.root.right
             if not right:
                 self.root = self.root.left
+                self.root.parent = None
                 self.counter -= 1
                 return
             if not right.left:
                 self.root = right
                 self.root.left = left
+                self.root.parent = None
                 self.counter -= 1
                 return
             vertex = vertex.right
@@ -228,9 +255,12 @@ class BinarySearchTree(object):
                     vertex = vertex.left
             min_node = min_parent.left
             min_parent.left = min_node.right
+            if min_parent.left:
+                min_parent.left.parent = min_parent
             self.root = min_node
             self.root.left = left
             self.root.right = right
+            self.root.parent = None
             self.counter -= 1
         else:
             while True:
@@ -256,22 +286,33 @@ class BinarySearchTree(object):
                     parent_of_del.right = None
                     self.counter -= 1
                     return
-                del_node = parent_of_del.right
                 if min_parent is del_node:
                     right = del_node.right
                     del_node_left = del_node.left
                     parent_of_del.right = right
+                    if right:
+                        right.parent = parent_of_del
                     parent_of_del.right.left = del_node_left
+                    if del_node_left:
+                        del_node_left.parent = parent_of_del.right
                     self.counter -= 1
                     return
                 left = del_node.left
                 right = del_node.right
                 min_node = min_parent.left
                 min_parent.left = min_node.right
+                if min_parent.left:
+                    min_parent.left.parent = min_parent
                 del_node = min_node
                 del_node.right = right
+                if right:
+                    del_node.right.parent = del_node
                 del_node.left = left
+                if left:
+                    del_node.left.parent = del_node
                 parent_of_del.right = del_node
+                if del_node:
+                    parent_of_del.right.parent = parent_of_del
                 self.counter -= 1
 
             elif val == parent_of_del.left.value:
@@ -279,22 +320,33 @@ class BinarySearchTree(object):
                     parent_of_del.left = None
                     self.counter -= 1
                     return
-                del_node = parent_of_del.left
                 if min_parent is del_node:
                     left = del_node.right
                     del_node_left = del_node.left
                     parent_of_del.left = left
+                    if left:
+                        left.parent = parent_of_del
                     parent_of_del.left.left = del_node_left
+                    if del_node_left:
+                        del_node_left.parent = parent_of_del.right
                     self.counter -= 1
                     return
                 left = del_node.left
                 right = del_node.right
                 min_node = min_parent.left
                 min_parent.left = min_node.right
+                if min_parent.left:
+                    min_parent.left.parent = min_parent
                 del_node = min_node
                 del_node.right = right
+                if right:
+                    del_node.right.parent = del_node
                 del_node.left = left
+                if left:
+                    del_node.left.parent = del_node
                 parent_of_del.left = del_node
+                if del_node:
+                    parent_of_del.left.parent = parent_of_del
                 self.counter -= 1
 
     def _find_min_parent(self, vertex, side):
@@ -324,6 +376,30 @@ class BinarySearchTree(object):
                     else:
                         vertex = vertex.left
         return
+
+    def _balance_tree(self, node):
+        self._left_rotation(node)
+        return node
+
+    def _left_rotation(self, node):
+        self.root = node.right
+        self.root.left = node
+        self.root.left.parent = self.root
+        self.root.parent = None
+        return node
+
+    def _left_left_case():
+        pass
+
+    def _right_right_case():
+        pass
+
+    def _left_right_case():
+        pass
+
+    def _right_left_case():
+        pass
+
 
 
 # if __name__ == "__main__":
