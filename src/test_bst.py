@@ -300,3 +300,17 @@ def test_auto_balance_adding_to_empty_tree(e_tree):
     assert e_tree.root.value == 10
     assert e_tree.root.right.value == 15
     assert e_tree.root.left.value == 5
+
+
+def test_auto_balance_two_step_adding_to_e_tree(e_tree):
+    """Test autobalance on tree that leads to two step rotation."""
+    e_tree.insert(5)
+    e_tree.insert(10)
+    e_tree.insert(7)  #<-- should initiate two step balance.
+    assert e_tree.root.value == 7
+    assert e_tree.root.left.value == 5
+    assert e_tree.root.right.value == 10
+    assert e_tree.root.left.right is None
+    assert e_tree.root.left.left is None
+    assert e_tree.root.right.right is None
+    assert e_tree.root.right.left is None
