@@ -75,6 +75,7 @@ class BinarySearchTree(object):
                         break
                 else:
                     break
+        self._balance_tree(self.root)
 
     def size(self):
         """Return size of Binary Search Tree."""
@@ -348,6 +349,7 @@ class BinarySearchTree(object):
                 if del_node:
                     parent_of_del.left.parent = parent_of_del
                 self.counter -= 1
+        self._balance_tree()
 
     def _find_min_parent(self, vertex, side):
         """Find the parent of the replacement node, given the parent of the delete node."""
@@ -378,26 +380,28 @@ class BinarySearchTree(object):
         return
 
     def _balance_tree(self, node):
-        self._left_rotation(node)
-        return node
+        if self.size() >= 3:
+            if self.root.right:
+                self._left_rotation(node)
+            else:
+                self._right_rotation(node)
 
     def _left_rotation(self, node):
         self.root = node.right
         self.root.left = node
         self.root.left.parent = self.root
         self.root.parent = None
-        return node
 
-    def _left_left_case():
+    def _right_rotation(self, node):
+        self.root = node.left
+        self.root.right = node
+        self.root.right.parent = self.root
+        self.root.parent = None
+
+    def _left_right_rotation(self, node):
         pass
 
-    def _right_right_case():
-        pass
-
-    def _left_right_case():
-        pass
-
-    def _right_left_case():
+    def _right_left_rotation(self, node):
         pass
 
 
