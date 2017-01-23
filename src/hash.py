@@ -19,7 +19,7 @@ class AddHash(object):
         self.slots = slots
         self.table = []
         for i in range(slots):
-            self.table[i] = []
+            self.table.append([])
 
     def get(self, key):
         """Return a value stored with given key."""
@@ -64,19 +64,26 @@ class FNVHash(object):
     def __init__(self, slots):
         """Set starting table values."""
         self.slots = slots
-        self.table = {}
+        self.table = []
         for i in range(slots):
-            self.table[i] = []
+            self.table.append([])
 
     def get(self, key):
         """Return a value stored with given key."""
-        return self.table[self._hash(key)]
+        bucket = self.table[self._hash(key)]
+        return [item for item in bucket if item[0] == key][0]
 
     def set(self, key, val):
         """Store val at key in the table."""
         if not isinstance(key, str):
             raise TypeError('key must be type str')
-        self.table[self._hash(key)].append(val)
+        index = self._hash(key)
+        bucket = self.table[index]
+        for item in bucket:
+            if key == item[0]:
+                bucket.remove(item)
+                break
+        bucket.append((key, val))
         return None
 
     def _hash(self, key):

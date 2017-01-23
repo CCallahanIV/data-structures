@@ -3,11 +3,6 @@
 # import pytest
 import os
 
-# @pytest.fixture
-# def small_add():
-#     from hash import AddHash
-#     return AddHash(11)
-
 
 def test_add_hash():
     """Test the additive hash table."""
@@ -21,7 +16,7 @@ def test_add_hash():
         a_hash.set(key, key)
 
     for key in keys:
-        assert key == a_hash.get(key)
+        assert key == a_hash.get(key)[1]
 
 
 def test_fnv_hash():
@@ -36,4 +31,4 @@ def test_fnv_hash():
         f_hash.set(key, key)
 
     for key in keys:
-        assert key == f_hash.get(key)
+        assert key == f_hash.get(key)[1]
