@@ -69,7 +69,7 @@ class FNVHash(object):
         """Store val at key in the table."""
         if not isinstance(key, str):
             raise TypeError('key must be type str')
-        self.table[(self._hash(key) % self.slots)].append(val)
+        self.table[self._hash(key)].append(val)
         return None
 
     def _hash(self, key):
@@ -78,4 +78,4 @@ class FNVHash(object):
         for letter in key:
             hash_total = (hash_total * 16777619) ^ ord(letter)
 
-        return hash_total
+        return hash_total % self.slots
