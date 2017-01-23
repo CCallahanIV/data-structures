@@ -296,7 +296,7 @@ def test_auto_balance_adding_to_empty_tree(e_tree):
     e_tree.insert(5)
     e_tree.insert(10)
     assert e_tree.root.value == 5
-    e_tree.insert(15)   #<-- Should balance.
+    e_tree.insert(15)   # <-- Should balance.
     assert e_tree.root.value == 10
     assert e_tree.root.right.value == 15
     assert e_tree.root.left.value == 5

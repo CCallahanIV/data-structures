@@ -127,7 +127,9 @@ class BinarySearchTree(object):
             if start is None:
                 return 0
             else:
-                return max(depth_wrapped(start.right), depth_wrapped(start.left)) + 1
+                right_depth = depth_wrapped(start.right)
+                left_depth = depth_wrapped(start.left)
+                return max(right_depth, left_depth) + 1
         if start is '':
             return depth_wrapped(self.root)
         else:
