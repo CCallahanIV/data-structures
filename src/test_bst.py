@@ -177,12 +177,12 @@ def test_balance():
     assert a.balance() == 0
 
 
-def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
+def test_in_order_traversal_with_generator_first_node_traversed_is_1(filled_bst):
     """In-order traversal will start with 1. """
     in_order_list = []
-    for x in filled_bst.in_order():
-        in_order_list.append(x)
-    assert in_order_list[0] == 1
+    import pdb; pdb.set_trace()
+    [x for x in filled_bst.in_order()]
+    assert in_order_list == [1, 2, 3, 4, 5, 6]
 
 
 def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
@@ -190,9 +190,11 @@ def test_in_order_traversal_first_node_traversed_is_1(filled_bst):
     assert filled_bst.in_order() == 1
 
 
-def test_pre_order_traversal_first_node_traversed_is_1(filled_bst):
-    """Pre-order traversal will get """
+def test_pre_order_traversal_first_node_traversed_is_8(filled_bst):
+    """Pre-order traversal will get an 8 first."""
     assert filled_bst.pre_order() == 8
+
 
 def test_post_order_traversal(filled_bst):
     """Post-order traversal."""
+    assert filled_bst.post_order() == 1
