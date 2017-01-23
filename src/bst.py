@@ -50,7 +50,6 @@ class BinarySearchTree(object):
         if self.root is None:
             self.root = Node(val)
             self.counter += 1
-            # self.container.append(val)
 
         else:
             vertex = self.root
@@ -61,7 +60,6 @@ class BinarySearchTree(object):
                     else:
                         vertex.right = Node(val)
                         self.counter += 1
-                        # self.container.append(val)
                         break
 
                 elif val < vertex.value:
@@ -70,7 +68,6 @@ class BinarySearchTree(object):
                     else:
                         vertex.left = Node(val)
                         self.counter += 1
-                        # self.container.append(val)
                         break
                 else:
                     break

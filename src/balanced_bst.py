@@ -13,6 +13,8 @@ class Node(object):
         self.value = value
         self.left = left
         self.right = right
+        self.parent = 
+        self.red = False
 
 
 class BinarySearchTree(object):
