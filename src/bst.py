@@ -33,7 +33,6 @@ class BinarySearchTree(object):
         """Init of the Binary Search Tree class."""
         self.root = None
         self.counter = 0
-        # self.container = []
         if if_iter:
             try:
                 for value in if_iter:
@@ -127,7 +126,7 @@ class BinarySearchTree(object):
         return self._calc_depth(self.root.right) - self._calc_depth(self.root.left)
 
     def in_order(self):
-        """Return."""
+        """Return the next value from the generator _in_order."""
         return next(self._in_order)
 
     def _in_order_trav(self):
@@ -145,7 +144,7 @@ class BinarySearchTree(object):
                 vertex = vertex.right
 
     def pre_order(self):
-        """Return."""
+        """Return the next value from the generator _pre_order."""
         return next(self._pre_order)
 
     def _pre_order_trav(self):
@@ -162,7 +161,7 @@ class BinarySearchTree(object):
                 vertex = vertex.right
 
     def post_order(self):
-        """Return."""
+        """Return the next value from the generator _post_order."""
         return next(self._post_order)
 
     def _post_order_trav(self):
@@ -184,7 +183,7 @@ class BinarySearchTree(object):
                     last_vertex = visited.pop()
 
     def breadth_first(self):
-        """Fill in later."""
+        """Return the next value from the generator _breadth_first."""
         return next(self._breadth_first)
 
     def _breadth_first_trav(self):
