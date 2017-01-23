@@ -254,7 +254,6 @@ class BinarySearchTree(object):
                     parent_of_del.right = None
                     self.counter -= 1
                     return
-                del_node = parent_of_del.right
                 if min_parent is del_node:
                     right = del_node.right
                     del_node_left = del_node.left
@@ -277,7 +276,6 @@ class BinarySearchTree(object):
                     parent_of_del.left = None
                     self.counter -= 1
                     return
-                del_node = parent_of_del.left
                 if min_parent is del_node:
                     left = del_node.right
                     del_node_left = del_node.left
