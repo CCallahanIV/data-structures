@@ -23,13 +23,13 @@ class AddHash(object):
 
     def get(self, key):
         """Return a value stored with given key."""
-        return self.table[ord(key)]
+        return self.table[self._hash(key)]
 
     def set(self, key, val):
         """Store val at key in the table."""
         if not isinstance(key, str):
             raise TypeError('key must be type str')
-        self.table[(self._hash(key) % self.slots)].append(val)
+        self.table[self._hash(key)].append(val)
         return None
 
     def _hash(self, key):
@@ -38,7 +38,7 @@ class AddHash(object):
         for letter in key:
             hash_total += ord(letter)
 
-        return hash_total
+        return hash_total % self.slots
 
 
 class FNVHash(object):
@@ -63,7 +63,7 @@ class FNVHash(object):
 
     def get(self, key):
         """Return a value stored with given key."""
-        return self.table[ord(key)]
+        return self.table[self._hash(key)]
 
     def set(self, key, val):
         """Store val at key in the table."""
