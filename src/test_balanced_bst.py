@@ -97,8 +97,7 @@ def filled_bst_rot_5_rl_gc_5():
 
 def test_simple_3_node_right_rotation():
     """Balance bst via right rotation, when adding 1 to tree."""
-    filled_bst_rot_2_r_1
-    a = filled_bst_rot_2_l_3.balance_tree()
+    a = filled_bst_rot_2_r_1.insert(1)
     assert a.root.value == 2
     assert a.root.right.value == 3
     assert a.root.left.value == 1
@@ -106,8 +105,7 @@ def test_simple_3_node_right_rotation():
 
 def test_simple_3_node_left_rotation():
     """Balance bst via right rotation, when adding 1 to tree."""
-    filled_bst_rot_2_l_3
-    a = filled_bst_rot_2_l_3.balance_tree()
+    a = filled_bst_rot_2_l_3.insert(3)
     assert a.root.value == 2
     assert a.root.right.value == 3
     assert a.root.left.value == 1
