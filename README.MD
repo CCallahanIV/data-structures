@@ -35,3 +35,15 @@ in Python containing the following methods:
 | TOTAL                    |  256  |  3   | 98%   |
 
 
+#Hash Functions:
+    Additive hash:
+    __init__ : O(n)
+    get: O(1) + O(k)
+    set: O(k) + O(1)
+    _hash: O(m)
+
+    FNV hash:
+    __init__ : O(n)
+    get: O(1) + O(k)
+    set: O(k) + O(1)
+    _hash: O(m)
