@@ -268,26 +268,34 @@ class BinarySearchTree(object):
     def _rotate_right(self, sub_root):
         """Given root and pivot nodes, complete a right rotation."""
         pivot = sub_root.left
+        sub_root.left = pivot.right
+        if pivot.right is not None:
+            pivot.right.parent = sub_root
+        pivot.parent = sub_root.parent
         if sub_root is self.root:
             self.root = pivot
-        pivot.parent = sub_root.parent
-        sub_root.left = None
-        if pivot.right:
-            pivot.right.parent = sub_root
-            sub_root.left = pivot.right
+        else:
+            if sub_root is sub_root.parent.right:
+                    sub_root.parent.right = pivot
+            else:
+                sub_root.parent.left = pivot
         pivot.right = sub_root
         sub_root.parent = pivot
 
     def _rotate_left(self, sub_root):
         """Give root and pivot nodes, complete a left rotation."""
         pivot = sub_root.right
+        sub_root.right = pivot.left
+        if pivot.left is not None:
+            pivot.left.parent = sub_root
+        pivot.parent = sub_root.parent
         if sub_root is self.root:
             self.root = pivot
-        pivot.parent = sub_root.parent
-        sub_root.right = None
-        if pivot.left:
-            pivot.left.parent = sub_root
-            sub_root.right = pivot.left
+        else:
+            if sub_root is sub_root.parent.left:
+                    sub_root.parent.left = pivot
+            else:
+                sub_root.parent.right = pivot
         pivot.left = sub_root
         sub_root.parent = pivot
 
