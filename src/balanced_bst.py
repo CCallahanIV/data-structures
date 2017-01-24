@@ -380,21 +380,25 @@ class BinarySearchTree(object):
         return
 
     def _balance_tree(self, node):
-        if self.size() >= 3:
+        if self.balance > 1 or self.balance < -1:
             if self.root.right:
                 self._left_rotation(node)
             else:
                 self._right_rotation(node)
 
     def _left_rotation(self, node):
+        node_right = node.right.left
         self.root = node.right
         self.root.left = node
+        self.root.left.right = node_right
         self.root.left.parent = self.root
         self.root.parent = None
 
     def _right_rotation(self, node):
+        node_left = node.left.right
         self.root = node.left
         self.root.right = node
+        self.root.right.left = node_left
         self.root.right.parent = self.root
         self.root.parent = None
 
