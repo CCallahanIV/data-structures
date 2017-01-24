@@ -628,3 +628,51 @@ def test_bst_14_values_starting_at_14_down():
     assert a.root.left.left.left.value == 1
     assert a.root.left.right.right.value == 6
     assert a.root.left.right.left.value == 4
+
+
+def test_bst_left_right_basic(filled_bst_rot_2_r_1):
+    """Test left right rotation."""
+    a = filled_bst_rot_2_r_1
+    a.insert(2.5)
+    assert a.root.value == 2.5
+    assert a.root.parent is None
+    assert a.root.left.value == 2
+    assert a.root.right.value == 3
+
+
+def test_bst_right_left_basic(filled_bst_rot_2_l_3):
+    """Test right left rotation."""
+    a = filled_bst_rot_2_l_3
+    a.insert(1.5)
+    assert a.root.value == 1.5
+    assert a.root.parent is None
+    assert a.root.left.value == 1
+    assert a.root.right.value == 2
+
+
+def test_bst_left_right_root_left_right_add_left(filled_bst_rot_lr_gc_7):
+    """Test left right rotation."""
+    a = filled_bst_rot_lr_gc_7
+    a.insert(7)
+    assert a.root.value == 8
+    assert a.root.parent is None
+    assert a.root.left.value == 5
+    assert a.root.left.left.value == 2
+    assert a.root.left.right.value == 7
+    assert a.root.right.value == 10
+    assert a.root.right.left.value is None
+    assert a.root.right.right.value == 12
+
+
+def test_bst_left_right_root_left_right_add_right(filled_bst_rot_lr_gc_7):
+    """Test left right rotation."""
+    a = filled_bst_rot_lr_gc_7
+    a.insert(9)
+    assert a.root.value == 8
+    assert a.root.parent is None
+    assert a.root.left.value == 5
+    assert a.root.left.left.value == 2
+    assert a.root.left.right is None
+    assert a.root.right.value == 10
+    assert a.root.right.left.value == 9
+    assert a.root.right.right.value == 12
