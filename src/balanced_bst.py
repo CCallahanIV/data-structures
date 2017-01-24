@@ -364,12 +364,12 @@ class BinarySearchTree(object):
     def _balance_tree(self):
         for node in self._post_order_node():
             if self._calc_balance(node) > 1:
-                if self._calc_balance(node.right.left) > self._calc_balance(node.right.right):
+                if self._calc_balance(node.right) < 0:
                     self._right_left_rotation(node)
                 else:
                     self._left_rotation(node)
             elif self._calc_balance(node) < -1:
-                if self._calc_balance(node.left.right) > self._calc_balance(node.left.left):
+                if self._calc_balance(node.left) > 0:
                     self._left_right_rotation(node)
                 else:
                     self._right_rotation(node)
@@ -420,15 +420,16 @@ class BinarySearchTree(object):
 
     def _left_right_rotation(self, node):
         """Try left right rotation on node."""
-        if node.left.right.left.value < node.left.right.value:
+        if node.left.right.left and node.left.right and node.left.right.left.value < node.left.right.value:
             vertex = node
             left_head = node.left
             right_sub = node.left.right
             switcher = node.left.right.left
-            switcher.parent = left_sub
+            switcher.parent = left_head
             left_head.parent = right_sub
             left_head.right = switcher
             right_sub.parent = vertex.parent
+            vertex.parent.
             right_sub.right = vertex
             right_sub.left = left_head
             vertex.parent = right_sub
@@ -449,7 +450,7 @@ class BinarySearchTree(object):
 
     def _right_left_rotation(self, node):
         """Try right left rotation on node."""
-        if node.right.left.left.value > node.right.left.value:
+        if node.right.left.left and node.right.left and node.right.left.left.value > node.right.left.value:
             vertex = node
             right_head = node.right
             left_sub = node.right.left
