@@ -676,3 +676,27 @@ def test_bst_left_right_root_left_right_add_right(filled_bst_rot_lr_gc_7):
     assert a.root.right.value == 10
     assert a.root.right.left.value == 9
     assert a.root.right.right.value == 12
+
+
+def test_bst_double_rotation_one():
+    """Test double rotation one."""
+    a = BinarySearchTree([10, 5, 15, 13, 20])
+    a.insert(12)
+    assert a.root.value == 13
+    assert a.root.right.value == 15
+    assert a.root.left.value == 10
+    assert a.root.right.right.value == 20
+    assert a.root.left.left.value == 5
+    assert a.root.left.right.value == 12
+
+
+def test_bst_double_rotation_two():
+    """Test double rotation one."""
+    a = BinarySearchTree([15, 10, 20, 5, 13,])
+    a.insert(14)
+    assert a.root.value == 13
+    assert a.root.right.value == 15
+    assert a.root.left.value == 10
+    assert a.root.right.right.value == 20
+    assert a.root.right.left.value == 14
+    assert a.root.left.left.value == 5
