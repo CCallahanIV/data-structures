@@ -45,38 +45,6 @@ class BinarySearchTree(object):
         self._post_order = self._post_order_trav()
         self._breadth_first = self._breadth_first_trav()
 
-    def insert(self, val):
-        """Take a value, inserts into Binary Search Tree at correct placement."""
-        if self.root is None:
-            self.root = Node(val)
-            self.counter += 1
-
-        else:
-            vertex = self.root
-            while True:
-                if val > vertex.value:
-                    if vertex.right:
-                        vertex = vertex.right
-                    else:
-                        new_node = Node(val)
-                        vertex.right = new_node
-                        new_node.parent = vertex
-                        self.counter += 1
-                        break
-
-                elif val < vertex.value:
-                    if vertex.left:
-                        vertex = vertex.left
-                    else:
-                        new_node = Node(val)
-                        vertex.left = new_node
-                        new_node.parent = vertex
-                        self.counter += 1
-                        break
-                else:
-                    break
-        self._balance_tree(self.root)
-
     def size(self):
         """Return size of Binary Search Tree."""
         return self.counter
@@ -129,7 +97,11 @@ class BinarySearchTree(object):
         """
         if self.root is None:
             return 0
-        return self._calc_depth(self.root.right) - self._calc_depth(self.root.left)
+        return self._calc_balance(self.root)
+
+    def _calc_balance(self, node):
+        """Calculate the balance of a subtree at node."""
+        return self._calc_depth(node.right) - self._calc_depth(node.left)
 
     def in_order(self):
         """Return the next value from the generator _in_order."""
@@ -204,27 +176,37 @@ class BinarySearchTree(object):
             if (vertex.right):
                 q.enqueue(vertex.right)
 
-    def print_bst(self):
-        """Return."""
-        thislevel = [self.root]
-        while thislevel:
-            nextlevel = []
-            print_level = []
-            counter = 0
-            for n in thislevel:
-                print(print_level[counter])
-                if n.left:
-                    nextlevel.append(n.left)
-                    print_level.append(n.left.value)
+    def insert(self, val):
+        """Take a value, inserts into Binary Search Tree at correct placement."""
+        if self.root is None:
+            self.root = Node(val)
+            self.counter += 1
+
+        else:
+            vertex = self.root
+            while True:
+                if val > vertex.value:
+                    if vertex.right:
+                        vertex = vertex.right
+                    else:
+                        new_node = Node(val)
+                        vertex.right = new_node
+                        new_node.parent = vertex
+                        self.counter += 1
+                        break
+
+                elif val < vertex.value:
+                    if vertex.left:
+                        vertex = vertex.left
+                    else:
+                        new_node = Node(val)
+                        vertex.left = new_node
+                        new_node.parent = vertex
+                        self.counter += 1
+                        break
                 else:
-                    print_level.append('_')
-                if n.right:
-                    nextlevel.append(n.right)
-                    print_level.append(n.right.value)
-                else:
-                    print_level.append('_')
-            print()
-            thislevel = nextlevel
+                    break
+        self._balance_tree()
 
     def delete(self, val):
         """Remove val from the tree if present, if not present this method is a no-op. Return None in all cases."""
@@ -379,34 +361,115 @@ class BinarySearchTree(object):
                         vertex = vertex.left
         return
 
-    def _balance_tree(self, node):
-        if self.balance > 1 or self.balance < -1:
-            if self.root.right:
+    def _balance_tree(self):
+        # import pdb;pdb.set_trace()
+        for node in self._post_order_node():
+            if self._calc_balance(node) > 1:
                 self._left_rotation(node)
-            else:
+            elif self._calc_balance(node) < -1:
                 self._right_rotation(node)
 
     def _left_rotation(self, node):
-        node_right = node.right.left
-        self.root = node.right
-        self.root.left = node
-        self.root.left.right = node_right
-        self.root.left.parent = self.root
-        self.root.parent = None
+        a = node
+        a_parent = a.parent
+        b = a.right
+        d = b.left
+        if a is self.root:
+            self.root = b
+            self.root.parent = None
+            self.root.left = a
+            a.parent = self.root
+            a.right = d
+            if d:
+                d.parent = a
+            return
+        a_parent.right = b
+        b.parent = a_parent
+        b.left = a
+        a.parent = b
+        a.right = d
+        if d:
+            d.parent = a
 
     def _right_rotation(self, node):
-        node_left = node.left.right
-        self.root = node.left
-        self.root.right = node
-        self.root.right.left = node_left
-        self.root.right.parent = self.root
-        self.root.parent = None
+        a = node
+        a_parent = a.parent
+        b = a.left
+        d = b.right
+        if a is self.root:
+            self.root = b
+            self.root.parent = None
+            self.root.right = a
+            a.parent = self.root
+            a.left = d
+            if d:
+                d.parent = a
+            return
+        a_parent.left = b
+        b.parent = a_parent
+        b.right = a
+        a.parent = b
+        a.left = d
+        if d:
+            d.parent = a
 
     def _left_right_rotation(self, node):
         pass
 
     def _right_left_rotation(self, node):
         pass
+
+    def _post_order_node(self):
+        vertex = self.root
+        peek_vertex = None
+        last_vertex = None
+        visited = []
+        while (visited or vertex is not None):
+            if vertex is not None:
+                visited.append(vertex)
+                vertex = vertex.left
+            else:
+                peek_vertex = visited[-1]
+                if peek_vertex.right and peek_vertex.right is not last_vertex:
+                    vertex = peek_vertex.right
+                else:
+                    yield peek_vertex
+                    last_vertex = visited.pop()
+
+    # def balance(self):
+    #     """
+    #     Return an integer, positive or negative that represents how well balanced the tree is.
+
+    #     Trees which are higher on the left than the right should return a positive value,
+    #     trees which are higher on the right than the left should return a negative value.
+    #     An ideally-balanced tree should return 0.
+    #     """
+    #     if self.root is None:
+    #         return 0
+    #     return self._calc_depth(self.root.right) - self._calc_depth(self.root.left)
+
+
+    # def print_bst(self):
+    #     """Return."""
+    #     thislevel = [self.root]
+    #     while thislevel:
+    #         nextlevel = []
+    #         print_level = []
+    #         counter = 0
+    #         for n in thislevel:
+    #             print(print_level[counter])
+    #             if n.left:
+    #                 nextlevel.append(n.left)
+    #                 print_level.append(n.left.value)
+    #             else:
+    #                 print_level.append('_')
+    #             if n.right:
+    #                 nextlevel.append(n.right)
+    #                 print_level.append(n.right.value)
+    #             else:
+    #                 print_level.append('_')
+    #         print()
+    #         thislevel = nextlevel
 
 
 
