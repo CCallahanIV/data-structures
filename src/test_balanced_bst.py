@@ -54,13 +54,13 @@ def test_simple_3_node_left_rotation(filled_bst_rot_2_l_3):
 
 
 def test_left_right_rotation(filled_bst_rot_lr_gc_7):
-    """Balance bst via left-right rotation, when adding 2 to tree of 5, 6, 3, 1."""
+    """Balance bst via left-right rotation, when adding 7 to tree of 10, 12, 5, 8, 2."""
     a = filled_bst_rot_lr_gc_7
     a.insert(7)
     assert a.root.value == 8
     assert a.root.right.value == 10
     assert a.root.left.value == 5
-    assert a.root.right.left.value == 7
+    assert a.root.left.right.value == 7
     assert a.root.left.left.value == 2
     assert a.root.right.right.value == 12
 
@@ -640,21 +640,21 @@ def test_bst_14_values_starting_at_14_down():
 def test_bst_left_right_basic(filled_bst_rot_2_r_1):
     """Test left right rotation."""
     a = filled_bst_rot_2_r_1
-    a.insert(2.5)
-    assert a.root.value == 2.5
+    a.insert(1)
+    assert a.root.value == 2
     assert a.root.parent is None
-    assert a.root.left.value == 2
+    assert a.root.left.value == 1
     assert a.root.right.value == 3
 
 
 def test_bst_right_left_basic(filled_bst_rot_2_l_3):
     """Test right left rotation."""
     a = filled_bst_rot_2_l_3
-    a.insert(1.5)
-    assert a.root.value == 1.5
+    a.insert(3)
+    assert a.root.value == 2
     assert a.root.parent is None
     assert a.root.left.value == 1
-    assert a.root.right.value == 2
+    assert a.root.right.value == 3
 
 
 def test_bst_left_right_root_left_right_add_left(filled_bst_rot_lr_gc_7):
@@ -667,7 +667,7 @@ def test_bst_left_right_root_left_right_add_left(filled_bst_rot_lr_gc_7):
     assert a.root.left.left.value == 2
     assert a.root.left.right.value == 7
     assert a.root.right.value == 10
-    assert a.root.right.left.value is None
+    assert a.root.right.left is None
     assert a.root.right.right.value == 12
 
 
