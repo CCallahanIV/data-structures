@@ -28,6 +28,7 @@ def filled_bst_rot_lr_gc_7():
     new_tree = BinarySearchTree(BST_ROT_LR_GC_7)
     return new_tree
 
+
 @pytest.fixture
 def filled_bst_rot_rl():
     """Fixture for a binary search tree for a right-left rotation."""
@@ -702,7 +703,7 @@ def test_right_left_root_right_left_add_left(filled_bst_rot_rl):
 def test_right_left_root_right_left_add_right(filled_bst_rot_rl):
     """Test right left rotation."""
     a = filled_bst_rot_rl
-    a.insert(12)
+    a.insert(14)
     assert a.root.value == 13
     assert a.root.parent is None
     assert a.root.left.value == 10
@@ -711,3 +712,27 @@ def test_right_left_root_right_left_add_right(filled_bst_rot_rl):
     assert a.root.right.value == 15
     assert a.root.right.left.value == 14
     assert a.root.right.right.value == 20
+
+
+def test_bst_double_rotation_one():
+    """Test double rotation one."""
+    a = BinarySearchTree([10, 5, 15, 13, 20])
+    a.insert(12)
+    assert a.root.value == 13
+    assert a.root.right.value == 15
+    assert a.root.left.value == 10
+    assert a.root.right.right.value == 20
+    assert a.root.left.left.value == 5
+    assert a.root.left.right.value == 12
+
+
+def test_bst_double_rotation_two():
+    """Test double rotation one."""
+    a = BinarySearchTree([15, 10, 20, 5, 13])
+    a.insert(14)
+    assert a.root.value == 13
+    assert a.root.right.value == 15
+    assert a.root.left.value == 10
+    assert a.root.right.right.value == 20
+    assert a.root.right.left.value == 14
+    assert a.root.left.left.value == 5
