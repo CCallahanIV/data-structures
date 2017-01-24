@@ -11,23 +11,21 @@
 
 
 """
-The Mailroom module allows the user to
-track donations and format emails for donors.
-The user can write tailored thank you emails
-given donor names and donation amounts.
-The user can create a report that is
-a list of donor names and their corresponding donation
-histories, arranged by in order of the total amount
-donated.
-The user can add a donor name to this list.
-The user can quit the program from Main Menu, and
-may return to Main Menu at any time.
+The HashTable is a data structure that implements an
+assosiative array. The structure maps keys to values
+in such a way that values may be accessed in O(1) time.
+This is done through use of a hashing function.
+The hashing function maps the content of the key to
+a specific bucket. As the content of the key always
+maps to a specific hash value, the key's value may
+be accessed quickly.
 """
 
 
 class HashTable(object):
     """Hash Table."""
 
+    """self._num_buckets - the number of buckets in the Hash Table."""
     """get(key) - should return the value stored with the given key"""
     """set(key, val) - should store the given val using the given key"""
     """_hash(key) - should hash the key provided (note that this is an internal api)"""
