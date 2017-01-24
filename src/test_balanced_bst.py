@@ -4,25 +4,7 @@ import pytest
 
 BST_ROT_2_R_1 = [3, 2]
 BST_ROT_2_L_3 = [1, 2]
-BST_ROT_4_R_1 = [5, 6, 4, 2]
-BST_ROT_4_LR_2 = [5, 6, 3, 1]
-BST_ROT_4_L_12 = [6, 8, 5, 10]
-BST_ROT_4_RL_9 = [6, 8, 5, 10]
-BST_ROT_5_L_GC_6 = [2, 1, 4, 3, 5]
-BST_ROT_5_L_GC_5 = [2, 1, 4, 3, 6]
-# BST_ROT_5_R_GC_1 = []
-# BST_ROT_5_LR_GC_3 = []
-
-# filled_bst_rot_2_r_1
-# filled_bst_rot_2_l_3
-# filled_bst_rot_4_r_1
-# filled_bst_rot_4_lr_2
-# filled_bst_rot_4_r_12
-# filled_bst_rot_4_rl_9
-# filled_bst_rot_5_l_gc_6
-# filled_bst_rot_5_rl_gc_5
-# filled_bst_rot_5_r_gc_1
-# filled_bst_rot_5_lr_gc_3
+BST_ROT_LR_GC_7 = [10, 12, 5, 8, 2]
 
 
 @pytest.fixture
@@ -40,59 +22,10 @@ def filled_bst_rot_2_l_3():
 
 
 @pytest.fixture
-def filled_bst_rot_4_r_1():
-    """Fixture for a 4 node tree for a right rotation with insertion of 1."""
-    new_tree = BinarySearchTree(BST_ROT_4_R_1)
+def filled_bst_rot_lr_gc_7():
+    """Fixture for a binary search tree for a left-right rotation with insertion of 7 to tree 10, 12, 5, 8, 2."""
+    new_tree = BinarySearchTree(BST_ROT_LR_GC_7)
     return new_tree
-
-
-@pytest.fixture
-def filled_bst_rot_4_lr_2():
-    """Fixture for a 4 node tree for a left-right rotation with insertion of 2."""
-    new_tree = BinarySearchTree(BST_ROT_4_LR_2)
-    return new_tree
-
-
-@pytest.fixture
-def filled_bst_rot_4_l_12():
-    """Fixture for a 4 node tree for a left rotation with insertion of 12."""
-    new_tree = BinarySearchTree(BST_ROT_4_L_12)
-    return new_tree
-
-
-@pytest.fixture
-def filled_bst_rot_4_rl_9():
-    """Fixture for a 4 node tree for a right-left rotation with insertion of 9."""
-    new_tree = BinarySearchTree(BST_ROT_4_RL_9)
-    return new_tree
-
-
-@pytest.fixture
-def filled_bst_rot_5_l_gc_6():
-    """Fixture for a 4 node tree for a right-left rotation with insertion of 9."""
-    new_tree = BinarySearchTree(BST_ROT_5_L_GC_6)
-    return new_tree
-
-
-@pytest.fixture
-def filled_bst_rot_5_l_gc_5():
-    """Fixture for a 4 node tree for a left rotation with insertion of 9."""
-    new_tree = BinarySearchTree(BST_ROT_5_L_GC_5)
-    return new_tree
-
-
-# @pytest.fixture
-# def filled_bst_rot_5_r_gc_1():
-#     """Fixture for a 4 node tree for a right-left rotation with insertion of 9."""
-#     new_tree = BinarySearchTree(BST_ROT_5_R_GC_1)
-#     return new_tree
-
-
-# @pytest.fixture
-# def filled_bst_rot_5_lr_gc_3():
-#     """Fixture for a 4 node tree for a right-left rotation with insertion of 9."""
-#     new_tree = BinarySearchTree(BST_ROT_5_LR_GC_3)
-#     return new_tree
 
 
 def test_simple_3_node_right_rotation(filled_bst_rot_2_r_1):
@@ -105,11 +38,308 @@ def test_simple_3_node_right_rotation(filled_bst_rot_2_r_1):
 
 
 def test_simple_3_node_left_rotation(filled_bst_rot_2_l_3):
-    """Balance bst via right rotation, when adding 3 to tree of 1, 2."""
+    """Balance bst via left rotation, when adding 3 to tree of 1, 2."""
     a = filled_bst_rot_2_l_3
     a.insert(3)
     assert a.root.value == 2
     assert a.root.right.value == 3
     assert a.root.left.value == 1
 
-# def test_left_right
+
+def test_left_right_rotation(filled_bst_rot_lr_gc_7):
+    """Balance bst via left-right rotation, when adding 2 to tree of 5, 6, 3, 1."""
+    a = filled_bst_rot_lr_gc_7
+    a.insert(7)
+    assert a.root.value == 8
+    assert a.root.right.value == 10
+    assert a.root.left.value == 5
+    assert a.root.right.left.value == 7
+    assert a.root.left.left.value == 2
+    assert a.root.right.right.value == 12
+
+def test_bst_empty_tree():
+    """Test balancing empty tree."""
+    a = BinarySearchTree()
+    assert a.root.value is None
+
+
+def test_bst_1_value():
+    """Test balancing tree with one value."""
+    a = BinarySearchTree()
+    a.insert(1)
+    assert a.root.value == 1
+    assert a.root.right.value is None
+    assert a.root.left.value is None
+
+
+def test_bst_2_values():
+    """Test balancing tree with two values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    assert a.root.value == 1
+    assert a.root.right.value == 2
+    assert a.root.left.value is None
+
+
+def test_bst_3_values():
+    """Test balancing tree with three values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    assert a.root.value == 2
+    assert a.root.right.value == 3
+    assert a.root.left.value == 1
+
+
+def test_bst_4_values():
+    """Test balancing tree with four values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    assert a.root.value == 2
+    assert a.root.right.value == 3
+    assert a.root.left.value == 1
+    assert a.root.right.right.value == 4
+
+
+def test_bst_5_values():
+    """Test balancing tree with five values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    assert a.root.value == 2
+    assert a.root.right.value == 4
+    assert a.root.left.value == 1
+    assert a.root.right.right.value == 5
+    assert a.root.right.left.value == 3
+
+
+def test_bst_6_values():
+    """Test balancing tree with six values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    assert a.root.value == 4
+    assert a.root.right.value == 5
+    assert a.root.left.value == 2
+    assert a.root.right.right.value == 6
+    assert a.root.left.left.value == 1
+    assert a.root.left.right.value == 3
+
+
+def test_bst_7_values():
+    """Test balancing tree with seven values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    assert a.root.value == 4
+    assert a.root.right.value == 6
+    assert a.root.left.value == 2
+    assert a.root.right.right.value == 7
+    assert a.root.left.left.value == 1
+    assert a.root.left.right.value == 3
+    assert a.root.right.left.value == 5
+
+
+def test_bst_8_values():
+    """Test balancing tree with eight values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    assert a.root.value == 4
+    assert a.root.right.value == 6
+    assert a.root.left.value == 2
+    assert a.root.right.right.value == 7
+    assert a.root.left.left.value == 1
+    assert a.root.left.right.value == 3
+    assert a.root.right.left.value == 5
+    assert a.root.right.right.right.value == 8
+
+def test_bst_9_values():
+    """Test balancing tree with nine values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    a.insert(9)
+    assert a.root.value == 4
+    assert a.root.right.value == 6
+    assert a.root.left.value == 2
+    assert a.root.right.right.value == 8
+    assert a.root.left.left.value == 1
+    assert a.root.left.right.value == 3
+    assert a.root.right.left.value == 5
+    assert a.root.right.right.right.value == 9
+    assert a.root.right.right.left.value == 9
+
+
+def test_bst_10_values():
+    """Test balancing tree with ten values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    a.insert(9)
+    a.insert(10)
+    assert a.root.value == 4
+    assert a.root.right.value == 8
+    assert a.root.left.value == 2
+    assert a.root.right.right.value == 9
+    assert a.root.left.left.value == 1
+    assert a.root.left.right.value == 3
+    assert a.root.right.right.right.value == 10
+    assert a.root.right.left.value == 6
+    assert a.root.right.left.right.value == 7
+    assert a.root.right.left.left.value == 5
+
+
+def test_bst_11_values():
+    """Test balancing tree with eleven values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    a.insert(9)
+    a.insert(10)
+    a.insert(11)
+    assert a.root.value == 4
+    assert a.root.right.value == 8
+    assert a.root.left.value == 2
+    assert a.root.right.right.value == 10
+    assert a.root.left.left.value == 1
+    assert a.root.left.right.value == 3
+    assert a.root.right.right.right.value == 11
+    assert a.root.right.right.left.value == 9
+    assert a.root.right.left.value == 6
+    assert a.root.right.left.right.value == 7
+    assert a.root.right.left.left.value == 5
+
+
+def test_bst_12_values():
+    """Test balancing tree with twelve values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    a.insert(9)
+    a.insert(10)
+    a.insert(11)
+    a.insert(12)
+    assert a.root.value == 8
+    assert a.root.right.value == 10
+    assert a.root.right.right.value == 11
+    assert a.root.right.left.value == 9
+    assert a.root.right.right.right.value == 12
+    assert a.root.left.value == 4
+    assert a.root.left.left.value == 2
+    assert a.root.left.left.left.value == 1
+    assert a.root.left.left.right.value == 3
+    assert a.root.left.right.value == 6
+    assert a.root.left.right.left.value == 5
+    assert a.root.left.right.right.value == 7
+
+    
+def test_bst_13_values():
+    """Test balancing tree with thirteen values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    a.insert(9)
+    a.insert(10)
+    a.insert(11)
+    a.insert(12)
+    a.insert(13)
+    assert a.root.value == 8
+    assert a.root.right.value == 10
+    assert a.root.right.right.value == 12
+    assert a.root.right.left.value == 9
+    assert a.root.right.right.right.value == 13
+    assert a.root.right.right.left.value == 11
+    assert a.root.left.value == 4
+    assert a.root.left.left.value == 2
+    assert a.root.left.left.left.value == 1
+    assert a.root.left.left.right.value == 3
+    assert a.root.left.right.value == 6
+    assert a.root.left.right.left.value == 5
+    assert a.root.left.right.right.value == 7
+
+
+def test_bst_14_values():
+    """Test balancing tree with fourteen values."""
+    a = BinarySearchTree()
+    a.insert(1)
+    a.insert(2)
+    a.insert(3)
+    a.insert(4)
+    a.insert(5)
+    a.insert(6)
+    a.insert(7)
+    a.insert(8)
+    a.insert(9)
+    a.insert(10)
+    a.insert(11)
+    a.insert(12)
+    a.insert(13)
+    a.insert(14)
+    assert a.root.value == 8
+    assert a.root.right.value == 12
+    assert a.root.right.right.value == 13
+    assert a.root.right.left.value == 10
+    assert a.root.right.right.right.value == 14
+    assert a.root.right.left.left.value == 9
+    assert a.root.right.left.right.value == 11
+    assert a.root.left.value == 4
+    assert a.root.left.left.value == 2
+    assert a.root.left.left.left.value == 1
+    assert a.root.left.left.right.value == 3
+    assert a.root.left.right.value == 6
+    assert a.root.left.right.left.value == 5
+    assert a.root.left.right.right.value == 7
