@@ -61,7 +61,7 @@ def test_left_right_rotation(filled_bst_rot_lr_gc_7):
 def test_bst_empty_tree():
     """Test balancing empty tree."""
     a = BinarySearchTree()
-    assert a.root.value is None
+    assert a.root is None
 
 
 def test_bst_1_value():
@@ -69,8 +69,8 @@ def test_bst_1_value():
     a = BinarySearchTree()
     a.insert(1)
     assert a.root.value == 1
-    assert a.root.right.value is None
-    assert a.root.left.value is None
+    assert a.root.right is None
+    assert a.root.left is None
 
 
 def test_bst_2_values():
@@ -80,7 +80,7 @@ def test_bst_2_values():
     a.insert(2)
     assert a.root.value == 1
     assert a.root.right.value == 2
-    assert a.root.left.value is None
+    assert a.root.left is None
 
 
 def test_bst_3_values():
@@ -199,7 +199,7 @@ def test_bst_9_values():
     assert a.root.left.right.value == 3
     assert a.root.right.left.value == 5
     assert a.root.right.right.right.value == 9
-    assert a.root.right.right.left.value == 9
+    assert a.root.right.right.left.value == 7
 
 
 def test_bst_10_values():
@@ -352,8 +352,8 @@ def test_bst_1_value_starting_at_14_down():
     a = BinarySearchTree()
     a.insert(14)
     assert a.root.value == 14
-    assert a.root.right.value is None
-    assert a.root.left.value is None
+    assert a.root.right is None
+    assert a.root.left is None
 
 
 def test_bst_2_values_starting_at_14_down():
@@ -362,7 +362,7 @@ def test_bst_2_values_starting_at_14_down():
     a.insert(14)
     a.insert(13)
     assert a.root.value == 14
-    assert a.root.right.value is None
+    assert a.root.right is None
     assert a.root.left.value == 13
 
 
@@ -507,7 +507,7 @@ def test_bst_10_values_starting_at_14_down():
     assert a.root.left.right.value == 9
     assert a.root.left.left.left.value == 5
     assert a.root.left.right.right.value == 10
-    assert a.root.right.right.left.value == 8
+    assert a.root.left.right.left.value == 8
 
 
 def test_bst_11_values_starting_at_14_down():
@@ -613,6 +613,7 @@ def test_bst_14_values_starting_at_14_down():
     a.insert(4)
     a.insert(3)
     a.insert(2)
+    a.insert(1)
     assert a.root.value == 7
     assert a.root.right.value == 11
     assert a.root.right.right.value == 13
