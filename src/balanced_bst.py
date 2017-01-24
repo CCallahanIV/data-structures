@@ -414,10 +414,12 @@ class BinarySearchTree(object):
             d.parent = a
 
     def _left_right_rotation(self, node):
-        pass
+
+        self._right_rotation(node)
 
     def _right_left_rotation(self, node):
-        pass
+        
+        self._left_rotation(node)
 
     def _post_order_node(self):
         vertex = self.root
