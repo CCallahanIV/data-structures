@@ -4,10 +4,10 @@
 class Node(object):
     """Node object to build a trie."""
 
-    def __init__(self, prev=None, children={}, end=False):
+    def __init__(self, prev=None, end=False):
         """Init node object."""
         self.prev = prev
-        self. children = children
+        self.children = {}
         self.end = end
 
 
@@ -25,17 +25,18 @@ class Trie(object):
     def __init__(self):
         """Initialize the Trie class."""
         self.root = Node()
-        self.size = 0
+        self._size = 0
 
     def insert(self, string):
         """Insert string into the trie."""
         current_node = self.root
         for i in range(len(string)):
-            if string[i] in current_node.children:
-                current_node.children.setdefault(string[i], Node(prev=current_node))
+            if string[i] not in current_node.children:
+                new_node = Node(prev=current_node)
+                current_node.children[string[i]] = new_node
             current_node = current_node.children[string[i]]
         current_node.end = True
-        self.size += 1
+        self._size += 1
 
     def contains(self, string):
         """Return a boolean, true if the string is present, else false."""
@@ -43,8 +44,12 @@ class Trie(object):
 
     def size(self):
         """Return the number of strings in the trie."""
-        pass
+        return self._size
 
     def remove(self, string):
         """Remove a string from the trie. Exception if string is absent."""
         pass
+
+    def __len__(self):
+        """Allow use of len() function."""
+        return self.size()
