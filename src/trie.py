@@ -40,7 +40,13 @@ class Trie(object):
 
     def contains(self, string):
         """Return a boolean, true if the string is present, else false."""
-        pass
+        curr_node = self.root
+        for char in string:
+            if char in curr_node.children:
+                curr_node = curr_node.children[char]
+            else:
+                return False
+        return curr_node.end
 
     def size(self):
         """Return the number of strings in the trie."""
