@@ -1,6 +1,16 @@
 """A trie data structure implemented as a class."""
 
 
+class Node(object):
+    """Node object to build a trie."""
+
+    def __init__(self, prev=None, children={}, end=False):
+        """Init node object."""
+        self.prev = prev
+        self. children = children
+        self.end = end
+
+
 class Trie(object):
     """
     Trie class.
@@ -14,11 +24,18 @@ class Trie(object):
 
     def __init__(self):
         """Initialize the Trie class."""
-        pass
+        self.root = Node()
+        self.size = 0
 
     def insert(self, string):
         """Insert string into the trie."""
-        pass
+        current_node = self.root
+        for i in range(len(string)):
+            if string[i] in current_node.children:
+                current_node.children.setdefault(string[i], Node(prev=current_node))
+            current_node = current_node.children[string[i]]
+        current_node.end = True
+        self.size += 1
 
     def contains(self, string):
         """Return a boolean, true if the string is present, else false."""
