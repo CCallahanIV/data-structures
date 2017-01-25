@@ -26,16 +26,14 @@ class HashTable(object):
     """Hash Table."""
 
     """self._num_buckets - the number of buckets in the Hash Table."""
-    """get(key) - should return the value stored with the given key"""
-    """set(key, val) - should store the given val using the given key"""
-    """_hash(key) - should hash the key provided (note that this is an internal api)"""
+    """get(key) - should return the value stored with the given key."""
+    """set(key, val) - store the given val using the given key."""
+    """_hash(key) - hash the key provided (note that this is an internal api)."""
 
-    def __init__(self):
+    def __init__(self, type='additive'):
         """Init function for the Hash Table class."""
-        self._container = []
         self._num_buckets = 1000
-        for i in range(0, self._num_buckets):
-            self._container.append([])
+        self._container = [[] for i in range(0, self._num_buckets)]
 
     def get(self, key):
         """Return the value corresponding to this key in the hash table."""
@@ -48,12 +46,11 @@ class HashTable(object):
     def set(self, key, val):
         """Place the key value pair in the hash table."""
         hashed_value = self._hash(key)
+        for each in self._container[hashed_value]:
+            if each[0] == key:
+                (self._container[hashed_value]).remove(each)
         (self._container[hashed_value]).append((key, val))
-        return
 
     def _hash(self, key):
-        """Docstring."""
-        num = 0
-        for each in key:
-            num += ord(each)
-        return num % self._num_buckets
+        """Additive hash function."""
+        return sum([ord(each) for each in key]) % self._num_buckets
