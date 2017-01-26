@@ -1,4 +1,5 @@
 """Hash table module."""
+
 # HASH TABLE (HT)
 #
 # CodeFellows 401d5

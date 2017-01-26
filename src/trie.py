@@ -1,11 +1,14 @@
 """Module for Trie tree."""
 
-"""
-    insert(self, string): will insert the input string into the trie. If character in the input string is already present, it will be ignored.
-    contains(self, string): will return True if the string is in the trie, False if not.
-    size(self): will return the total number of words contained within the trie. 0 if empty.
-    remove(self, string): will remove the given string from the trie. If the word doesn’t exist, will raise an appropriate exception.
-"""
+# TRIE TREE (TT)
+#
+# CodeFellows 401d5
+# Submission Date:
+#
+# Authors:  Colin Lamont <https://github.com/chamberi>
+#           Ben Shields <https://github.com/iamrobinhood12345>
+#
+# URL:
 
 
 class Node(object):
@@ -19,6 +22,13 @@ class Node(object):
 
 class Trie(object):
     """Trie class, which is the Trie tree."""
+
+    """
+        insert(self, string): will insert the input string into the trie. If character in the input string is already present, it will be ignored.
+        contains(self, string): will return True if the string is in the trie, False if not.
+        size(self): will return the total number of words contained within the trie. 0 if empty.
+        remove(self, string): will remove the given string from the trie. If the word doesn’t exist, will raise an appropriate exception.
+    """
 
     def __init__(self):
         """Initialize the Trie class with root Node with ('*') and size of 0."""
