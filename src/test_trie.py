@@ -108,7 +108,7 @@ def test_size_method(e_trie):
     e_trie.insert('sword')
     e_trie.insert('wordless')
     e_trie.insert('wordy')
-    assert e_trie.size() == 4
+    assert e_trie.size == 4
 
 
 def test_remove_single_word(e_trie):
@@ -132,7 +132,7 @@ def test_remove_small_overlap_word(e_trie):
     e_trie.remove('word')
     assert e_trie.contains('wordless')
     assert not e_trie.contains('word')
-    assert e_trie.size() == 1
+    assert e_trie.size == 1
 
 
 def test_remove_large_overlap_word(e_trie):
