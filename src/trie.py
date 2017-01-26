@@ -54,7 +54,21 @@ class Trie(object):
 
     def remove(self, string):
         """Remove a string from the trie. Exception if string is absent."""
-        pass
+        curr_node = self.root
+        for i in range(len(string)):
+            if string[i] in curr_node.children:
+                curr_node = curr_node.children[string[i]]
+            else:
+                raise ValueError("That word is not in this Trie.")
+        if curr_node.children[string[-1]].end and not curr_node.children[string[-1]].children:
+            i = 1
+            while start_node.prev is not self.root or not start_node.prev.end:
+                start_node = start_node.prev
+                i += 1
+            del start_node.prev.children[string[-i]]
+            start_node.prev = None
+        else:
+            curr_node.children[string[-1]].end = False
 
     def __len__(self):
         """Allow use of len() function."""
