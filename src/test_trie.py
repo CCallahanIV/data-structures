@@ -2,6 +2,7 @@
 
 import pytest
 
+
 @pytest.fixture
 def e_trie():
     """Fixture to crate an empty tree."""
@@ -39,3 +40,31 @@ def test_insert_second_word_creates_branch(e_trie):
     assert len(e_trie.root.children['w'].children['o'].children['r'].children) == 2
     assert e_trie.root.children['w'].children['o'].children['r'].children['d'].end is True
     assert e_trie.root.children['w'].children['o'].children['r'].children['s'].children['t'].end is True
+
+
+def test_second_word_no_forks(e_trie):
+    """Test inserting a second word with different first letter."""
+    e_trie.insert('sword')
+    e_trie.insert('word')
+    assert len(e_trie.root.children) == 2
+    assert e_trie.root.children['w'].prev == e_trie.root
+    assert len(e_trie.root.children['s'].children) == 1
+    assert len(e_trie.root.children['s'].children['w'].children) == 1
+    assert len(e_trie.root.children['s'].children['w'].children['o'].children) == 1
+    assert len(e_trie.root.children['s'].children['w'].children['o'].children['r'].children) == 1
+
+
+def test_insert_short_shared_word(e_trie):
+    e_trie.insert('wordless')
+    e_trie.insert('word')
+    assert len(e_trie.root.children) == 1
+    assert e_trie.root.children['w'].children['o'].children['r'].children['d'].end is True
+    assert e_trie.root.children['w'].children['o'].children['r'].children['d'].children['l'].children['e'].children['s'].children['s'].end is True
+
+
+def test_insert_long_shared_word(e_trie):
+    e_trie.insert('word')
+    e_trie.insert('wordless')
+    assert len(e_trie.root.children) == 1
+    assert e_trie.root.children['w'].children['o'].children['r'].children['d'].end is True
+    assert e_trie.root.children['w'].children['o'].children['r'].children['d'].children['l'].children['e'].children['s'].children['s'].end is True
