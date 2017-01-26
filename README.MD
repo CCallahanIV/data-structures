@@ -1,32 +1,34 @@
 #Summary
 
-The assignment was to implement a [Weighted Graph](https://codefellows.github.io/sea-python-401d5/assignments/graph_3_weighted.html)
-in Python containing the following methods:
+The HashTable is a data structure that implements an
+assosiative array. The structure maps keys to values
+in such a way that values may be accessed in O(1) time.
+This is done through use of a hashing function.
+The hashing function maps the content of the key to
+a specific bucket. As the content of the key always
+maps to a specific hash value, the key's value may
+be accessed quickly.
 
-
-    * g.nodes(): return a list of all nodes in the graph
-    * g.edges(): return a list of all edges in the graph
-    * g.add_node(n): adds a new node 'n' to the graph
-    * g.add_edge(n1, n2): adds a new edge to the graph connecting 'n1' and 'n2', if either n1 or n2 are not already present in the graph, they should be added.
-    * g.del_node(n): deletes the node 'n' from the graph, raises an error if no such node exists
-    * g.del_edge(n1, n2): deletes the edge connecting 'n1' and 'n2' from the graph, raises an error if no such edge exists
-    * g.has_node(n): True if node 'n' is contained in the graph, False if not.
-    * g.neighbors(n): returns the list of all nodes connected to 'n' by edges, raises an error if n is not in g
-    * g.adjacent(n1, n2): returns True if there is an edge connecting n1 and n2, False if not, raises an error if either of the supplied nodes are not in g
-    * g.depth_first_traversal(start): Returns the path list for the entire graph with a depth first traversal.
-    * g.breadth_first_travers(start): Returns the path list for the entire graph with a breadth first traversal.
+    - get(key) - should return the value stored with the given key
+    - set(key, val) - should store the given val using the given key
+    - _hash(key) - should hash the key provided (note that this is an internal api)
 
 
 # Coverage:
 
+-----------------------------------------------------------
+---------- coverage: platform darwin, python 2.7.12-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+src/hash_table.py                47      2    96%   54, 58
+-----------------------------------------------------------
 ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+src/hash_table.py                47      2    96%   54, 58
+-----------------------------------------------------------
 
-
-| Name                     | Stmts | Miss | Cover |
-| -----------------------  | ----- | ---- | ----- |
-| weighted_graph.py        |  78   |  3   | 96%   |
-| test_weighted_graph.py   |  178  |  0   | 100%  |
-| -----------------------  |  ---  |  --  | ----  |
-| TOTAL                    |  256  |  3   | 98%   |
-
-
+Gen Primes function used:
+Sieve of Eratosthenes
+Code by David Eppstein, UC Irvine, 28 Feb 2002
+http://code.activestate.com/recipes/117119/
