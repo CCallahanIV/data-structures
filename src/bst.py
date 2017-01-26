@@ -249,7 +249,7 @@ class BinarySearchTree(object):
                 else:
                     return
 
-            if val == parent_of_del.right.value:
+            if parent_of_del.right and val == parent_of_del.right.value:
                 if not min_parent:
                     parent_of_del.right = None
                     self.counter -= 1
@@ -271,7 +271,7 @@ class BinarySearchTree(object):
                 parent_of_del.right = del_node
                 self.counter -= 1
 
-            elif val == parent_of_del.left.value:
+            elif parent_of_del.left and val == parent_of_del.left.value:
                 if not min_parent:
                     parent_of_del.left = None
                     self.counter -= 1
