@@ -17,7 +17,7 @@ class Trie(object):
 
     def __init__(self):
         self.root = Node('*')
-        self.size = 0
+        self._size = 0
 
     def insert(self, word):
         node = self.root
@@ -32,7 +32,7 @@ class Trie(object):
             node.nodes[each] = new_node
             node = new_node
         if new_word:
-            self.size += 1
+            self._size += 1
             node.nodes['$'] = None
 
     def contains(self, word):
@@ -46,17 +46,16 @@ class Trie(object):
             return True
         return False
 
-    def size(self, size):
-        return self.size
+    def size(self):
+        return self._size
 
     def remove(self, word):
         node_list = []
         node = self.root
         for each in word:
             if each in node.nodes:
-                node_list.append(node)
+                node_list.append(node.nodes[each])
                 node = node.nodes[each]
-                continue
         last = node_list.pop()
         if '$' not in last.nodes:
             return
@@ -64,17 +63,9 @@ class Trie(object):
         for i in range(len(node_list)):
             last_val = last.val
             last = node_list.pop()
+            if '$' in last.nodes:
+                break
             if len(last.nodes) > 1:
-                return
+                del last.nodes[last_val]
+                break
             del last.nodes[last_val]
-
-
-# class Node(object):
-#     """Node class."""
-
-#     def __init__(self, value=None, left=None, right=None):
-#         """Init of the Node class."""
-#         self.value = value
-#         self.node = node
-#         self.right = right
-#         self.parent = None
