@@ -1,3 +1,5 @@
+"""Module for Trie tree."""
+
 """
     insert(self, string): will insert the input string into the trie. If character in the input string is already present, it will be ignored.
     contains(self, string): will return True if the string is in the trie, False if not.
@@ -7,19 +9,24 @@
 
 
 class Node(object):
+    """Node Class contains a value and a dictionary of nodes."""
 
     def __init__(self, val=None):
+        """Initialize the Node class with val and empty nodes dictionary."""
         self.val = val
         self.nodes = {}
 
 
 class Trie(object):
+    """Trie class, which is the Trie tree."""
 
     def __init__(self):
+        """Initialize the Trie class with root Node with ('*') and size of 0."""
         self.root = Node('*')
         self._size = 0
 
     def insert(self, word):
+        """Insert method, which takes a word and inserts each letter of the word into the Trie, with pointer to next Node or $ if end.""" 
         node = self.root
         new_node = None
         new_word = False
@@ -36,6 +43,7 @@ class Trie(object):
             node.nodes['$'] = None
 
     def contains(self, word):
+        """The contains method returns True if the word is found in the Trie tree, or False if not."""
         node = self.root
         for each in word:
             if each in node.nodes:
@@ -47,9 +55,11 @@ class Trie(object):
         return False
 
     def size(self):
+        """The size method returns the number of words in the Trie."""
         return self._size
 
     def remove(self, word):
+        """The remove method removes the word from the Trie."""
         node_list = []
         node = self.root
         for each in word:
@@ -64,8 +74,10 @@ class Trie(object):
             last_val = last.val
             last = node_list.pop()
             if '$' in last.nodes:
+                self._size -= 1
                 break
             if len(last.nodes) > 1:
                 del last.nodes[last_val]
+                self._size -= 1
                 break
             del last.nodes[last_val]
