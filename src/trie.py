@@ -89,12 +89,12 @@ class Trie(object):
                     raise ValueError("That string is not in this Trie.")
 
         trav_list = []
-        for i, (key, node) in enumerate(start_node.children.items()):
+        for i, (key, node) in enumerate(reversed(start_node.children.items())):
             trav_list.append((key, node))
 
         while trav_list:
             curr = trav_list.pop()
             yield curr[0]
-
-            for key, node in curr[1].children:
-                trav_list.append(key, node)
+            start_node = curr[1]
+            for i, (key, node) in enumerate(reversed(start_node.children.items())):
+                trav_list.append((key, node))

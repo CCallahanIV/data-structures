@@ -16,7 +16,6 @@ def f_trie():
     from trie import Trie
     fill = Trie()
     fill.insert('struggle')
-    import pdb; pdb.set_trace()
     fill.insert('sword')
     fill.insert('wordless')
     fill.insert('wordy')
