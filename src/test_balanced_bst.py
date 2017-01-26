@@ -711,3 +711,4 @@ def test_right_left_root_right_left_add_right(filled_bst_rot_rl):
     assert a.root.right.value == 15
     assert a.root.right.left.value == 14
     assert a.root.right.right.value == 20
+
