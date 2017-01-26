@@ -8,14 +8,14 @@
 
 class Node(object):
 
-    def __init__(self, val):
-        self.val = None
+    def __init__(self, val=None):
+        self.val = val
         self.nodes = {}
 
 
 class Trie(object):
 
-    def __init(self):
+    def __init__(self):
         self.root = Node('*')
         self.size = 0
 
@@ -28,12 +28,12 @@ class Trie(object):
                 node = node.nodes[each]
                 continue
             new_word = True
-            new_node = Node('each')
+            new_node = Node(each)
             node.nodes[each] = new_node
             node = new_node
         if new_word:
             self.size += 1
-            node['$'] = None
+            node.nodes['$'] = None
 
     def contains(self, word):
         node = self.root
