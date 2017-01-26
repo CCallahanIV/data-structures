@@ -69,6 +69,7 @@ class Trie(object):
             curr_node.prev = None
         else:
             curr_node.children[string[-1]].end = False
+        self._size -= 1
 
     def __len__(self):
         """Allow use of len() function."""
