@@ -48,6 +48,7 @@ class Trie(object):
                 return False
         return curr_node.end
 
+    @property
     def size(self):
         """Return the number of strings in the trie."""
         return self._size
