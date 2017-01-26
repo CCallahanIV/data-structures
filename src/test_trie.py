@@ -10,6 +10,20 @@ def e_trie():
     return Trie()
 
 
+@pytest.fixture
+def f_trie():
+    """Fixture with words added."""
+    from trie import Trie
+    fill = Trie()
+    fill.insert('struggle')
+    import pdb; pdb.set_trace()
+    fill.insert('sword')
+    fill.insert('wordless')
+    fill.insert('wordy')
+    fill.insert('word')
+    return fill
+
+
 def test_create_emtpy_tree(e_trie):
     """Test creating an empty Trie."""
     from trie import Trie
@@ -141,3 +155,11 @@ def test_remove_large_overlap_word(e_trie):
     e_trie.remove('wordless')
     assert not e_trie.contains('wordless')
     assert e_trie.contains('word')
+
+
+def test_traversal_order(f_trie):
+    """Test that a traversal returns expected letters in expected order."""
+    expected_list = list('strugglewordwordlessy')
+    gen_test = f_trie.traversal()
+    for item in expected_list:
+        assert next(gen_test) == item

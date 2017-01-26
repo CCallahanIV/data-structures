@@ -82,7 +82,6 @@ class Trie(object):
         """Return a generator containing complete tokens (words) from a starting point."""
         start_node = self.root
         if start is not None:
-            start_node = self.root
             for char in start:
                 if char in start_node.children:
                     start_node = start_node.children[char]
@@ -90,7 +89,7 @@ class Trie(object):
                     raise ValueError("That string is not in this Trie.")
 
         trav_list = []
-        for key, node in start_node.children:
+        for i, (key, node) in enumerate(start_node.children.items()):
             trav_list.append((key, node))
 
         while trav_list:
