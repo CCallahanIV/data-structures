@@ -62,7 +62,7 @@ class Trie(object):
                 raise ValueError("That word is not in this Trie.")
         if curr_node.end and not curr_node.children:
             i = 1
-            while curr_node.prev is not self.root or not curr_node.prev.end:
+            while curr_node.prev is not self.root and not curr_node.prev.end and len(curr_node.prev.children) < 2:
                 curr_node = curr_node.prev
                 i += 1
             del curr_node.prev.children[string[-i]]

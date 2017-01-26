@@ -55,6 +55,7 @@ def test_second_word_no_forks(e_trie):
 
 
 def test_insert_short_shared_word(e_trie):
+    """Test inserting a shorter word results in proper trie form."""
     e_trie.insert('wordless')
     e_trie.insert('word')
     assert len(e_trie.root.children) == 1
@@ -63,8 +64,80 @@ def test_insert_short_shared_word(e_trie):
 
 
 def test_insert_long_shared_word(e_trie):
+    """Test inserting a longer word results in proper trie form."""
     e_trie.insert('word')
     e_trie.insert('wordless')
     assert len(e_trie.root.children) == 1
     assert e_trie.root.children['w'].children['o'].children['r'].children['d'].end is True
     assert e_trie.root.children['w'].children['o'].children['r'].children['d'].children['l'].children['e'].children['s'].children['s'].end is True
+
+
+def test_contains_one_word(e_trie):
+    """Test contains method returns true on single word trie."""
+    e_trie.insert('word')
+    assert e_trie.contains('word')
+
+
+def test_contains_overlap_word(e_trie):
+    """Test contains sees both overlapping words."""
+    e_trie.insert('word')
+    e_trie.insert('wordless')
+    assert e_trie.contains('word')
+    assert e_trie.contains('wordless')
+
+
+def test_contains_fork_word(e_trie):
+    """Test contains sees two forked words."""
+    e_trie.insert('word')
+    e_trie.insert('worst')
+    assert e_trie.contains('word')
+    assert e_trie.contains('worst')
+
+
+def test_contains_seperate_words(e_trie):
+    """Test contains sees two seperate words."""
+    e_trie.insert('word')
+    e_trie.insert('struggle')
+    assert e_trie.contains('word')
+    assert e_trie.contains('struggle')
+
+
+def test_size_method(e_trie):
+    """Test that size tracks multiple interconnected words."""
+    e_trie.insert('struggle')
+    e_trie.insert('sword')
+    e_trie.insert('wordless')
+    e_trie.insert('wordy')
+    assert e_trie.size() == 4
+
+
+def test_remove_single_word(e_trie):
+    """Removing a word removes it from parent's children."""
+    e_trie.insert('word')
+    e_trie.remove('word')
+    assert e_trie.root.children == {}
+
+
+def test_remove_forked_word(e_trie):
+    e_trie.insert('word')
+    e_trie.insert('worst')
+    e_trie.remove('word')
+    assert e_trie.contains('worst')
+    assert not e_trie.contains('word')
+
+
+def test_remove_small_overlap_word(e_trie):
+    e_trie.insert('word')
+    e_trie.insert('wordless')
+    e_trie.remove('word')
+    assert e_trie.contains('wordless')
+    assert not e_trie.contains('word')
+    assert e_trie.size() == 1
+
+
+def test_remove_large_overlap_word(e_trie):
+    e_trie.insert('word')
+    e_trie.insert('wordless')
+    e_trie.remove('wordless')
+    assert not e_trie.contains('wordless')
+    assert e_trie.contains('word')
