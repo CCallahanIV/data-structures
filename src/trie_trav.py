@@ -98,14 +98,25 @@ class Trie(object):
         """The traversal method does a depth first traversal of the trie to find instances of start and return the rest."""
         node = self.root
         output = []
-        for each in start:
-            import pdb; pdb.set_trace()
-            if each in node.nodes:
-                node = node.nodes[each]
-        for letter in node.nodes:
-            for endword in node.nodes[letter].nodes:
-                print(letter)
-                print(endword)
-                output.append(letter)
-                output.append(endword)
-        return output
+        while True:
+            if node.nodes:
+                for each in node.nodes:
+                    yield each
+                break
+
+        for letter in start:
+            # import pdb; pdb.set_trace()
+            while True:
+                if node.nodes:
+                    for each in node.nodes:
+                        yield each
+
+                if each in node.nodes:
+                    node = node.nodes[each]
+            for letter in node.nodes:
+                for endword in node.nodes[letter].nodes:
+                    print(letter)
+                    print(endword)
+                    output.append(letter)
+                    output.append(endword)
+            return output
