@@ -96,27 +96,45 @@ class Trie(object):
 
     def traversal(self, start=None):
         """The traversal method does a depth first traversal of the trie to find instances of start and return the rest."""
-        node = self.root
-        output = []
-        while True:
-            if node.nodes:
-                for each in node.nodes:
-                    yield each
-                break
+        if not start:
+            self._traversal(self.root)
+        else:
 
-        for letter in start:
-            # import pdb; pdb.set_trace()
-            while True:
-                if node.nodes:
-                    for each in node.nodes:
-                        yield each
 
-                if each in node.nodes:
-                    node = node.nodes[each]
-            for letter in node.nodes:
-                for endword in node.nodes[letter].nodes:
-                    print(letter)
-                    print(endword)
-                    output.append(letter)
-                    output.append(endword)
-            return output
+
+        # node = self.root
+        # output = []
+        # while True:
+        #     if node.nodes:
+        #         for each in node.nodes:
+        #             yield each
+        #         break
+
+        # for letter in start:
+        #     # import pdb; pdb.set_trace()
+        #     while True:
+        #         if node.nodes:
+        #             for each in node.nodes:
+        #                 yield each
+
+        #         if each in node.nodes:
+        #             node = node.nodes[each]
+        #     for letter in node.nodes:
+        #         for endword in node.nodes[letter].nodes:
+        #             print(letter)
+        #             print(endword)
+        #             output.append(letter)
+        #             output.append(endword)
+        #     return output
+
+    def _find_start(self, start):
+        """Return the next instance of start string."""
+
+    def _traversal(self, node):
+        """Recursive helper method for traversal. Yields value at node."""
+        if len(node.nodes) == 1 and '$' in node.nodes:
+            return
+        else:
+            for each in node.nodes:
+                self._traversal(node.nodes[each])
+        return node.val
