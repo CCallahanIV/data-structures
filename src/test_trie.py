@@ -93,7 +93,7 @@ def test_removeal_of_an_empty_trie():
 def test_removal_of_substring_word_of_another_word_in_trie():
     """Test the removal of 'o', where 'oo' and 'oooo' exist too in the trie."""
     a = Trie()
-    for each in MODERATE_INPUT:
+    for each in COMPLEX_INPUT:
         a.insert(each)
     a.remove('o')
     assert a.size() == 14
