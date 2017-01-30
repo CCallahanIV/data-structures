@@ -79,3 +79,16 @@ def test_removeal_of_an_empty_trie():
     a = Trie()
     with pytest.raises(IndexError):
         a.remove("fast")
+<<<<<<< HEAD
+=======
+
+
+def test_removal_of_substring_word_of_another_word_in_trie():
+    """Test the removal of 'o', where 'oo' and 'oooo' exist too in the trie."""
+    a = Trie()
+    for each in COMPLEX_INPUT:
+        a.insert(each)
+    a.remove('o')
+    assert a.size() == 14
+    assert a.contains('o') is False
+>>>>>>> b0bbe4c9d3c1da286bdadb8eec1622c1ecbd08bb

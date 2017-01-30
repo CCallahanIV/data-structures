@@ -36,14 +36,23 @@ class Trie(object):
         self._size = 0
 
     def insert(self, word):
-        """Insert method, which takes a word and inserts each letter of the word into the Trie, with pointer to next Node or $ if end.""" 
+        """Insert method, which takes a word and inserts each letter of the word into the Trie, with pointer to next Node or $ if end."""
         node = self.root
         new_node = None
         new_word = False
+        counter = 0
         for each in word:
             if each in node.nodes:
+                if counter == (len(word) - 1) and '$' not in node.nodes:
+                    new_word = True
+                    new_node = Node(each)
+                    node.nodes[each] = new_node
+                    node = new_node
+                    break
+                counter += 1
                 node = node.nodes[each]
                 continue
+            counter += 1
             new_word = True
             new_node = Node(each)
             node.nodes[each] = new_node
@@ -76,6 +85,8 @@ class Trie(object):
             if each in node.nodes:
                 node_list.append(node.nodes[each])
                 node = node.nodes[each]
+            else:
+                raise(IndexError)
         last = node_list.pop()
         if '$' not in last.nodes:
             return
@@ -91,3 +102,4 @@ class Trie(object):
                 self._size -= 1
                 break
             del last.nodes[last_val]
+        self._size -= 1
