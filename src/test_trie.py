@@ -65,21 +65,12 @@ def test_size_of_a_filled_trie():
     assert a.size() == 5
 
 
-def test_size_of_a_filled_trie_with_overlapping_words():
-    """Test for the size of a filled trie that has overlapping words 'o', 'oo', and 'oooo'."""
-    a = Trie()
-    for each in COMPLEX_INPUT:
-        a.insert(each)
-    assert a.size() == 15
-
-
 def test_removal_from_a_filled_trie():
     """Test the removal of a node from of a filled trie."""
     a = Trie()
     for each in MODERATE_INPUT:
         a.insert(each)
     a.remove("fast")
-    assert a.size() == 4
     assert a.contains("fast") is False
 
 
@@ -88,13 +79,3 @@ def test_removeal_of_an_empty_trie():
     a = Trie()
     with pytest.raises(IndexError):
         a.remove("fast")
-
-
-def test_removal_of_substring_word_of_another_word_in_trie():
-    """Test the removal of 'o', where 'oo' and 'oooo' exist too in the trie."""
-    a = Trie()
-    for each in MODERATE_INPUT:
-        a.insert(each)
-    a.remove('o')
-    assert a.size() == 14
-    assert a.contains('o') is False

@@ -74,14 +74,8 @@ class Trie(object):
         node = self.root
         for each in word:
             if each in node.nodes:
-                if each is word[-1] and '$' not in node.nodes:
-                    new_word = True
-                    new_node = Node(each)
-                    node.nodes[each] = new_node
-                    node = new_node
-                    break
+                node_list.append(node.nodes[each])
                 node = node.nodes[each]
-                continue
         last = node_list.pop()
         if '$' not in last.nodes:
             return
