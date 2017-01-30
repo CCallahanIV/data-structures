@@ -14,7 +14,7 @@ PARAMS_CONTAINS_SIMPLE = [
     ('ab', False),
     ('z', False),
     ('a', False),
-    ('t', False)
+    ('t', False),
 ]
 
 
