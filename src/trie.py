@@ -35,23 +35,6 @@ class Trie(object):
         self.root = Node('*')
         self._size = 0
 
-    # def insert(self, word):
-    #     """Insert method, which takes a word and inserts each letter of the word into the Trie, with pointer to next Node or $ if end.""" 
-    #     node = self.root
-    #     new_node = None
-    #     new_word = False
-    #     for each in word:
-    #         if each in node.nodes:
-    #             node = node.nodes[each]
-    #             continue
-    #         new_word = True
-    #         new_node = Node(each)
-    #         node.nodes[each] = new_node
-    #         node = new_node
-    #     if new_word:
-    #         self._size += 1
-    #         node.nodes['$'] = None
-
     def insert(self, word):
         """Insert method, which takes a word and inserts each letter of the word into the Trie, with pointer to next Node or $ if end."""
         node = self.root
@@ -93,36 +76,6 @@ class Trie(object):
     def size(self):
         """The size method returns the number of words in the Trie."""
         return self._size
-
-    # def remove(self, word):
-    #     """The remove method removes the word from the Trie."""
-    #     node_list = []
-    #     node = self.root
-    #     for each in word:
-    #         if each in node.nodes:
-    #             if each is word[-1] and '$' not in node.nodes:
-    #                 new_word = True
-    #                 new_node = Node(each)
-    #                 node.nodes[each] = new_node
-    #                 node = new_node
-    #                 break
-    #             node = node.nodes[each]
-    #             continue
-    #     last = node_list.pop()
-    #     if '$' not in last.nodes:
-    #         return
-    #     del last.nodes['$']
-    #     for i in range(len(node_list)):
-    #         last_val = last.val
-    #         last = node_list.pop()
-    #         if '$' in last.nodes:
-    #             self._size -= 1
-    #             break
-    #         if len(last.nodes) > 1:
-    #             del last.nodes[last_val]
-    #             self._size -= 1
-    #             break
-    #         del last.nodes[last_val]
 
     def remove(self, word):
         """The remove method removes the word from the Trie."""
