@@ -1,5 +1,7 @@
 """Test the insertion sort algorithm."""
 
+from random import randint
+
 
 def test_insertion_sort_list_of_one():
     """Test insertion sort returns list of one item."""
@@ -25,4 +27,11 @@ def test_insertion_sort_sorts_bigger_list():
     """Test insertion sort on a larger list with repeated values."""
     from insertion_sort import insertion_sort
     test_list = [9, 4, 6, 8, 3, 1, 3, 8, 9]
+    assert insertion_sort(test_list) == sorted(test_list)
+
+
+def test_insertion_sort_on_randomized_list():
+    """Test insertion sort with random list of random length."""
+    from insertion_sort import insertion_sort
+    test_list = [randint(0, 100) for i in range(randint(10, 100))]
     assert insertion_sort(test_list) == sorted(test_list)
