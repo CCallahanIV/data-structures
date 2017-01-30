@@ -1,6 +1,6 @@
 """Test insertion sort."""
 
-import insertion_sort
+from insertion_sort import insertion_sort
 import pytest
 import random
 
@@ -30,7 +30,7 @@ PARAMS_LIST_NO_REPEATS_NO_DECIMALS = [
     ([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
     ([1], [1]),
     ([2, 1], [1, 2]),
-    ([-1, 8], [8, -1]),
+    ([-1, 8], [-1, 8]),
 ]
 
 PARAMS_LIST_REPEATS_NO_DECIMALS = [
@@ -68,7 +68,7 @@ def test_rand_list1_sorted(rand_list1):
 
 def test_rand_list2_sorted(rand_list2):
     """Test if the random list is sorted."""
-    new_list = rand_list1[:]
+    new_list = rand_list2[:]
     assert insertion_sort(rand_list2) == sorted(new_list)
 
 

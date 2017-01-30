@@ -1,7 +1,7 @@
 """Insertion Sort Module."""
 
 
-def insert_sort(isl):
+def insertion_sort(isl):
     """Insertion sort method."""
     for item in range(len(isl)):
         x = isl[item]
