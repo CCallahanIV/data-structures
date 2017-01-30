@@ -16,8 +16,8 @@ def insertion_sort(sort_list):
 
 
 if __name__ == '__main__':
-    if sys.argv[1]:
-        result = insertion_sort(sys.argv[1])
+    if len(sys.argv) > 1:
+        result = insertion_sort(list(sys.argv[1]))
         print("Sorted list: ", result)
     else:
         import timeit
@@ -39,4 +39,4 @@ if __name__ == '__main__':
 
         for i in range(len(test_lists)):
             print("Testing: ", test_desc[i])
-            print(timeit.timeit("insertion_sort(test_lists[i])", setup="from __main__ import insertion_sort")
+            print(timeit.timeit("insertion_sort(test_lists[i])", number=1000, setup="from __main__ import insertion_sort", globals=globals()))
