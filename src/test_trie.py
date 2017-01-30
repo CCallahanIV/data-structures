@@ -49,3 +49,32 @@ def complex_trie():
 def test_contains_simple(simple_trie, n, result):
     """Test contains function."""
     assert simple_trie.contains(n) == result
+
+
+def test_size_of_an_empty_trie():
+    """Test for the size of an empty trie."""
+    a = Trie()
+    assert a.size() == 0
+
+
+def test_size_of_a_filled_trie():
+    """Test for the size of a filled trie."""
+    a = Trie()
+    for each in MODERATE_INPUT:
+        a.insert(each)
+    assert a.size() == 5
+
+
+def test_removal_from_a_filled_trie():
+    """Test the removal of a node from of a filled trie."""
+    a = Trie()
+    for each in MODERATE_INPUT:
+        a.insert(each)
+    a.remove("fast")
+    a.size() == 4
+
+def test_removeal_of_an_empty_trie():
+    """Test the removal of a node from an empty trie."""
+    a = Trie()
+    with pytest.raises(IndexError):
+        a.remove("fast")
