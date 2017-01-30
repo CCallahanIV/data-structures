@@ -59,6 +59,12 @@ PARAMS_LIST_DECIMALS_AND_REPEATS = [
     ([1.1111111111111, .555555555555, -.43434343434343, -.343434343434343434343434], [-.43434343434343, -.343434343434343434343434, .555555555555, 1.1111111111111]),
 ]
 
+WORD_PARAMS_LIST = [
+    (["the", "brown", "cow", "doth", "protest", "too", "much"], ["brown", "cow", "doth", "much", "protest", "the", "too"]),
+    (["sometimes", "Brown", "altoids", "look", "so", "very", "strange", "in", "town", "now"], ["Brown", "altoids", "in", "look", "now", "so", "sometimes", "strange", "town", "very"]),
+    (["Big", "SMALL", "BOY", "almost", "ZOO", "SiNg"], ["BOY", "Big", "SMALL", "SiNg", "ZOO", "almost"])
+]
+
 
 def test_rand_list1_sorted(rand_list1):
     """Test if the random list is sorted."""
@@ -93,4 +99,10 @@ def test_list_decimals_no_repeats(n, result):
 @pytest.mark.parametrize('n, result', PARAMS_LIST_DECIMALS_AND_REPEATS)
 def test_list_decimals_and_repeats(n, result):
     """Test input lists with decimals and no repeats."""
+    assert insertion_sort(n) == result
+
+
+@pytest.mark.parametrize('n, result', WORD_PARAMS_LIST)
+def test_word_list_with_sorted(n, result):
+    """Test list of words with the insertion sort."""
     assert insertion_sort(n) == result
