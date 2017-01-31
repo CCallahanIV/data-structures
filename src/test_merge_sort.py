@@ -3,6 +3,12 @@
 from random import randint
 
 
+def test_merge_sort_empty_list():
+    """Test merge sort on empty list."""
+    from merge_sort import merge_sort
+    assert merge_sort([]) == []
+
+
 def test_merge_sort_list_of_one():
     """Test insertion sort returns list of one item."""
     from merge_sort import merge_sort

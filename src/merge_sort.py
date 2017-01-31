@@ -59,4 +59,4 @@ if __name__ == '__main__':
 
         for i in range(len(test_lists)):
             print("Testing: ", test_desc[i])
-            print(timeit.timeit("merge_sort(test_lists[i])", number=1000, setup="from __main__ import insertion_sort", globals=globals()))
+            print(timeit.timeit("merge_sort(test_lists[i])", number=1000, setup="from __main__ import merge_sort", globals=globals()))
