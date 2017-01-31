@@ -5,7 +5,34 @@ import sys
 
 def merge_sort(sort_list):
     """Return a sorted list using the merge sort algorithm."""
-    pass
+    if len(sort_list) <= 1:
+        return sort_list
+
+    left = sort_list[:len(sort_list) // 2]
+    right = sort_list[len(sort_list) // 2:]
+
+    left = merge_sort(left)
+    right = merge_sort(right)
+
+    return merge(left, right)
+
+
+def merge(left, right):
+    """Sort left and right, returns a list of the two merged."""
+    result = []
+
+    while left and right:
+        if left[0] <= right[0]:
+            result.append(left.pop(0))
+        else:
+            result.append(right.pop(0))
+
+    while left:
+        result.append(left.pop(0))
+    while right:
+        result.append(right.pop(0))
+
+    return result
 
 
 if __name__ == '__main__':
