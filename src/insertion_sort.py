@@ -23,7 +23,7 @@ def insertion_sort(isl):
     return isl
 
 
-def filled_list():
+def _random_list():
     """Return a list of random numbers from 0 to 300 of random size less than 300."""
     import random
     a = random
@@ -32,14 +32,49 @@ def filled_list():
     return b.sample(range(0, 300), c)
 
 
-l = filled_list()
+def _best_list():
+    """Return a list of random numbers of random size less than 300 in ascending order."""
+    import random
+    a = random
+    b = random
+    c = a.randint(0, 300)
+    return sorted(b.sample(range(0, 300), c))
+
+
+def _worst_list():
+    """Return a list of randon numbers of random size less than 300 in descending order."""
+    import random
+    a = random
+    b = random
+    c = a.randint(0, 300)
+    return sorted(b.sample(range(0, 300), c))[::-1]
+
+
+r = _random_list()
+b = _best_list()
+w = _worst_list()
 
 
 if __name__ == "__main__":
     import timeit
-    insertion_sort_timed = timeit.repeat(stmt="insertion_sort(l)", setup="from insertion_sort import insertion_sort, l", number=1000, repeat=3)
-    average_insertion_sort_timed = float(sum(insertion_sort_timed) / len(insertion_sort_timed))
+
+    random_insertion_sort_timed = timeit.repeat(stmt="insertion_sort(r)", setup="from insertion_sort import insertion_sort, r", number=1000, repeat=3)
+    random_average_insertion_sort_timed = float(sum(random_insertion_sort_timed) / len(random_insertion_sort_timed))
 
     print("number of runs: " + str(3))
-    print("insertion_sort_timed: " + str(insertion_sort_timed))
-    print("average: ", str(average_insertion_sort_timed))
+    print("random insertion_sort_timed: " + str(random_insertion_sort_timed))
+    print("average: ", str(random_average_insertion_sort_timed))
+
+    best_insertion_sort_timed = timeit.repeat(stmt="insertion_sort(b)", setup="from insertion_sort import insertion_sort, b", number=1000, repeat=3)
+    best_average_insertion_sort_timed = float(sum(best_insertion_sort_timed) / len(best_insertion_sort_timed))
+
+    print("number of runs: " + str(3))
+    print("best case insertion_sort_timed: " + str(best_insertion_sort_timed))
+    print("average: ", str(best_average_insertion_sort_timed))
+
+    worst_insertion_sort_timed = timeit.repeat(stmt="insertion_sort(w)", setup="from insertion_sort import insertion_sort, w", number=1000, repeat=3)
+    worst_average_insertion_sort_timed = float(sum(worst_insertion_sort_timed) / len(worst_insertion_sort_timed))
+
+    print("number of runs: " + str(3))
+    print("worst case insertion_sort_timed: " + str(worst_insertion_sort_timed))
+    print("average: ", str(worst_average_insertion_sort_timed))

@@ -54,8 +54,16 @@ def _best_list():
     a = random
     b = random
     c = a.randint(0, 300)
-    return b.sample(range(0, 300), c).sorted()
+    return sorted(b.sample(range(0, 300), c))
 
+
+def _worst_list():
+    """Return a list of randon numbers of random size less than 300 in descending order."""
+    import random
+    a = random
+    b = random
+    c = a.randint(0, 300)
+    return sorted(b.sample(range(0, 300), c))[::-1]
 
 
 r = _random_list()
@@ -65,9 +73,24 @@ w = _worst_list()
 
 if __name__ == "__main__":
     import timeit
-    merge_sort_timed = timeit.repeat(stmt="merge_sort(l)", setup="from merge_sort import merge_sort, l", number=1000, repeat=3)
-    average_merge_sort_timed = float(sum(merge_sort_timed) / len(merge_sort_timed))
+
+    random_merge_sort_timed = timeit.repeat(stmt="merge_sort(r)", setup="from merge_sort import merge_sort, r", number=1000, repeat=3)
+    random_average_merge_sort_timed = float(sum(random_merge_sort_timed) / len(random_merge_sort_timed))
 
     print("number of runs: " + str(3))
-    print("merge_sort_timed: " + str(merge_sort_timed))
-    print("average: ", str(average_merge_sort_timed))
+    print("random merge_sort_timed: " + str(random_merge_sort_timed))
+    print("average: ", str(random_average_merge_sort_timed))
+
+    best_merge_sort_timed = timeit.repeat(stmt="merge_sort(b)", setup="from merge_sort import merge_sort, b", number=1000, repeat=3)
+    best_average_merge_sort_timed = float(sum(best_merge_sort_timed) / len(best_merge_sort_timed))
+
+    print("number of runs: " + str(3))
+    print("best case merge_sort_timed: " + str(best_merge_sort_timed))
+    print("average: ", str(best_average_merge_sort_timed))
+
+    worst_merge_sort_timed = timeit.repeat(stmt="merge_sort(w)", setup="from merge_sort import merge_sort, w", number=1000, repeat=3)
+    worst_average_merge_sort_timed = float(sum(worst_merge_sort_timed) / len(worst_merge_sort_timed))
+
+    print("number of runs: " + str(3))
+    print("worst case merge_sort_timed: " + str(worst_merge_sort_timed))
+    print("average: ", str(worst_average_merge_sort_timed))
