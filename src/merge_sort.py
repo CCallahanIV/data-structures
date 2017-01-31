@@ -21,7 +21,7 @@ def merge_sort(msl):
     msl1 = merge_sort(msl1)
     msl2 = merge_sort(msl2)
 
-    def merge(msla, mslb):
+    def _merge(msla, mslb):
         sorted_list = []
         while len(msla) and len(mslb):
             if msla[0] < mslb[0]:
@@ -36,4 +36,4 @@ def merge_sort(msl):
             sorted_list.extend(mslb)
             return sorted_list
 
-    return merge(msl1, msl2)
+    return _merge(msl1, msl2)
