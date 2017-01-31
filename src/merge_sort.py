@@ -22,6 +22,7 @@ def merge_sort(msl):
     msl2 = merge_sort(msl2)
 
     def _merge(msla, mslb):
+        """Merge compares the two lists and returns a sorted list from lowest to highest value.""" 
         sorted_list = []
         while len(msla) and len(mslb):
             if msla[0] < mslb[0]:

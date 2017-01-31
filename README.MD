@@ -1,34 +1,38 @@
+[![Build Status](https://travis-ci.org/chamberi/data-structures.svg?branch=master)](https://travis-ci.org/chamberi/data-structures)
 #Summary
 
-The HashTable is a data structure that implements an
-assosiative array. The structure maps keys to values
-in such a way that values may be accessed in O(1) time.
-This is done through use of a hashing function.
-The hashing function maps the content of the key to
-a specific bucket. As the content of the key always
-maps to a specific hash value, the key's value may
-be accessed quickly.
+Merge Sort takes a list and re-orders it so that the items in the list are arranged lowest to highest.
+Merge method compares two lists and re-arranges to form a new list from lowest to highest.
+Random_list returns a list of random numbers from 0 to 300 of random size less than 300.
+Best_list returnd a list of random numbers of random size less than 300 in ascending order.
+Worst_list returns a list of randon numbers of random size less than 300 in descending order.
 
-    - get(key) - should return the value stored with the given key
-    - set(key, val) - should store the given val using the given key
-    - _hash(key) - should hash the key provided (note that this is an internal api)
+Timeit Information:
 
 
-# Coverage:
+number of runs: 3
+random merge_sort_timed: [2.029730997979641, 2.009656429057941, 2.0230366070754826]
+average:  2.0208080113710216
 
------------------------------------------------------------
+number of runs: 3
+best case merge_sort_timed: [0.9284612570190802, 0.939503213041462, 0.9183095849584788]
+average:  0.9287580183396736
+
+number of runs: 3
+worst case merge_sort_timed: [1.1671109580202028, 1.1538064640481025, 1.159422929980792]
+average:  1.1601134506830324
+
+
+test_merge_sort.py ............................
+
 ---------- coverage: platform darwin, python 2.7.12-final-0 ----------
-Name                          Stmts   Miss  Cover   Missing
------------------------------------------------------------
-src/hash_table.py                47      2    96%   54, 58
------------------------------------------------------------
----------- coverage: platform darwin, python 3.5.2-final-0 -----------
-Name                          Stmts   Miss  Cover   Missing
------------------------------------------------------------
-src/hash_table.py                47      2    96%   54, 58
------------------------------------------------------------
+Name                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------
+merge_sort.py                58     16    72%   76-97
 
-Gen Primes function used:
-Sieve of Eratosthenes
-Code by David Eppstein, UC Irvine, 28 Feb 2002
-http://code.activestate.com/recipes/117119/
+test_merge_sort.py ............................
+
+---------- coverage: platform darwin, python 3.5.2-final-0 -----------
+Name                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------
+merge_sort.py                58     16    72%   76-97
