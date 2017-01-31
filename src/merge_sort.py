@@ -13,7 +13,7 @@
 
 def merge_sort(msl):
     """Merge sort method."""
-    if len(msl) == 1:
+    if len(msl) == 1 or not msl:
         return msl
     msl1 = msl[:int(len(msl) / 2)]
     msl2 = msl[int(len(msl) / 2):]
