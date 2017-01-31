@@ -26,28 +26,22 @@ def insertion_sort(isl):
 def _random_list():
     """Return a list of random numbers from 0 to 300 of random size less than 300."""
     import random
-    a = random
     b = random
-    c = a.randint(0, 300)
-    return b.sample(range(0, 300), c)
+    return b.sample(range(0, 300), 150)
 
 
 def _best_list():
     """Return a list of random numbers of random size less than 300 in ascending order."""
     import random
-    a = random
     b = random
-    c = a.randint(0, 300)
-    return sorted(b.sample(range(0, 300), c))
+    return sorted(b.sample(range(0, 300), 150))
 
 
 def _worst_list():
     """Return a list of randon numbers of random size less than 300 in descending order."""
     import random
-    a = random
     b = random
-    c = a.randint(0, 300)
-    return sorted(b.sample(range(0, 300), c))[::-1]
+    return sorted(b.sample(range(0, 300), 150))[::-1]
 
 
 r = _random_list()
