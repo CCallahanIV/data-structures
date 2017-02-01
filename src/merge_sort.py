@@ -41,7 +41,7 @@ def merge_sort(msl):
 
 
 def _random_list():
-    """Return a list of random numbers from 0 to 300 of random size less than 300."""
+    """Return a list of random numbers from 0 to 300 of size 150."""
     import random
     b = random
     return b.sample(range(0, 300), 150)
