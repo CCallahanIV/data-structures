@@ -6,7 +6,7 @@ quick_sort: picks a pivot, compares the rest of list next to the pivot, creates 
 _random_list() returns a list of random numbers from 0 to 300 of random size less than 300. 
 
 
-Timeit Information:
+## Timeit Information:
 
 number of runs: 3
 random quick_sort_timed: [0.41075075999833643, 0.39770520699676126, 0.38073374499799684]
@@ -20,17 +20,19 @@ number of runs: 3
 reversed case quick_sort_timed: [2.0951970440219156, 2.0876480030128732, 2.0934092969982885]
 average:  2.0920847813443593
 
-test_quick_sort.py ............................
+## Tests and Coverage
 
----------- coverage: platform darwin, python 2.7.12-final-0 ----------
-Name                      Stmts   Miss  Cover   Missing
--------------------------------------------------------
-quick_sort.py                39     16    59%   50-71
+        test_quick_sort.py ............................
+
+        ---------- coverage: platform darwin, python 2.7.12-final-0 ----------
+        Name                      Stmts   Miss  Cover   Missing
+        -------------------------------------------------------
+        quick_sort.py                39     16    59%   50-71
 
 
-test_quick_sort.py ............................
+        test_quick_sort.py ............................
 
----------- coverage: platform darwin, python 3.5.2-final-0 -----------
-Name                      Stmts   Miss  Cover   Missing
--------------------------------------------------------
-quick_sort.py                39     16    59%   50-71
+        ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
+        Name                      Stmts   Miss  Cover   Missing
+        -------------------------------------------------------
+        quick_sort.py                39     16    59%   50-71
