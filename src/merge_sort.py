@@ -69,6 +69,13 @@ w = b[::-1]
 if __name__ == "__main__":
     import timeit
 
+    random_merge_sort_timed = timeit.repeat(stmt="merge_sort(r)", setup="from merge_sort import merge_sort, r", number=1000, repeat=3)
+    random_average_merge_sort_timed = float(sum(random_merge_sort_timed) / len(random_merge_sort_timed))
+
+    print("number of runs: " + str(3))
+    print("random merge_sort_timed: " + str(random_merge_sort_timed))
+    print("average: ", str(random_average_merge_sort_timed))
+
     best_merge_sort_timed = timeit.repeat(stmt="merge_sort(b)", setup="from merge_sort import merge_sort, b", number=1000, repeat=3)
     best_average_merge_sort_timed = float(sum(best_merge_sort_timed) / len(best_merge_sort_timed))
 
@@ -82,10 +89,3 @@ if __name__ == "__main__":
     print("number of runs: " + str(3))
     print("worst case merge_sort_timed: " + str(worst_merge_sort_timed))
     print("average: ", str(worst_average_merge_sort_timed))
-
-    random_merge_sort_timed = timeit.repeat(stmt="merge_sort(r)", setup="from merge_sort import merge_sort, r", number=1000, repeat=3)
-    random_average_merge_sort_timed = float(sum(random_merge_sort_timed) / len(random_merge_sort_timed))
-
-    print("number of runs: " + str(3))
-    print("random merge_sort_timed: " + str(random_merge_sort_timed))
-    print("average: ", str(random_average_merge_sort_timed))

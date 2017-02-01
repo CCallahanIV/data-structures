@@ -43,10 +43,10 @@ def _worst_list():
     b = random
     return sorted(b.sample(range(0, 300), 150))[::-1]
 
-
-r = _random_list()
-b = _best_list()
-w = _worst_list()
+a = _random_list()
+r = a[:]
+b = sorted(a)
+w = b[::-1]
 
 
 if __name__ == "__main__":
