@@ -1,11 +1,16 @@
 [![Build Status](https://travis-ci.org/chamberi/data-structures.svg?branch=master)](https://travis-ci.org/chamberi/data-structures)
 #Summary
 
-Merge Sort takes a list and re-orders it so that the items in the list are arranged lowest to highest.
-Merge method compares two lists and re-arranges to form a new list from lowest to highest.
-Random_list returns a list of random numbers from 0 to 300 of random size less than 300.
-Best_list returnd a list of random numbers of random size less than 300 in ascending order.
-Worst_list returns a list of randon numbers of random size less than 300 in descending order.
+Merge Sort orders a list so that it is ascending by dividing the list into progressively smaller partitions and then merging sorted combinations of those partitions.
+
+msl : merge sort list
+
+merge_sort() divides a list into progressively smaller partitions.
+
+merge() compares two lists and re-arranges to form a new list from lowest to highest.
+
+_random_list() returns a list of random numbers from 0 to 300 of random size less than 300. 
+
 
 Timeit Information:
 

@@ -47,19 +47,6 @@ def _random_list():
     return b.sample(range(0, 300), 150)
 
 
-def _best_list():
-    """Return a list of random numbers of random size less than 300 in ascending order."""
-    import random
-    b = random
-    return sorted(b.sample(range(0, 300), 150))
-
-
-def _worst_list():
-    """Return a list of randon numbers of random size less than 300 in descending order."""
-    import random
-    b = random
-    return sorted(b.sample(range(0, 300), 150))[::-1]
-
 a = _random_list()
 r = a[:]
 b = sorted(a)
