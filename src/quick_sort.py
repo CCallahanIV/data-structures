@@ -3,10 +3,34 @@
 import sys
 
 
-def quick_sort(sort_list):
+def quick_sort(sort_list, first=None, last=None):
     """Return a sorted list using the quick sort algorithm."""
-    pass
+    if first is None and last is None:
+        first = 0
+        last = len(sort_list) - 1
+    if first < last:
+        split = partition(sort_list, first, last)
+        quick_sort(sort_list, first, split - 1)
+        quick_sort(sort_list, split + 1, last)
+    return sort_list
 
+
+def partition(lst, first, last):
+    """Sort a portion of list with relation to the value at index first."""
+    pivot = lst[first]
+    left = first + 1
+    right = last
+    while True:
+        while lst[left] <= pivot and left <= right:
+            left += 1
+        while lst[right] >= pivot and right >= left:
+            right -= 1
+        if left >= right:
+            break
+        else:
+            lst[left], lst[right] = lst[right], lst[left]
+    lst[left], lst[right] = lst[right], lst[left]
+    return right
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
