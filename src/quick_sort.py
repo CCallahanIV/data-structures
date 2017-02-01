@@ -21,15 +21,16 @@ def partition(lst, first, last):
     left = first + 1
     right = last
     while True:
-        while lst[left] <= pivot and left <= right:
+        while left <= right and lst[left] <= pivot:
             left += 1
         while lst[right] >= pivot and right >= left:
             right -= 1
-        if left >= right:
+
+        if right < left:
             break
         else:
             lst[left], lst[right] = lst[right], lst[left]
-    lst[left], lst[right] = lst[right], lst[left]
+    lst[first], lst[right] = lst[right], lst[first]
     return right
 
 if __name__ == '__main__':
