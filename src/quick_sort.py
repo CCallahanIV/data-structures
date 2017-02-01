@@ -16,8 +16,7 @@ quick_sort:
 
 
 def quick_sort(sort_list):
-    """Quick sort method ."""
-    import pdb; pdb.set_trace()
+    """Quick sort method."""
     if len(sort_list) == 1 or not sort_list:
         return sort_list
     pivot = sort_list[0]
@@ -28,7 +27,8 @@ def quick_sort(sort_list):
             sort_list1.append(item)
         else:
             sort_list2.append(item)
-    sort_list1 = quick_sort(sort_list1).append(pivot)
+    sort_list1 = quick_sort(sort_list1)
+    sort_list1.append(pivot)
     sort_list2 = quick_sort(sort_list2)
     return sort_list1 + sort_list2
 
