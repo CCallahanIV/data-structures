@@ -4,7 +4,7 @@ import sys
 
 
 def radix_sort(sort_list, first=None, last=None):
-    """Return a sorted list using the quick sort algorithm."""
+    """Return a sorted list using the radix sort algorithm."""
     pass
 
 
@@ -14,7 +14,7 @@ def radix_sort(sort_list, first=None, last=None):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        result = quick_sort(list(sys.argv[1]))
+        result = radix_sort(list(sys.argv[1]))
         print("Sorted list: ", result)
     else:
         import timeit
@@ -36,4 +36,4 @@ if __name__ == '__main__':
 
         for i in range(len(test_lists)):
             print("Testing: ", test_desc[i])
-            print(timeit.timeit("quick_sort(test_lists[i])", number=1000, setup="from __main__ import quick_sort", globals=globals()))
+            print(timeit.timeit("radix_sort(test_lists[i])", number=1000, setup="from __main__ import radix_sort", globals=globals()))
