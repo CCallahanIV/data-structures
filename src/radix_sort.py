@@ -1,16 +1,31 @@
 """Implement an insertion sort algorithm."""
 
 import sys
+from queue_ds import Queue
 
 
-def radix_sort(sort_list, first=None, last=None):
+def radix_sort(sort_list):
     """Return a sorted list using the radix sort algorithm."""
-    pass
+    buckets = {char: Queue() for char in list('0123456789')}
+    max_digits = 0
+    digit = -1
+    while True:
+        for item in sort_list:
+            try:
+                buckets[str(item)[digit]].enqueue(item)
+                if len(str(item)) > max_digits:
+                    max_digits = len(str(item))
+            except IndexError:
+                buckets['0'].enqueue(item)
+        new_list = []
+        for i in range(10):
+            while len(buckets[str(i)]) > 0:
+                new_list.append(buckets[str(i)].dequeue())
+        if abs(digit) > max_digits:
+            return new_list
+        digit -= 1
+        sort_list = new_list
 
-
-# def partition(lst, first, last):
-#     """Sort a portion of list with relation to the value at index first."""
-#     pass
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
