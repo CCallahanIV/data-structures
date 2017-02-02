@@ -20,19 +20,24 @@ def radix_sort(sort_list):
     if len(sort_list) == 1 or not sort_list:
         return sort_list
     temp_dict, new_dict, last_dict = {}, {}, {}
+    temp_list, new_list, last_list = [], [], []
     for item in sort_list:
+        import pdb; pdb.set_trace()
         temp_dict.setdefault(int(str(item)[2]), [])
         temp_dict[int(str(item)[2])].append(item)
-    print(temp_dict)
-    for key, item in temp_dict.items():
+    for key, value in temp_dict.items():
+        temp_list.extend(value)
+    for item in temp_list:
         new_dict.setdefault(int(str(item)[1]), [])
         new_dict[int(str(item)[1])].append(item)
-    for key, item in new_dict.items():
+    for key, value in new_dict.items():
+        new_list.extend(value)
+    for item in new_list:
         last_dict.setdefault(int(str(item)[0]), [])
         last_dict[int(str(item)[0])].append(item)
-    return last_dict
-
-
+    for key, value in last_dict.items():
+        last_list.extend(value)
+    return last_list
 
     # pivot = sort_list[0]
     # sort_list1 = []
