@@ -11,46 +11,31 @@
 # URL:
 
 """
-radix_sort: picks a pivot, compares the rest of list next to the pivot, creates a lesser and greater list, and recursively calls radix_sort, combining the sorted lists and initial pivot at the end.
+radix_sort: sorts numbers by their 0-9 digits first, putting them in a list from lowest to highest. Next does the same for 10s (10-99), and so forth.
 """
 
+from collections import OrderedDict
 
 def radix_sort(sort_list):
     """Radix sort method."""
     if len(sort_list) == 1 or not sort_list:
         return sort_list
-    temp_dict, new_dict, last_dict = {}, {}, {}
-    temp_list, new_list, last_list = [], [], []
-    for item in sort_list:
-        import pdb; pdb.set_trace()
-        temp_dict.setdefault(int(str(item)[2]), [])
-        temp_dict[int(str(item)[2])].append(item)
-    for key, value in temp_dict.items():
-        temp_list.extend(value)
-    for item in temp_list:
-        new_dict.setdefault(int(str(item)[1]), [])
-        new_dict[int(str(item)[1])].append(item)
-    for key, value in new_dict.items():
-        new_list.extend(value)
-    for item in new_list:
-        last_dict.setdefault(int(str(item)[0]), [])
-        last_dict[int(str(item)[0])].append(item)
-    for key, value in last_dict.items():
-        last_list.extend(value)
-    return last_list
+    iters = len(str(max(sort_list))) - 1
+    for i in range(iters + 1):
+        temp_list = []
+        num_pots = [[] for x in range(10)]
+        for item in sort_list:
+            try:
+                num_pots[int(str(item)[-(i + 1)])].append(item)
+            except:
+                num_pots[0].append(item)
+        for nums in num_pots:
+            temp_list.extend(nums)
+        print(temp_list)
+        sort_list = temp_list
+        iters -= 1
+    return temp_list
 
-    # pivot = sort_list[0]
-    # sort_list1 = []
-    # sort_list2 = []
-    # for item in sort_list[1:]:
-    #     if item < pivot:
-    #         sort_list1.append(item)
-    #     else:
-    #         sort_list2.append(item)
-    # sort_list1 = radix_sort(sort_list1)
-    # sort_list1.append(pivot)
-    # sort_list2 = radix_sort(sort_list2)
-    # return sort_list1 + sort_list2
 
 
 # def _random_list():
