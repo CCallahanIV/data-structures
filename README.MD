@@ -1,38 +1,38 @@
 [![Build Status](https://travis-ci.org/chamberi/data-structures.svg?branch=master)](https://travis-ci.org/chamberi/data-structures)
 #Summary
 
-quick_sort: picks a pivot, compares the rest of list next to the pivot, creates a lesser and greater list, and recursively calls quick_sort, combining the sorted lists and initial pivot at the end.
+radix_sort: sorts numbers by their 0-9 digits first, putting them in a list from lowest to highest. Next does the same for 10s (10-99), and so forth.
 
 _random_list() returns a list of random numbers from 0 to 300 of random size less than 300. 
 
 
 ## Timeit Information:
 
-number of runs: 3
-random quick_sort_timed: [0.41075075999833643, 0.39770520699676126, 0.38073374499799684]
-average:  0.39639657066436484
-number of runs: 3
+                number of runs: 3
+                random radix_sort_timed: [0.48798475600779057, 0.4725390509702265, 0.47569359897170216]
+                average:  0.4787391353165731
 
-arranged case quick_sort_timed: [2.141874284017831, 2.1192383560119197, 2.095355052035302]
-average:  2.1188225640216842
-number of runs: 3
+                number of runs: 3
+                arranged case radix_sort_timed: [0.48790664895204827, 0.48251010198146105, 0.48216112999944016]
+                average:  0.4841926269776498
 
-reversed case quick_sort_timed: [2.0951970440219156, 2.0876480030128732, 2.0934092969982885]
-average:  2.0920847813443593
+                number of runs: 3
+                reversed case radix_sort_timed: [0.48425215197494254, 0.4971498280065134, 0.4777760480064899]
+                average:  0.48639267599598196
 
 ## Tests and Coverage
 
-        test_quick_sort.py ............................
+                test_radix.py ..........
 
-        ---------- coverage: platform darwin, python 2.7.12-final-0 ----------
-        Name                      Stmts   Miss  Cover   Missing
-        -------------------------------------------------------
-        quick_sort.py                39     16    59%   50-71
+                ---------- coverage: platform darwin, python 2.7.12-final-0 ----------
+                Name                      Stmts   Miss  Cover   Missing
+                -------------------------------------------------------
+                radix.py                     43     16    63%   53-74
 
 
-        test_quick_sort.py ............................
+                test_radix.py ..........
 
-        ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
-        Name                      Stmts   Miss  Cover   Missing
-        -------------------------------------------------------
-        quick_sort.py                39     16    59%   50-71
+                ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
+                Name                      Stmts   Miss  Cover   Missing
+                -------------------------------------------------------
+                radix.py                     43     16    63%   53-74

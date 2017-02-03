@@ -14,7 +14,6 @@
 radix_sort: sorts numbers by their 0-9 digits first, putting them in a list from lowest to highest. Next does the same for 10s (10-99), and so forth.
 """
 
-from collections import OrderedDict
 
 def radix_sort(sort_list):
     """Radix sort method."""
@@ -31,46 +30,44 @@ def radix_sort(sort_list):
                 num_pots[0].append(item)
         for nums in num_pots:
             temp_list.extend(nums)
-        print(temp_list)
         sort_list = temp_list
         iters -= 1
     return temp_list
 
 
-
-# def _random_list():
-#     """Return a list of random numbers from 0 to 300 of size 150."""
-#     import random
-#     b = random
-#     return b.sample(range(0, 300), 150)
-
-
-# a = _random_list()
-# r = a[:]
-# b = sorted(a)
-# w = b[::-1]
+def _random_list():
+    """Return a list of random numbers from 0 to 300 of size 150."""
+    import random
+    b = random
+    return b.sample(range(0, 300), 150)
 
 
-# if __name__ == "__main__":
-#     import timeit
+a = _random_list()
+r = a[:]
+b = sorted(a)
+w = b[::-1]
 
-#     random_radix_sort_timed = timeit.repeat(stmt="radix_sort(r)", setup="from radix_sort import radix_sort, r", number=1000, repeat=3)
-#     random_average_radix_sort_timed = float(sum(random_radix_sort_timed) / len(random_radix_sort_timed))
 
-#     print("number of runs: " + str(3))
-#     print("random radix_sort_timed: " + str(random_radix_sort_timed))
-#     print("average: ", str(random_average_radix_sort_timed))
+if __name__ == "__main__":
+    import timeit
 
-#     arranged_radix_sort_timed = timeit.repeat(stmt="radix_sort(b)", setup="from radix_sort import radix_sort, b", number=1000, repeat=3)
-#     arranged_average_radix_sort_timed = float(sum(arranged_radix_sort_timed) / len(arranged_radix_sort_timed))
+    random_radix_sort_timed = timeit.repeat(stmt="radix_sort(r)", setup="from radix import radix_sort, r", number=1000, repeat=3)
+    random_average_radix_sort_timed = float(sum(random_radix_sort_timed) / len(random_radix_sort_timed))
 
-#     print("number of runs: " + str(3))
-#     print("arranged case radix_sort_timed: " + str(arranged_radix_sort_timed))
-#     print("average: ", str(arranged_average_radix_sort_timed))
+    print("number of runs: " + str(3))
+    print("random radix_sort_timed: " + str(random_radix_sort_timed))
+    print("average: ", str(random_average_radix_sort_timed))
 
-#     reversed_radix_sort_timed = timeit.repeat(stmt="radix_sort(w)", setup="from radix_sort import radix_sort, w", number=1000, repeat=3)
-#     reversed_average_radix_sort_timed = float(sum(reversed_radix_sort_timed) / len(reversed_radix_sort_timed))
+    arranged_radix_sort_timed = timeit.repeat(stmt="radix_sort(b)", setup="from radix import radix_sort, b", number=1000, repeat=3)
+    arranged_average_radix_sort_timed = float(sum(arranged_radix_sort_timed) / len(arranged_radix_sort_timed))
 
-#     print("number of runs: " + str(3))
-#     print("reversed case quick_sort_timed: " + str(reversed_quick_sort_timed))
-#     print("average: ", str(reversed_average_quick_sort_timed))
+    print("number of runs: " + str(3))
+    print("arranged case radix_sort_timed: " + str(arranged_radix_sort_timed))
+    print("average: ", str(arranged_average_radix_sort_timed))
+
+    reversed_radix_sort_timed = timeit.repeat(stmt="radix_sort(w)", setup="from radix import radix_sort, w", number=1000, repeat=3)
+    reversed_average_radix_sort_timed = float(sum(reversed_radix_sort_timed) / len(reversed_radix_sort_timed))
+
+    print("number of runs: " + str(3))
+    print("reversed case radix_sort_timed: " + str(reversed_radix_sort_timed))
+    print("average: ", str(reversed_average_radix_sort_timed))
