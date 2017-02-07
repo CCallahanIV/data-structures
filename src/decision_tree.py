@@ -10,8 +10,11 @@
 #
 # URL:
 
+import pandas as pd
+from bst import BinarySearchTree
 
-class clf(object):
+
+class DTC(object):
     """
     Decision Tree Class:
     clf.fit(self, data): construct a decision tree based on some incoming data set; returns nothing
@@ -21,10 +24,19 @@ class clf(object):
     """
 
     def __init__(self, max_depth=None, min_leaf_size=None):
-        pass
+        """Docstring."""
+        self._classifier = BinarySearchTree()
 
     def fit(self, data):
+        """Docstring."""
         pass
 
     def predict(self, data):
-        pass
+        """Docstring."""
+        return_list = []
+        for each in data:
+            if each[0] < 2.5:
+                return_list.append("setosa")
+            else:
+                return_list.append("versicolor")
+        return return_list
