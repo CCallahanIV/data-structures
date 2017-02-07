@@ -1,6 +1,6 @@
-"""Module for decision treee."""
+"""Module for decision tree."""
 
-# DECISION TREE (MS)
+# DECISION TREE (DT)
 #
 # CodeFellows 401d5
 # Submission Date:
@@ -10,10 +10,21 @@
 #
 # URL:
 
-"""
-Decision Tree Class:
-clf.fit(self, data): construct a decision tree based on some incoming data set; returns nothing
-clf.predict(self, data): returns labels for your test data.
-max_depth: limits the maximum number of steps your tree can take down any decision chain.
-min_leaf_size: Limits the minimum number of data points that may exist within a region before ending a decision chain.
-"""
+
+class clf(object):
+    """
+    Decision Tree Class:
+    clf.fit(self, data): construct a decision tree based on some incoming data set; returns nothing
+    clf.predict(self, data): returns labels for your test data.
+    max_depth: limits the maximum number of steps your tree can take down any decision chain.
+    min_leaf_size: Limits the minimum number of data points that may exist within a region before ending a decision chain.
+    """
+
+    def __init__(self, max_depth=None, min_leaf_size=None):
+        pass
+
+    def fit(self, data):
+        pass
+
+    def predict(self, data):
+        pass
