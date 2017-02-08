@@ -29,7 +29,62 @@ class DTC(object):
 
     def fit(self, data):
         """Docstring."""
-        pass
+        pl_list = []
+        pw_list = []
+        for each in data:
+            pl_list.append(each[0])
+        for each in data:
+            pw_list.append(each[1])
+        t = None
+        data_left = []
+        data_right = []
+        min_g = None
+        for i in range(int(max(pl_list))):
+            if t is None:
+                t = i
+                continue
+            for each in data:
+                if pl_list[i] < i:
+                    data_left.append(data[i])
+                else:
+                    data_right.append(data[i])
+            g = self.G(data, data_left, data_right)
+            if g < min_g:
+                min_g = g
+                t = i
+            data_left = []
+            data_right = []
+        for i in range(int(max(pw_list))):
+            if t is None:
+                t = i
+                continue
+            for each in data:
+                if pw_list[i] < i:
+                    data_left.append(data[i])
+                else:
+                    data_right.append(data[i])
+            g = self.G(data, data_left, data_right)
+            if g < min_g:
+                min_g = g
+                t = i
+            data_left = []
+            data_right = []
+        return t
+
+    def G(self, total_data, data_left, data_right):
+        """Docstring."""
+        return (len(data_left) / len(total_data)) * self.H(data_left) + (len(data_right) / len(total_data)) * self.H(data_right)
+
+    def H(self, data):
+        """Docstring."""
+        setosa = []
+        versicolor = []
+        for each in data:
+            if each[2] == "setosa":
+                setosa.append(each)
+            else:
+                versicolor.append(each)
+        return (len(setosa) / len(data)) * (1 - (len(setosa) / len(data))) + (len(versicolor) / len(data)) * (1 - (len(versicolor) / len(data)))
 
     def predict(self, data):
         """Docstring."""
