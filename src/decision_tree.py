@@ -39,16 +39,21 @@ class DTC(object):
         data_left = []
         data_right = []
         min_g = None
+        # import pdb; pdb.set_trace()
         for i in range(int(max(pl_list))):
             if t is None:
                 t = i
                 continue
-            for each in data:
-                if pl_list[i] < i:
-                    data_left.append(data[i])
+            for j in range(len(data)):
+                if pl_list[j] < i:
+                    data_left.append(data[j])
                 else:
-                    data_right.append(data[i])
+                    data_right.append(data[j])
+            if len(data_left) == 0 or len(data_right) == 0:
+                continue
             g = self.G(data, data_left, data_right)
+            if min_g is None:
+                min_g = g
             if g < min_g:
                 min_g = g
                 t = i
@@ -58,12 +63,16 @@ class DTC(object):
             if t is None:
                 t = i
                 continue
-            for each in data:
-                if pw_list[i] < i:
-                    data_left.append(data[i])
+            for j in range(len(data)):
+                if pl_list[j] < i:
+                    data_left.append(data[j])
                 else:
-                    data_right.append(data[i])
+                    data_right.append(data[j])
+            if len(data_left) == 0 or len(data_right) == 0:
+                continue
             g = self.G(data, data_left, data_right)
+            if min_g is None:
+                min_g = g
             if g < min_g:
                 min_g = g
                 t = i
