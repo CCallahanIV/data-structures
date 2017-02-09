@@ -1,3 +1,5 @@
+import pandas as pd
+
 
 class TreeNode(object):
     """Define a Node object for use in a decision tree classifier."""
@@ -28,7 +30,15 @@ class DecisionTree(object):
 
     def _calculate_gini(self, data):
         """Calculate gini for a given data_set."""
-        pass
+        gini = 0.0
+        for class_name in data["class_names"].unique():
+            for col in data.columns[:-2]:
+                total_size = len(data)
+                if total_size == 0:
+                    continue
+                proportion = [row[-1] for row in col].count(class_name) / float(total_size)
+                gini += (proportion * (1.0 - proportion))
+        return gini
 
     def predict(self, data):
         """Given data, return labels for that data."""
