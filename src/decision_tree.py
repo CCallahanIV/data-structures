@@ -1,3 +1,5 @@
+import pandas as pd
+
 
 class TreeNode(object):
     """Define a Node object for use in a decision tree classifier."""
@@ -26,11 +28,45 @@ class DecisionTree(object):
         """Create a tree to fit the data."""
         pass
 
-    def _calculate_gini(self, data):
+    def _calculate_gini(self, groups, class_values):
         """Calculate gini for a given data_set."""
-        pass
+        gini = 0.0
+        for class_value in class_values:
+            for group in groups:
+                size = len(group)
+                if size == 0:
+                    continue
+                proportion = [row[-1] for row in group].count(class_value) / float(size)
+                gini += (proportion * (1.0 - proportion))
+        return gini
+
+    def _get_split(self, data):
+        """Choose a split point with lowest gini index."""
+        classes = data["class_names"].unique()
+        split_col_index, split_value, split_gini, split_groups =\
+            float('inf'), float('inf'), float('inf'), None
+        for col_index in range(len(data.columns) - 2):
+            for row in data:
+                groups = self._test_split(col_index, row[col_index], data)
+                gini = self._calculate_gini(groups, classes)
+            if gini < split_gini:
+                split_col_index, split_value, split_gini, split_groups =\
+                    col_index, row[col_index], gini, groups
+        return split_col_index, split_value, split_groups
+
+    def _calculate_split(self, data):
+        lowest_gini = 1.0
+        lowest_row = None
+        lowest_col = None
+        for row in data:
+            for col in data:
+                gini = self._calculate_gini(row, col)
+                if gini < lowest_gini:
+                    lowest_gini = gini
+                    lowest_row = row
+                    lowest_col = col
+        return lowest_row, lowest_col
 
     def predict(self, data):
         """Given data, return labels for that data."""
         pass
-
