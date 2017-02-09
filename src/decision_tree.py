@@ -39,7 +39,8 @@ class DTC(object):
 
     def fit(self, data):
         """Generate conditions for classification of flowers based on training set."""
-
+        node_args = self._split(data)
+        self.root = TreeNode(column=node_args[1], split=node_args[0])
 
         # self.root = TreeNode(data_idx=data.index)
 
