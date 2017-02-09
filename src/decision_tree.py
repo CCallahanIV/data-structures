@@ -14,12 +14,12 @@
 class TreeNode(object):
     """An individual node for a decision tree."""
 
-    def __init__(self, column=None, split=None, left=None, right=None, data_idx=None):
+    def __init__(self, column=None, split=None, left=None, right=None):
         self.column = column
         self.split = split
         self.left = left
         self.right = right
-        self.data_idx = data_idx
+        # self.data_idx = data_idx
 
 
 class DTC(object):
@@ -39,11 +39,30 @@ class DTC(object):
 
     def fit(self, data):
         """Generate conditions for classification of flowers based on training set."""
-        self.root = TreeNode(data_idx=data.index)
-        until max depth or min leaf min_leaf_size
-        split nodes starting at root
 
 
+        # self.root = TreeNode(data_idx=data.index)
+
+        # until max depth or min leaf min_leaf_size
+        # split nodes starting at root
+
+    def _min_func(self, total_data, data_left, data_right):
+        """Docstring."""
+        return (len(data_left) / len(total_data)) * self._analyze_purities(data_left) + (len(data_right) / len(total_data)) * self._analyze_purities(data_right)
+
+    def _analyze_purities(self, data):
+        """Docstring."""
+        setosa = []
+        versicolor = []
+        for each in data:
+            if each[2] == "setosa":
+                setosa.append(each)
+            else:
+                versicolor.append(each)
+        return (len(setosa) / len(data)) * (1 - (len(setosa) / len(data))) + (len(versicolor) / len(data)) * (1 - (len(versicolor) / len(data)))
+
+    def _split(self, data):
+        """Given some input node containing data, find best column to split on, and assign split point, and child nodes."""
 
         pl_list = []
         pw_list = []
@@ -98,32 +117,15 @@ class DTC(object):
             data_right = []
         return t, axis
 
-    def _min_func(self, total_data, data_left, data_right):
-        """Docstring."""
-        return (len(data_left) / len(total_data)) * self._analyze_purities(data_left) + (len(data_right) / len(total_data)) * self._analyze_purities(data_right)
-
-    def _analyze_purities(self, data):
-        """Docstring."""
-        setosa = []
-        versicolor = []
-        for each in data:
-            if each[2] == "setosa":
-                setosa.append(each)
-            else:
-                versicolor.append(each)
-        return (len(setosa) / len(data)) * (1 - (len(setosa) / len(data))) + (len(versicolor) / len(data)) * (1 - (len(versicolor) / len(data)))
-
-    def _split(self, node):
-        """Given some input node containing data, find best column to split on, and assign split point, and child nodes."""
-        column_name = self.some_best_column_algorithm()
-        split_pt = self.some_best_split_point_algorithm()
-        if result of splitting produces nodes with at least one value:
-            node.left = TreeNode(data_idx=node.data_idx where less than split_pt)
-            node.right = TreeNode(data_idx=node.data_idx where greater than split_pt)
-        elif left has one value or left is purely one label:
-            end left
-        elif right has one value or right is purely one label:
-            end right
+        # column_name = self.some_best_column_algorithm()
+        # split_pt = self.some_best_split_point_algorithm()
+        # if result of splitting produces nodes with at least one value:
+        #     node.left = TreeNode(data_idx=node.data_idx where less than split_pt)
+        #     node.right = TreeNode(data_idx=node.data_idx where greater than split_pt)
+        # elif left has one value or left is purely one label:
+        #     end left
+        # elif right has one value or right is purely one label:
+        #     end right
 
     def predict(self, data):
         """Return the likely classification for a flower(s) given petal length and petal width."""
