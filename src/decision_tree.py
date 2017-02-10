@@ -28,19 +28,44 @@ class DecisionTree(object):
         """Create a tree to fit the data."""
         pass
 
-    def _calculate_gini(self, data):
+    def _calculate_gini(self, groups, class_values):
         """Calculate gini for a given data_set."""
         gini = 0.0
-        for class_name in data["class_names"].unique():
-            for col in data.columns[:-2]:
-                total_size = len(data)
-                if total_size == 0:
+        for class_value in class_values:
+            for group in groups:
+                size = len(group)
+                if size == 0:
                     continue
-                proportion = [row[-1] for row in col].count(class_name) / float(total_size)
+                proportion = len(group[group[group.columns[-1]] == class_value]) / float(size)
                 gini += (proportion * (1.0 - proportion))
         return gini
+
+    def _get_split(self, data):
+        """Choose a split point with lowest gini index."""
+        classes = data[data.columns[-1]].unique()
+        split_col, split_value, split_gini, split_groups =\
+            float('inf'), float('inf'), float('inf'), None
+        for col in data.columns.values[:-2]:
+            for i in range(len(data)):
+                row = data.iloc[i]
+                groups = self._test_split(col, row[col], data)
+                gini = self._calculate_gini(groups, classes)
+            if gini < split_gini:
+                split_col, split_value, split_gini, split_groups =\
+                    col, row[col], gini, groups
+        return split_col, split_value, split_groups
+
+    def _test_split(self, col, value, data):
+        """Given a dataset, column index, and value, split the dataset."""
+        left, right = pd.DataFrame(columns=data.columns), pd.DataFrame(columns=data.columns)
+        for i in range(len(data)):
+            row = data.iloc[i]
+            if row[col] < value:
+                left = left.append(row)
+            else:
+                right = right.append(row)
+        return left, right
 
     def predict(self, data):
         """Given data, return labels for that data."""
         pass
-
