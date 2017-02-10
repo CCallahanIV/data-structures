@@ -14,8 +14,9 @@
 class TreeNode(object):
     """An individual node for a decision tree."""
 
-    def __init__(self, column=None, split=None, left=None, right=None):
+    def __init__(self, column=None, split=None, left=None, right=None, data=None):
         self.column = column
+        self.data = data
         self.split = split
         self.left = left
         self.right = right
@@ -57,10 +58,49 @@ class DTC(object):
                     data_right.append(each[1])
                 else:
                     data_left.append(each[1])
-        self.root = TreeNode(column=node_args[0], split=node_args[1])
+        self.root = TreeNode(column=node_args[0], split=node_args[1], data=data)
+        if self._is_pure(data_right):
+            self.root.right = data_right[0][3]
+        if self._is_pure(data_left):
+            self.root.left = data_left[0][3]
+        if self._is_pure(data_right) and self._is_pure(data_left):
+            return
         depth += 1
         node = self.root
-        while(depth < max_depth):
+        nodes = []
+        nodes.append
+        while(depth < self.max_depth):
+            dat = node.data
+            node_args = self._split(dat)
+            if node_args[0] == 'x':
+                for each in dat:
+                    if each[0] > node_args[1]:
+                        data_right.append(each[0])
+                    else:
+                        data_left.append(each[0])
+            elif node_args[0] == 'y':
+                for each in dat:
+                    if each[1] > node_args[1]:
+                        data_right.append(each[1])
+                    else:
+                        data_left.append(each[1])
+
+
+
+    def is_pure(self, data):
+        """Checks to see if the data is pure."""
+        setosa = []
+        versicolor = []
+        for each in data:
+            if each[3] == "setosa":
+                setosa.append(each)
+            else:
+                versicolor.append(each)
+        if len(setosa) == 0:
+            return True
+        elif len(versicolor) == 0:
+            return True
+        return False
 
         # column_name = self.some_best_column_algorithm()
         # split_pt = self.some_best_split_point_algorithm()
