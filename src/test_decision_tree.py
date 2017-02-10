@@ -90,3 +90,14 @@ def test_calculate_gini():
     for i in range(len(DATASET2_VALUES)):
         left, right = dtree._test_split(DATASET2_VALUES[i][1], DATASET2_VALUES[i][0], data)
         assert round(dtree._calculate_gini([left, right], [0.0, 1.0]), 3) == DATASET2_GINI[i]
+
+
+def test__get_split():
+    """Test get optimal split point."""
+    from decision_tree import DecisionTree
+    data_table = pd.DataFrame(DATASET2)
+    dtree = DecisionTree(1, 1)
+    split = dtree._get_split(data_table)
+    # import pdb; pdb.set_trace()
+    for i in range(len(split[2])):
+        assert split[2][i].to_dict() == dtree._test_split(0, 5, data_table)[i].to_dict()
