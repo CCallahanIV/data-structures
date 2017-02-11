@@ -4,7 +4,7 @@ import pandas as pd
 class TreeNode(object):
     """Define a Node object for use in a decision tree classifier."""
 
-    def __init__(self, data, split_value, split_gini, split_col, left=None, right=None, parent=None):
+    def __init__(self, data, split_value, split_gini, split_col, left=None, right=None, label=None):
         """Initialize a node object for a decision tree classifier."""
         self.left = left
         self.right = right
@@ -12,19 +12,13 @@ class TreeNode(object):
         self.split_value = split_value
         self.split_gini = split_gini
         self.split_col = split_col
+        self.label = label
 
     def _has_children(self):
         """Return True or False if Node has children."""
         if self.right or self.left:
             return True
         return False
-
-    def _return_children(self):
-        """Return all children of a Node."""
-        if self.left and self.right:
-            return [self.left, self.right]
-        elif self.left or self.right:   
-            return [self.left] if self.left else [self.right]
 
 
 class DecisionTree(object):
@@ -40,31 +34,37 @@ class DecisionTree(object):
         """Create a tree to fit the data."""
         split_col, split_value, split_gini, split_groups = self._get_split(data)
         new_node = TreeNode(data, split_value, split_gini, split_col)
-        if not self.root:
-            self.root = new_node
-        if self._can_split(split_gini, len(data)):
-            self.root.left = self.fit(split_groups[0])
-            self.root.right = self.fit(split_groups[1])
+        self.root = new_node
+        self.root.left = self._build_tree(split_groups[0])
+        self.root.right = self._build_tree(split_groups[1])
+
+    def _build_tree(self, data, depth_count=0):
+        """Given a node, build the tree."""
+        split_col, split_value, split_gini, split_groups = self._get_split(data)
+        new_node = TreeNode(data, split_value, split_gini, split_col)
+        try:
+            new_node.label = data[data.columns[-1]].mode()[0]
+        except:
+            pass
+        if self._can_split(split_gini, depth_count, len(data)):
+            print("splitting")
+            new_node.left = self._build_tree(split_groups[0], depth_count + 1)
+            new_node.right = self._build_tree(split_groups[1], depth_count + 1)
         else:
+            print("terminating")
             return new_node
+        return new_node
 
-    # def _build_tree(self, data):
-    #     """Given a node, build the tree."""
-    #     split_col, split_value, split_gini, split_groups = self._get_split(data)
-    #     new_node = TreeNode(split_value, data, label=split_col)
-    #     if self._can_split(split_gini, len(data)):
-    #         self.root.left = self._build_tree(split_groups[0], new_node)
-    #         self.root.right = self._build_tree(split_groups[1], new_node)
-    #     else:
-    #         return new_node
-
-    def _can_split(self, gini, data_size):
+    def _can_split(self, gini, depth_count, data_size):
         """Given a gini value, determine whether or not tree can split."""
         if gini == 0.0:
+            print("Bad gini")
             return False
-        elif self._depth() >= self.max_depth:
+        elif depth_count >= self.max_depth:
+            print("bad depth")
             return False
         elif data_size <= self.min_leaf_size:
+            print("bad data size")
             return False
         else:
             return True
@@ -105,9 +105,9 @@ class DecisionTree(object):
                 row = data.iloc[i]
                 groups = self._test_split(col, row[col], data)
                 gini = self._calculate_gini(groups, classes)
-            if gini < split_gini:
-                split_col, split_value, split_gini, split_groups =\
-                    col, row[col], gini, groups
+                if gini < split_gini:
+                    split_col, split_value, split_gini, split_groups =\
+                        col, row[col], gini, groups
         return split_col, split_value, split_gini, split_groups
 
     def _test_split(self, col, value, data):
