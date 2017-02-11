@@ -99,5 +99,5 @@ def test__get_split():
     dtree = DecisionTree(1, 1)
     split = dtree._get_split(data_table)
     # import pdb; pdb.set_trace()
-    for i in range(len(split[2])):
-        assert split[2][i].to_dict() == dtree._test_split(0, 5, data_table)[i].to_dict()
+    for i in range(len(split[3])):
+        assert split[3][i].to_dict() == dtree._test_split(0, 5, data_table)[i].to_dict()

@@ -58,7 +58,7 @@ class DecisionTree(object):
     def _can_split(self, gini, depth_count, data_size):
         """Given a gini value, determine whether or not tree can split."""
         if gini == 0.0:
-            print("Bad gini")
+            print("gini zero")
             return False
         elif depth_count >= self.max_depth:
             print("bad depth")
@@ -97,16 +97,17 @@ class DecisionTree(object):
 
     def _get_split(self, data):
         """Choose a split point with lowest gini index."""
+        if len(data) < 10:
+            import pdb; pdb.set_trace()
         classes = data[data.columns[-1]].unique()
-        split_col, split_value, split_gini, split_groups =\
-            float('inf'), float('inf'), float('inf'), None
+        split_col, split_value, split_gini, split_groups = float('inf'), float('inf'), float('inf'), None
         for col in data.columns.values[:-2]:
             for row in data.iterrows():
                 groups = self._test_split(col, row[1][col], data)
                 gini = self._calculate_gini(groups, classes)
+                # import pdb; pdb.set_trace()
                 if gini < split_gini and len(groups[0]) > 0 and len(groups[1]) > 0:
-                    split_col, split_value, split_gini, split_groups =\
-                        col, row[1][col], gini, groups
+                    split_col, split_value, split_gini, split_groups = col, row[1][col], gini, groups
         # print("Col: ", split_col, "s_val: ", split_value, "gini: ", split_gini, "\n groups:", split_groups)
         return split_col, split_value, split_gini, split_groups
 
