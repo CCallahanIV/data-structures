@@ -38,7 +38,7 @@ class DecisionTree(object):
         self.root.left = self._build_tree(split_groups[0])
         self.root.right = self._build_tree(split_groups[1])
 
-    def _build_tree(self, data, depth_count=0):
+    def _build_tree(self, data, depth_count=1):
         """Given a node, build the tree."""
         split_col, split_value, split_gini, split_groups = self._get_split(data)
         new_node = TreeNode(data, split_value, split_gini, split_col)
@@ -101,24 +101,23 @@ class DecisionTree(object):
         split_col, split_value, split_gini, split_groups =\
             float('inf'), float('inf'), float('inf'), None
         for col in data.columns.values[:-2]:
-            for i in range(len(data)):
-                row = data.iloc[i]
-                groups = self._test_split(col, row[col], data)
+            for row in data.iterrows():
+                groups = self._test_split(col, row[1][col], data)
                 gini = self._calculate_gini(groups, classes)
-                if gini < split_gini:
+                if gini < split_gini and len(groups[0]) > 0 and len(groups[1]) > 0:
                     split_col, split_value, split_gini, split_groups =\
-                        col, row[col], gini, groups
+                        col, row[1][col], gini, groups
+        # print("Col: ", split_col, "s_val: ", split_value, "gini: ", split_gini, "\n groups:", split_groups)
         return split_col, split_value, split_gini, split_groups
 
     def _test_split(self, col, value, data):
         """Given a dataset, column index, and value, split the dataset."""
         left, right = pd.DataFrame(columns=data.columns), pd.DataFrame(columns=data.columns)
-        for i in range(len(data)):
-            row = data.iloc[i]
-            if row[col] < value:
-                left = left.append(row)
+        for row in data.iterrows():
+            if row[1][col] < value:
+                left = left.append(row[1])
             else:
-                right = right.append(row)
+                right = right.append(row[1])
         return left, right
 
     def predict(self, data):
