@@ -15,17 +15,17 @@ class TreeNode(object):
     """An individual node for a decision tree."""
 
     def __init__(self, column=None, split=None, left=None, right=None, data=None):
+        """Init function for TreeNode class."""
         self.column = column
         self.data = data
         self.split = split
         self.left = left
         self.right = right
-        # self.data_idx = data_idx
 
 
 class DTC(object):
-    """
-    Decision Tree Class:
+    """Decision Tree Class.
+
     clf.fit(self, data): construct a decision tree based on some incoming data set; returns nothing
     clf.predict(self, data): returns labels for your test data.
     max_depth: limits the maximum number of steps your tree can take down any decision chain.
@@ -63,7 +63,7 @@ class DTC(object):
                 depth += 1
                 if depth >= self.max_depth:
                     self._assign_leaves()
-                    return
+                    break
             if self._is_pure(data_left) or depth >= self.max_depth:
                 node.left = left_type
             else:
@@ -73,15 +73,34 @@ class DTC(object):
                 depth += 1
                 if depth >= self.max_depth:
                     self._assign_leaves()
-                    return
+                    break
             if self._tree_complete():
-                return
+                break
+
+    def _tree_complete(self):
+        """Check to see if the decision tree is completely filled out, with no more nodes to assign."""
+        nodes = []
+        nodes.append(self.root)
+        while(True):
+            if len(nodes) == 0:
+                return True
+            node = nodes.pop()
+            if type(node.right) == TreeNode:
+                nodes.append(node.right)
+            if type(node.left) == TreeNode:
+                nodes.append(node.left)
+            if not node.right:
+                return False
+            if not node.left:
+                return False
 
     def _assign_leaves(self):
         """Assign end leaves to nodes who have children that are None."""
         nodes = []
         nodes.append(self.root)
         while(True):
+            if len(nodes) == 0:
+                return
             node = nodes.pop()
             if type(node.right) == TreeNode:
                 nodes.append(node.right)
