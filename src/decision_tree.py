@@ -32,7 +32,7 @@ class DTC(object):
     min_leaf_size: Limits the minimum number of data points that may exist within a region before ending a decision chain.
     """
 
-    def __init__(self, max_depth=1, min_leaf_size=1):
+    def __init__(self, max_depth=None, min_leaf_size=1):
         """Initialize the DTC object."""
         self.max_depth = max_depth
         self.min_leaf_size = min_leaf_size
@@ -44,55 +44,93 @@ class DTC(object):
         self.fitted = True
         depth = 0
         node_args = self._split(data)
-        data_right = []
-        data_left = []
+        self.root = TreeNode(column=node_args[0], split=node_args[1], data=data)
+        node = self.root
+        nodes = []
+        nodes.append(node)
+        depth += 1
+        while(depth <= self.max_depth):
+            node = nodes.pop()
+            node_data = node.data
+            node_args = self._split(node_data)
+            data_right, data_left, right_type, left_type = self._make_lr_data(data, node_args)
+            if self._is_pure(data_right) or depth >= self.max_depth:
+                node.right = right_type
+            else:
+                right_node_args = self._split(data_right)
+                node.right = TreeNode(column=right_node_args[0], split=right_node_args[1], data=data_right)
+                nodes.append(node.right)
+                depth += 1
+                if depth >= self.max_depth:
+                    self._assign_leaves()
+                    return
+            if self._is_pure(data_left) or depth >= self.max_depth:
+                node.left = left_type
+            else:
+                left_node_args = self._split(data_left)
+                node.left = TreeNode(column=left_node_args[0], split=left_node_args[1], data=data_left)
+                nodes.append(node.left)
+                depth += 1
+                if depth >= self.max_depth:
+                    self._assign_leaves()
+                    return
+            if self._tree_complete():
+                return
+
+    def _assign_leaves(self):
+        """Assign end leaves to nodes who have children that are None."""
+        nodes = []
+        nodes.append(self.root)
+        while(True):
+            node = nodes.pop()
+            if type(node.right) == TreeNode:
+                nodes.append(node.right)
+            if type(node.left) == TreeNode:
+                nodes.append(node.left)
+            if not node.right:
+                node_args = self._split(node.data)
+                node.right = self._make_lr_data(node.data, node_args)[2]
+            if not node.left:
+                node_args = self._split(node.data)
+                node.left = self._make_lr_data(node.data, node_args)[3]
+
+    def _make_lr_data(self, data, node_args):
+        """Fill data_right and data_left lists depending on column and split."""
+        data_right, data_left = [], []
+        right_type = {'setosa': 0, 'versicolor': 0}
+        left_type = {'setosa': 0, 'versicolor': 0}
         if node_args[0] == 'x':
             for each in data:
                 if each[0] > node_args[1]:
-                    data_right.append(each[0])
+                    data_right.append(each)
+                    right_type[each[2]] += 1
                 else:
-                    data_left.append(each[0])
+                    data_left.append(each)
+                    left_type[each[2]] += 1
         elif node_args[0] == 'y':
             for each in data:
                 if each[1] > node_args[1]:
-                    data_right.append(each[1])
+                    data_right.append(each)
+                    right_type[each[2]] += 1
                 else:
-                    data_left.append(each[1])
-        self.root = TreeNode(column=node_args[0], split=node_args[1], data=data)
-        if self._is_pure(data_right):
-            self.root.right = data_right[0][3]
-        if self._is_pure(data_left):
-            self.root.left = data_left[0][3]
-        if self._is_pure(data_right) and self._is_pure(data_left):
-            return
-        depth += 1
-        node = self.root
-        nodes = []
-        nodes.append
-        while(depth < self.max_depth):
-            dat = node.data
-            node_args = self._split(dat)
-            if node_args[0] == 'x':
-                for each in dat:
-                    if each[0] > node_args[1]:
-                        data_right.append(each[0])
-                    else:
-                        data_left.append(each[0])
-            elif node_args[0] == 'y':
-                for each in dat:
-                    if each[1] > node_args[1]:
-                        data_right.append(each[1])
-                    else:
-                        data_left.append(each[1])
+                    data_left.append(each)
+                    left_type[each[2]] += 1
+        if right_type['setosa'] > right_type['versicolor']:
+            right_type = 'setosa'
+        else:
+            right_type = 'versicolor'
+        if left_type['setosa'] > left_type['versicolor']:
+            left_type = 'setosa'
+        else:
+            left_type = 'versicolor'
+        return data_right, data_left, right_type, left_type
 
-
-
-    def is_pure(self, data):
-        """Checks to see if the data is pure."""
+    def _is_pure(self, data):
+        """Check to see if the data is pure."""
         setosa = []
         versicolor = []
         for each in data:
-            if each[3] == "setosa":
+            if each[2] == "setosa":
                 setosa.append(each)
             else:
                 versicolor.append(each)
@@ -129,13 +167,10 @@ class DTC(object):
             pw_list.append(each[1])
         t = None
         axis = None
-        data_left = []
-        data_right = []
         min_g = None
         for each in pl_list:
-            if t is None:
-                t = each
-                continue
+            data_left = []
+            data_right = []
             for j in range(len(data)):
                 if pl_list[j] < each:
                     data_left.append(data[j])
@@ -145,17 +180,16 @@ class DTC(object):
                 continue
             g = self._min_func(data, data_left, data_right)
             if min_g is None:
+                t = each
                 min_g = g
+                axis = 'x'
             if g < min_g:
                 min_g = g
                 t = each
                 axis = 'x'
+        for each in pw_list:
             data_left = []
             data_right = []
-        for each in pw_list:
-            if t is None:
-                t = each
-                continue
             for j in range(len(data)):
                 if pl_list[j] < each:
                     data_left.append(data[j])
@@ -165,13 +199,13 @@ class DTC(object):
                 continue
             g = self._min_func(data, data_left, data_right)
             if min_g is None:
+                t = each
                 min_g = g
+                axis = 'y'
             if g < min_g:
                 min_g = g
                 t = each
                 axis = 'y'
-            data_left = []
-            data_right = []
         return axis, t
 
     def _min_func(self, total_data, data_left, data_right):
