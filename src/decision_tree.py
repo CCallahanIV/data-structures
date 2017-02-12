@@ -32,25 +32,34 @@ class DecisionTree(object):
 
     def fit(self, data):
         """Create a tree to fit the data."""
+        print('building first node with data: ', data)
         split_col, split_value, split_gini, split_groups = self._get_split(data)
+        split_col
         new_node = TreeNode(data, split_value, split_gini, split_col)
         self.root = new_node
+        print('building root left with:', split_groups[0])
         self.root.left = self._build_tree(split_groups[0])
+        print('building root right with:', split_groups[1])
         self.root.right = self._build_tree(split_groups[1])
 
     def _build_tree(self, data, depth_count=1):
         """Given a node, build the tree."""
+        print('in build_tree ', data)
         split_col, split_value, split_gini, split_groups = self._get_split(data)
         new_node = TreeNode(data, split_value, split_gini, split_col)
         try:
             new_node.label = data[data.columns[-1]].mode()[0]
         except:
             pass
-        if self._can_split(split_gini, depth_count, len(data)):
+        if depth_count >= self.max_depth:
+            return new_node
+        if len(data) <= self.min_leaf_size:
+            return new_node
             print("splitting")
-            # import pdb; pdb.set_trace()
-            new_node.left = self._build_tree(split_groups[0], depth_count + 1)
-            new_node.right = self._build_tree(split_groups[1], depth_count + 1)
+        new_node.left = self._build_tree(split_groups[0], depth_count + 1)
+        new_node.right = self._build_tree(split_groups[1], depth_count + 1)
+        if split_gini == 0.0:
+            return new_node
         else:
             print("terminating")
             return new_node
@@ -94,20 +103,25 @@ class DecisionTree(object):
                     continue
                 proportion = len(group[group[group.columns[-1]] == class_value]) / float(size)
                 gini += (proportion * (1.0 - proportion))
+        print('gini value: ', gini)
         return gini
 
     def _get_split(self, data):
         """Choose a split point with lowest gini index."""
+        print('getting split')
+        print('columns: ', data.columns.values[:-1])
+        print('rows: ', data.iterrows())
         classes = data[data.columns[-1]].unique()
         split_col, split_value, split_gini, split_groups = float('inf'), float('inf'), float('inf'), None
         for col in data.columns.values[:-1]:
             for row in data.iterrows():
                 groups = self._test_split(col, row[1][col], data)
                 gini = self._calculate_gini(groups, classes)
-                import pdb; pdb.set_trace()
-                if gini < split_gini and len(groups[0]) > 0 and len(groups[1]) > 0:
+                if gini < split_gini:
+                    print('new gini: ', gini, ' at value: ', row[1][col])
                     split_col, split_value, split_gini, split_groups = col, row[1][col], gini, groups
-        # print("Col: ", split_col, "s_val: ", split_value, "gini: ", split_gini, "\n groups:", split_groups)
+        print("Return from get_split. Col: ", split_col, "s_val: ", split_value, "gini: ", split_gini, "\n groups:", split_groups)
+        # import pdb; pdb.set_trace()
         return split_col, split_value, split_gini, split_groups
 
     def _test_split(self, col, value, data):
