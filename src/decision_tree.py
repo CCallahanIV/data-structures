@@ -91,6 +91,7 @@ class DecisionTree(object):
                 size = len(group)
                 if size == 0:
                     continue
+                import pdb;pdb.set_trace()
                 proportion = len(group[group[group.columns[-1]] == class_value]) / float(size)
                 gini += (proportion * (1.0 - proportion))
         return gini
@@ -100,14 +101,13 @@ class DecisionTree(object):
         classes = data[data.columns[-1]].unique()
         split_col, split_value, split_gini, split_groups =\
             float('inf'), float('inf'), float('inf'), None
-        for col in data.columns.values[:-2]:
+        for col in data.columns.values[:-1]:
             for row in data.iterrows():
                 groups = self._test_split(col, row[1][col], data)
                 gini = self._calculate_gini(groups, classes)
                 if gini < split_gini and len(groups[0]) > 0 and len(groups[1]) > 0:
                     split_col, split_value, split_gini, split_groups =\
                         col, row[1][col], gini, groups
-        # print("Col: ", split_col, "s_val: ", split_value, "gini: ", split_gini, "\n groups:", split_groups)
         return split_col, split_value, split_gini, split_groups
 
     def _test_split(self, col, value, data):
