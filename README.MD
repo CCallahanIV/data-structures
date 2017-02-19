@@ -44,12 +44,14 @@ in Python containing the following methods:
 
     FNV hash:
     __init__ : O(n)
-    get: O(1) + O(k)
-    set: O(k) + O(1)
-    _hash: O(m)
+    get: O(1) + O(n)
+    set: O(n) + O(1)
+    _hash: O(n)
+
 
 #Trie
     insert: O(n)
     contains: O(n) + O(k)
     size: O(1)
     remove: O(n**2)
+    traversal: O(k) + O(2n)

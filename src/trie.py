@@ -1,5 +1,7 @@
 """A trie data structure implemented as a class."""
 
+from collections import OrderedDict
+
 
 class Node(object):
     """Node object to build a trie."""
@@ -7,7 +9,7 @@ class Node(object):
     def __init__(self, prev=None, end=False):
         """Init node object."""
         self.prev = prev
-        self.children = {}
+        self.children = OrderedDict()
         self.end = end
 
 
@@ -48,6 +50,7 @@ class Trie(object):
                 return False
         return curr_node.end
 
+    @property
     def size(self):
         """Return the number of strings in the trie."""
         return self._size
@@ -74,3 +77,24 @@ class Trie(object):
     def __len__(self):
         """Allow use of len() function."""
         return self.size()
+
+    def traversal(self, start=None):
+        """Return a generator containing complete tokens (words) from a starting point."""
+        start_node = self.root
+        if start is not None:
+            for char in start:
+                if char in start_node.children:
+                    start_node = start_node.children[char]
+                else:
+                    raise ValueError("That string is not in this Trie.")
+
+        trav_list = []
+        for i, (key, node) in enumerate(reversed(start_node.children.items())):
+            trav_list.append((key, node))
+
+        while trav_list:
+            curr = trav_list.pop()
+            yield curr[0]
+            start_node = curr[1]
+            for i, (key, node) in enumerate(reversed(start_node.children.items())):
+                trav_list.append((key, node))
