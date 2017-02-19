@@ -47,3 +47,9 @@ in Python containing the following methods:
     get: O(1) + O(k)
     set: O(k) + O(1)
     _hash: O(m)
+
+#Trie
+    insert: O(n)
+    contains: O(n) + O(k)
+    size: O(1)
+    remove: O(n**2)
