@@ -58,7 +58,6 @@ class BinarySearchTree(object):
         in the tree using post_order traversal, one at a time.
       - breadth_first(self): will return a generator that will return the
         values in the tree using breadth-first traversal, one at a time.
-
     """
 
     def __init__(self):
@@ -68,15 +67,13 @@ class BinarySearchTree(object):
 
     def insert(self, val):
         """Insert a new node with val into the BST."""
-        # if not self.search(val):
-        #     return
+        curr_node = self.root
         new_node = Node(val)
-        if self.root is None:
+        if curr_node is None:
             self.root = new_node
             self._size = 1
             return
 
-        curr_node = self.root
         while curr_node:
             if val > curr_node.value:
                 if curr_node.right:
@@ -257,3 +254,4 @@ class BinarySearchTree(object):
         else:
             node.parent.right = node._return_children()[0]
         node.parent = None
+        return self.depth(self.root.left) - self.depth(self.root.right)
