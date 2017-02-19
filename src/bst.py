@@ -1,8 +1,5 @@
 """This module implements a binary search tree."""
 
-from queue_ds import Queue
-from stack import Stack
-
 
 class Node(object):
     """Node object for use in a binary search tree."""
@@ -37,11 +34,6 @@ class BinarySearchTree(object):
       - depth(self): will return an integer representing the total number of levels in the tree. If there is one value, the depth should be 1, if two values it will be 2, if three values it may be 2 or three, depending, etc.
       - contains(self, val): will return True if val is in the BST, False if not.
       - balance(self): will return an integer, positive or negative that represents how well balanced the tree is. Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value. An ideally-balanced tree should return 0.
-      - in_order(self): will return a generator that will return the values in the tree using in-order traversal, one at a time.
-      - pre_order(self): will return a generator that will return the values in the tree using pre-order traversal, one at a time.
-      - post_order(self): will return a generator that will return the values in the tree using post_order traversal, one at a time.
-      - breadth_first(self): will return a generator that will return the values in the tree using breadth-first traversal, one at a time.
-
     """
 
     def __init__(self):
@@ -51,15 +43,13 @@ class BinarySearchTree(object):
 
     def insert(self, val):
         """Insert a new node with val into the BST."""
-        # if not self.search(val):
-        #     return
+        curr_node = self.root
         new_node = Node(val)
-        if self.root is None:
+        if curr_node is None:
             self.root = new_node
             self._size = 1
             return
 
-        curr_node = self.root
         while curr_node:
             if val > curr_node.value:
                 if curr_node.right:
@@ -122,69 +112,4 @@ class BinarySearchTree(object):
         """Return positive or negative integer that represents how well balanced the tree is."""
         if self.root is None:
             return 0
-        return self.depth(self.root.right) - self.depth(self.root.left)
-
-    def in_order(self):
-        """Return a generator of the tree in in_order order."""
-        start = self.root
-        if start is None:
-            raise StopIteration
-        s = Stack()
-        while len(s) or start:
-            if start:
-                s.push(start)
-                start = start.left
-            else:
-                start = s.pop()
-                yield start.value
-                start = start.right
-
-    def pre_order(self):
-        """Return a generator of the tree in pre_order order."""
-        start = self.root
-        if start is None:
-            raise StopIteration
-        s = Stack()
-        s.push(start)
-        while len(s):
-            curr = s.pop()
-            yield curr.value
-            if curr.right is not None:
-                s.push(curr.right)
-            if curr.left is not None:
-                s.push(curr.left)
-
-    def post_order(self):
-        """Return a generator of the tree in post_order order."""
-        start = self.root
-        if start is None:
-            raise StopIteration
-        s = []
-        last = None
-        while s or start:
-            if start:
-                s.append(start)
-                start = start.left
-            else:
-                peek = s[-1]
-                if peek.right and last is not peek.right:
-                    start = peek.right
-                else:
-                    yield peek.value
-                    last = s.pop()
-
-    def breadth_first(self):
-        """Return a generator of the tree in breadth first traversal order."""
-        start = self.root
-        if start is None:
-            raise StopIteration
-        q = Queue()
-        q.enqueue(start)
-
-        while len(q) > 0:
-            current = q.dequeue()
-            yield current.value
-
-            if current._has_children():
-                for child in current._return_children():
-                    q.enqueue(child)
+        return self.depth(self.root.left) - self.depth(self.root.right)
