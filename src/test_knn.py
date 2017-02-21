@@ -53,10 +53,10 @@ def test_distance_calc():
 def test_distance_calc_zero():
     """Test correctness of distance calc funciton when distance is zero."""
     from knn import KNearestNeighbors
-    rows = [[2, 2, 1], [0, 0, 1]]
+    rows = [[2, 2, 1], [2, 2, 1]]
     data = pd.DataFrame(data=rows, columns=['x', 'y', 'class'])
     test_data = KNearestNeighbors(data)
-    assert test_data._distance(data.loc[0], data.loc[1]) == sqrt(8)
+    assert test_data._distance(data.loc[0], data.loc[1]) == 0
 
 
 def test_simple_prediction(simple_knn):
