@@ -33,6 +33,7 @@ class KNearestNeighbors(object):
         for row in self.data.iterrows():
             distances.append((row[1][-1], self._distance(row[1], test_data)))
         distances.sort(key=lambda x: x[1])
+        # import pdb; pdb.set_trace()
         my_class = self._classify(distances[:tk])
         if my_class:
             return my_class

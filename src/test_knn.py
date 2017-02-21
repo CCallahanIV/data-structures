@@ -17,6 +17,7 @@ SIMPLE_DATA = [[6, 6, 0],
                [1, 1, 1],
                [0, 0, 1]]
 
+
 @pytest.fixture
 def simple_knn():
     """Create a default knn with flowers data."""
@@ -57,6 +58,18 @@ def test_distance_calc_zero():
     data = pd.DataFrame(data=rows, columns=['x', 'y', 'class'])
     test_data = KNearestNeighbors(data)
     assert test_data._distance(data.loc[0], data.loc[1]) == 0
+
+
+def test_classify(simple_knn):
+    """Test _classify method returns expected value."""
+    knn = simple_knn
+    data = pd.DataFrame(data=SIMPLE_DATA, columns=SIMPLE_COLUMNS)
+    test_data = [0.5, 0.5]
+    distances = []
+    for row in data.iterrows():
+        distances.append((row[1][-1], knn._distance(row[1], test_data)))
+    distances.sort(key=lambda x: x[1])
+    assert knn._classify(distances[:5]) == 1
 
 
 def test_simple_prediction(simple_knn):
