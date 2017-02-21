@@ -26,12 +26,12 @@ class KNearestNeighbors(object):
             tk = self.k
         if type(test_data) is not pd.DataFrame:
             try:
-                test_data = pd.DataFrame(test_data)
+                test_data = pd.Series(test_data)
             except pd.PandasError:
                 raise ValueError("BAD DATA YA TURKEY")
         distances = []
-        for row in self.data.iterrorws():
-            distances.append(row[-1], self._distance(row, test_data))
+        for row in self.data.iterrows():
+            distances.append((row[1][-1], self._distance(row[1], test_data)))
         distances.sort(key=lambda x: x[1])
         my_class = self._classify(distances[:tk])
         if my_class:
@@ -41,11 +41,11 @@ class KNearestNeighbors(object):
 
     def _classify(self, res_list):
         """Classify an object given a set of data about its classes."""
-        classes = (item[0] for item in res_list)
+        classes = {item[0] for item in res_list}
         class_counts = []
         for a_class in classes:
             class_counts.append((a_class, len([item for item in res_list if item[0] == a_class])))
-        class_counts.sort(key=lambda x: x[1], desc=True)
+        class_counts.sort(key=lambda x: x[1], reverse=True)
         if class_counts[0][1] == class_counts[1][1]:
             return
         else:
