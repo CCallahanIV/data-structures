@@ -47,7 +47,7 @@ class KNearestNeighbors(object):
         for a_class in classes:
             class_counts.append((a_class, len([item for item in res_list if item[0] == a_class])))
         class_counts.sort(key=lambda x: x[1], reverse=True)
-        if class_counts[0][1] == class_counts[1][1]:
+        if len(class_counts) > 1 and class_counts[0][1] == class_counts[1][1]:
             return
         else:
             return class_counts[0][0]

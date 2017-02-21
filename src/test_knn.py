@@ -78,3 +78,14 @@ def test_simple_prediction(simple_knn):
     test_data = [0.5, 0.5]
     prediction = knn.predict(test_data)
     assert prediction == 1
+
+
+def test_flowers_integration():
+    """Test knn predictions using flowers data."""
+    from knn import KNearestNeighbors
+    total_data = DATA.drop('target', axis=1)
+    calibration_number = len(total_data) // 5
+    new_data = total_data.sample(n=calibration_number)
+    k = KNearestNeighbors(new_data)
+    for row in new_data.iterrows():
+        assert k.predict(row[1][:-1]) == row[1][-1]
