@@ -54,6 +54,6 @@ class KNearestNeighbors(object):
     def _distance(self, row1, row2):
         """Calcute the distance between two rows."""
         dist = 0.0
-        for col in row1.columns.values[:-1]:
-            dist += (row1[col] - row2[col]) ** 2
+        for i in range(len(row1) - 1):
+            dist += (row1[i] - row2[i]) ** 2
         return sqrt(dist)

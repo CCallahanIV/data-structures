@@ -2,6 +2,7 @@
 import pytest
 import os
 import pandas as pd
+from math import sqrt
 
 
 BAD_Ks = [-1, "whoops", 0]
@@ -21,3 +22,20 @@ def test_initialize_k_nearest_good_k():
     from knn import KNearestNeighbors
     k = KNearestNeighbors(DATA, 2)
     assert type(k) is KNearestNeighbors
+
+
+def test_distance_calc():
+    """Test correctness of distance calc funciton."""
+    from knn import KNearestNeighbors
+    rows = [[2, 2, 1], [0, 0, 1]]
+    data = pd.DataFrame(data=rows, columns=['x', 'y', 'class'])
+    test_data = KNearestNeighbors(data)
+    assert test_data._distance(data.loc[0], data.loc[1]) == sqrt(8)
+
+def test_distance_calc_zero():
+    """Test correctness of distance calc funciton when distance is zero."""
+    from knn import KNearestNeighbors
+    rows = [[2, 2, 1], [0, 0, 1]]
+    data = pd.DataFrame(data=rows, columns=['x', 'y', 'class'])
+    test_data = KNearestNeighbors(data)
+    assert test_data._distance(data.loc[0], data.loc[1]) == sqrt(8)
