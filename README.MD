@@ -47,3 +47,19 @@ in Python containing the following methods:
     get: O(1) + O(k)
     set: O(k) + O(1)
     _hash: O(m)
+
+
+
+K Nearest Neighbors classifier:
+
+The KNearestNeighbors class initilaizes with the required argument
+data, which contains the dataset to base calculations on, and the optional
+argument k. K defaults to five and determines the number of neighbors the
+algorithm uses to classify new data.
+
+The predict method is the only one intended for the end user. It accepts the
+data to be tested as an argument, with the optional keyword argument of
+test_k_val. If test_k_val is not assigned, it defaults to the k value
+determined at instantiation. If data classification results in a tie, the
+k value is reduced by one and reevaluated. Predict returns a value corrisponding
+to one of the groups in the instantiation data.
