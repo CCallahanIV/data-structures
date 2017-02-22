@@ -42,7 +42,6 @@ class KMeansClassifier(object):
         dist = 0.0
         print('distance called from: ', pt1, pt2)
         for i in range(len(pt1) - 2):
-            print('i:', i, 'pt1:', pt1[i], 'pt2:', pt2[i])
             dist += (pt1[i] - pt2[i])**2
         return sqrt(dist)
 
