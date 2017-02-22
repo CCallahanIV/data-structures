@@ -55,3 +55,8 @@ in Python containing the following methods:
     size: O(1)
     remove: O(n**2)
     traversal: O(k) + O(2n)
+
+
+Kmeans:
+    collaboration note - this program was a collaboration between Ted,
+    Patrick, Rick, Julien, and Avery
