@@ -47,14 +47,14 @@ class KMeansClassifier(object):
         return sqrt(dist)
 
     def _classify(self, data):
-        """Assign each datapoint to the nearest centroid."""
+        """Assign each datapoint t o the nearest centroid."""
         for point in data.iterrows():
             print('point: ', point)
             distances = []
             for cent in self.centroids:
                 print('cent', cent)
-                distances.append(self._calc_distance(cent, point))
-            point.group = distances.index(min(distances))
+                distances.append(self._calc_distance(cent, point[1]))
+            point[1]["group"] = distances.index(min(distances))
 
     def _find_mean(self, points):
         """Find the mean coordinates of points."""

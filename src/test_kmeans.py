@@ -60,6 +60,5 @@ def test_classify():
     data = pd.DataFrame(data=rows, columns=['x', 'y', 'class', 'group'])
     clusters.centroids = None
     clusters.centroids = [[4, 5, 0, 0], [0, 1, 0, 0]]
-    # import pdb; pdb.set_trace()
     clusters._classify(data)
     assert True
