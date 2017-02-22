@@ -20,10 +20,10 @@ class KNearestNeighbors(object):
         else:
             self.data = data
 
-    def predict(self, test_data, tk=None):
+    def predict(self, test_data, test_k_val=None):
         """Given data, categorize the data by its k nearest neighbors."""
-        if tk is None:
-            tk = self.k
+        if test_k_val is None:
+            test_k_val = self.k
         if type(test_data) is not pd.DataFrame:
             try:
                 test_data = pd.Series(test_data)
@@ -33,12 +33,11 @@ class KNearestNeighbors(object):
         for row in self.data.iterrows():
             distances.append((row[1][-1], self._distance(row[1], test_data)))
         distances.sort(key=lambda x: x[1])
-        # import pdb; pdb.set_trace()
-        my_class = self._classify(distances[:tk])
+        my_class = self._classify(distances[:test_k_val])
         if my_class:
             return my_class
         else:
-            self.predict(test_data, tk - 1)
+            self.predict(test_data, test_k_val - 1)
 
     def _classify(self, res_list):
         """Classify an object given a set of data about its classes."""
