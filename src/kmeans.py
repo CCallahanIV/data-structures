@@ -24,7 +24,6 @@ class KMeansClassifier(object):
         old_centroids = None
 
         while not self._should_stop(old_centroids, iteration, k):
-            print("Iteration: ", iteration)
             old_centroids = self.centroids
             iteration += 1
             data = self._classify(data)
