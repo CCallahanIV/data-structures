@@ -24,36 +24,37 @@ class KMeansClassifier(object):
         old_centroids = None
 
         while not self._should_stop(old_centroids, iteration, k):
+            print("Iteration: ", iteration)
             old_centroids = self.centroids
             iteration += 1
-            self._classify(data)
-            self.centroids = self._assign_centroids(data, k)
+            data = self._classify(data)
+            self._assign_centroids(data, k)
         self.fitted = True
 
     def predict(self, data):
         """Predict the class of given test data after fit."""
         if self.fitted is False:
             raise RuntimeError('Run KMeansClassifier.fit before running predict.')
-        self._classify(data)
-        return data
+        distances = []
+        for centroid in self.centroids:
+            distances.append((centroid[-1], self._calc_distance(data, centroid[:-1])))
+        return min(distances, key=lambda x: x[1])[0]
 
     def _calc_distance(self, pt1, pt2):
         """Calculate the distance between two points."""
         dist = 0.0
-        print('distance called from: ', pt1, pt2)
         for i in range(len(pt1) - 2):
             dist += (pt1[i] - pt2[i])**2
         return sqrt(dist)
 
     def _classify(self, data):
-        """Assign each datapoint t o the nearest centroid."""
-        for point in data.iterrows():
-            print('point: ', point)
+        """Assign each datapoint to the nearest centroid."""
+        for i in range(len(data)):
             distances = []
             for cent in self.centroids:
-                print('cent', cent)
-                distances.append(self._calc_distance(cent, point[1]))
-            point[1]["group"] = distances.index(min(distances))
+                distances.append(self._calc_distance(cent, data.iloc[i]))
+            data.set_value(i, 'group', distances.index(min(distances)))
+        return data
 
     def _find_mean(self, points):
         """Find the mean coordinates of points."""
@@ -65,18 +66,20 @@ class KMeansClassifier(object):
     def _assign_centroids(self, data, k):
         """Set centroid coordinates to mean of their assigned datapoints."""
         groups = []
-        for _ in range(k):
-            groups.append(data[data["groups"] == k])
+        for i in range(k):
+            group = data[data["group"] == i]
+            groups.append(group)
         for idx, group in enumerate(groups):
             self.centroids[idx] = self._find_mean(group)
 
-    def _should_stop(self, old_centroids, centroids, iteration, k):
+    def _should_stop(self, old_centroids, iteration, k):
         """Determine if the fit should stop runnng."""
         if iteration > self.max_iter:
             return True
-        centroid_movements = []
-        for i in range(k):
-            centroid_movements.append(self._calc_distance(old_centroids[i], centroids[i]))
+        if old_centroids:
+            centroid_movements = []
+            for i in range(k):
+                centroid_movements.append(self._calc_distance(old_centroids[i], self.centroids[i]))
         if self.min_step:
             if max(centroid_movements) < self.min_step:
                 return True
@@ -86,5 +89,5 @@ class KMeansClassifier(object):
         """Return randomly generated centroids."""
         k_list = []
         for i in range(k):
-            k_list.append([random.uniform(min(data[column]), max(data[column])) for column in range(len(data) - 2)])
+            k_list.append([random.uniform(min(data[column]), max(data[column])) for column in data.columns.values[:-2]])
         return k_list
