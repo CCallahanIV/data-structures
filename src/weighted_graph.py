@@ -135,7 +135,6 @@ class WGraph(object):
 
     def shortest_dijkstra(self, start, target):
         """Use Dijkstra's algorithm to find the shortest path from start to target."""
-        # import pdb; pdb.set_trace()
         distance = {}
         path_weights = {start: (None, 0)}
         for key in self._gdict:
