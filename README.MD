@@ -55,3 +55,13 @@ in Python containing the following methods:
     size: O(1)
     remove: O(n**2)
     traversal: O(k) + O(2n)
+
+
+##K-Means Classifier
+    Establish *k* nodes, each one representing a centroid, or cluster of data. For each node desired then, the algorithm positions that centroid at the point where the distance between it and the nearest points is on average smaller than the distance between those points and the next node.
+
+    Public methods:
+        clf.fit(self, data, k): Generates k centroids with which to classify the given data
+        clf.predict(self, data): Returns classes for some data if clf.fit has already been called.
+
+    Work done in collaboration with [Julien Wilson](https://github.com/julienawilson), [Ted Callahan](https://github.com/CCallahanIV), [Patrick Saunders](https://github.com/pasaunders) and [Avery Pratt](https://github.com/AveryPratt).
